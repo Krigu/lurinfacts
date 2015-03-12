@@ -1,0 +1,10 @@
+<div ng-controller="MapCtrl as mapCtrl">
+    <ui-gmap-google-map
+            center="mapCtrl.map.center"
+            zoom="mapCtrl.map.zoom"
+            control="mapCtrl.map.control">
+    </ui-gmap-google-map>
+    <div>
+        center: {{mapCtrl.map.center}}
+    </div>
+</div>
