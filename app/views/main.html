@@ -1,0 +1,13 @@
+<div class="jumbotron">
+    <div ng-controller="MapController as vm" ng-cloak>
+        <google-map center="vm.map.center" draggable="true" zoom="vm.map.zoom">
+            <markers models="vm.markers" coords="'self'" icon="'icon'" click="'onMarkerClicked'">
+                <windows show="show">MapController
+                    <div ng-non-bindable class="markerPopUp"><h4>{{title}}</h4>
+                        <img class="thumb" src="{{imageUrl}}"/>
+                    </div>
+                </windows>
+            </markers>
+        </google-map>
+    </div>
+</div>
