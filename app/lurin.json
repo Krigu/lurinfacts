@@ -4,7 +4,7 @@
     "latitude": -20.5,
     "longitude": 134.233,
     "title": "Devils Marbles",
-    "imageUrl": "images/yeoman.jpg",
+    "imageUrl": "images/yeoman.png",
     "country": "Australien"
   },
   {
@@ -12,7 +12,7 @@
     "latitude": -38.680,
     "longitude": 143.391,
     "title": "Great Ocean Road",
-    "imageUrl": "images/yeoman.jpg",
+    "imageUrl": "images/yeoman.png",
     "country": "Victoria"
   },
   {
@@ -20,7 +20,7 @@
     "latitude": -16.263,
     "longitude": 133.375,
     "title": "Daly Waters Pub",
-    "imageUrl": "images/yeoman.jpg",
+    "imageUrl": "images/yeoman.png",
     "country": "Australien"
   }
 ]
