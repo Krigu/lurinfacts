@@ -3,8 +3,9 @@
             center="mapCtrl.map.center"
             zoom="mapCtrl.map.zoom"
             control="mapCtrl.map.control">
+
+        <ui-gmap-markers models="mapCtrl.markers" coords="'self'">
+        </ui-gmap-markers>
     </ui-gmap-google-map>
-    <div>
-        center: {{mapCtrl.map.center}}
-    </div>
+
 </div>
