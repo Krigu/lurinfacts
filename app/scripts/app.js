@@ -14,15 +14,11 @@ angular
     ])
     .config(function ($routeProvider) {
         $routeProvider
-            .when('/map', {
+            .when('/', {
                 templateUrl: 'views/map.html',
                 controller: 'MapCtrl'
             })
-            .when('/', {
-                templateUrl: 'views/main.html',
-                controller: 'MainCtrl'
-            })
             .otherwise({
-                redirectTo: '/'
+                redirectTo: 'views/map.html'
             });
     });
