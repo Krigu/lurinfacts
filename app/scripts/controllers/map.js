@@ -13,15 +13,17 @@
 
             $scope.map = {};
 
-            $scope.markers = {}
+            $scope.markers = {};
 
             $scope.selectedMarker = {};
+
+            $scope.control = {};
 
             markerFactory.getMarkers().success(function (data) {
                 $scope.markers = data;
             });
 
-            uiGmapGoogleMapApi.then(function (maps) {
+            uiGmapGoogleMapApi.then(function () {
                 angular.extend($scope.map, {
                     center: {
                         latitude: 26.949573,
@@ -37,15 +39,29 @@
                 show: false
             };
 
+            $scope.showWindow = function(show){
+                $scope.windowOptions.show = show;
+            };
+
             $scope.onClick = function (marker) {
                 $scope.selectedMarker = marker.model;
-                $scope.windowOptions.show = !$scope.windowOptions.show;
+                $scope.showWindow(!$scope.windowOptions.show);
             };
 
             $scope.closeClick = function () {
-                $scope.windowOptions.show = false;
+                $scope.showWindow(false);
             };
 
+            $scope.zoom = function (marker) {
+                $scope.selectedMarker = marker;
 
-        }])
+                var m = $scope.control.getGMap();
+                m.panTo(new google.maps.LatLng(marker.latitude, marker.longitude));
+                m.setZoom(10);
+
+                $scope.showWindow(true);
+            }
+
+
+        }]);
 })();

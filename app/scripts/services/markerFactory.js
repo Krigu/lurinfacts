@@ -14,7 +14,7 @@ angular.module('lurinfacts')
                 return $http({
                     url: '/lurin.json',
                     method: 'GET'
-                })
+                });
             }
-        }
+        };
     });

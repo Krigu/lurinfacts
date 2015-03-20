@@ -10,7 +10,7 @@
  */
 angular
     .module('lurinfacts', [
-        'ngRoute', 'uiGmapgoogle-maps'
+        'ngRoute', 'uiGmapgoogle-maps', 'angular-flexslider'
     ])
     .config(function ($routeProvider) {
         $routeProvider

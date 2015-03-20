@@ -15,11 +15,14 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       // bower:js
+      '../bower_components/jquery/dist/jquery.js',
       '../bower_components/angular/angular.js',
       '../bower_components/angular-route/angular-route.js',
       '../bower_components/angular-mocks/angular-mocks.js',
       '../bower_components/lodash/dist/lodash.compat.js',
       '../bower_components/angular-google-maps/dist/angular-google-maps.js',
+      '../bower_components/flexslider/jquery.flexslider.js',
+      '../bower_components/angular-flexslider/angular-flexslider.js',
       // endbower
       '../app/scripts/**/*.js',
       //'../test/mock/**/*.js',
