@@ -11,12 +11,21 @@
     "angular-mocks": "~1.3.14",
     "angular-google-maps": "latest",
     "angular-flexslider": "~1.3.2",
-    "flexslider": "*"
+    "flexslider": "*",
+    "FlexSlider": "https://github.com/woothemes/FlexSlider.git"
   },
   "devDependencies": {
     "angular-mocks": "~1.3.0"
   },
   "resolutions": {
     "angular": "1.3.14"
-  }
+  },
+	"overrides": {
+	  "FlexSlider": {
+	    "main": [
+	      "jquery.flexslider.js",
+	      "flexslider.css"
+	    ]
+	  }
+	}
 }
