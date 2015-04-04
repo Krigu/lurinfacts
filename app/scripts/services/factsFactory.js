@@ -8,11 +8,11 @@
  * Service in the lurinfactsApp.
  */
 angular.module('lurinfacts')
-    .factory('markerFactory', function ($http) {
+    .factory('factsFactory', function ($http) {
         return {
-            getMarkers: function () {
+            getFacts: function () {
                 return $http({
-                    url: '/pictures.json',
+                    url: '/facts.json',
                     method: 'GET'
                 });
             }

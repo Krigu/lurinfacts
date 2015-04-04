@@ -6,6 +6,11 @@
 
 body, html {
   height: 100%;
+  background-image: url('../images/bg.jpg');
+}
+
+body {
+  padding-top: 70px;
 }
 
 .ng-scope {
@@ -33,7 +38,7 @@ body, html {
   left: 0;
 }
 
-.markerPopUp{
+.markerPopUp {
   padding: 10px;
   background-color: white;
 }
@@ -42,5 +47,25 @@ body, html {
   position: fixed;
   height: 110px;
   bottom: 0;
-  width: 100%;
+}
+
+.contentContainer {
+  background-image: url('../images/container_bg.gif');
+}
+
+ul {
+  &, li {
+    list-style-image: none;
+    list-style-type: none;
+  }
+}
+
+.contentItems {
+  li {
+    border-bottom: 1px dotted black;
+    margin: 0;
+    padding: 1em;
+    height: 35px;
+    clear: both;
+  }
 }

@@ -12,7 +12,9 @@
     "angular-google-maps": "latest",
     "angular-flexslider": "~1.3.2",
     "flexslider": "*",
-    "FlexSlider": "https://github.com/woothemes/FlexSlider.git"
+    "FlexSlider": "https://github.com/woothemes/FlexSlider.git",
+    "angular-strap": "~2.2.1",
+    "angular-messages": "~1.3.15"
   },
   "devDependencies": {
     "angular-mocks": "~1.3.0"
@@ -20,12 +22,12 @@
   "resolutions": {
     "angular": "1.3.14"
   },
-	"overrides": {
-	  "FlexSlider": {
-	    "main": [
-	      "jquery.flexslider.js",
-	      "flexslider.css"
-	    ]
-	  }
-	}
+  "overrides": {
+    "FlexSlider": {
+      "main": [
+        "jquery.flexslider.js",
+        "flexslider.css"
+      ]
+    }
+  }
 }

@@ -21,8 +21,11 @@ module.exports = function(config) {
       '../bower_components/angular-mocks/angular-mocks.js',
       '../bower_components/lodash/dist/lodash.compat.js',
       '../bower_components/angular-google-maps/dist/angular-google-maps.js',
-      '../bower_components/flexslider/jquery.flexslider.js',
       '../bower_components/angular-flexslider/angular-flexslider.js',
+      '../bower_components/FlexSlider/jquery.flexslider.js',
+      '../bower_components/angular-strap/dist/angular-strap.js',
+      '../bower_components/angular-strap/dist/angular-strap.tpl.js',
+      '../bower_components/angular-messages/angular-messages.js',
       // endbower
       '../app/scripts/**/*.js',
       //'../test/mock/**/*.js',
