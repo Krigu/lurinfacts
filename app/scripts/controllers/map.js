@@ -57,7 +57,7 @@
 
                 var m = $scope.control.getGMap();
                 m.panTo(new google.maps.LatLng(marker.latitude, marker.longitude));
-                m.setZoom(10);
+                m.setZoom(6);
 
                 $scope.showWindow(true);
             }
