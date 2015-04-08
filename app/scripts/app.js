@@ -10,10 +10,18 @@
  */
 angular
   .module('lurinfacts', [
-    'ngRoute'
+    'ngRoute',
+    'firebase'
   ])
   .config(function($routeProvider) {
     $routeProvider
+      .when('/admin/addImage', {
+        templateUrl: 'views/admin/addImage.html',
+        controller: 'AddImageCtrl'
+      }).when('/admin/manageImage', {
+        templateUrl: 'views/admin/manageImage.html',
+        controller: 'ManageImageCtrl'
+      })
       .when('/', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
