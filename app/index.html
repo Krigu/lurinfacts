@@ -50,10 +50,23 @@
     <!-- endbower -->
     <!-- endbuild -->
 
+    <!-- Firebase -->
+    <script src="https://cdn.firebase.com/js/client/2.2.2/firebase.js"></script>
+    <!-- AngularFire -->
+    <script src="https://cdn.firebase.com/libs/angularfire/1.0.0/angularfire.min.js"></script>
+    <script src="https://cdn.firebase.com/v0/firebase-auth-client.js"></script>
+
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
     <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/addImage.js"></script>
+    <script src="scripts/controllers/manageImage.js"></script>
     <script src="scripts/controllers/map.js"></script>
+    <script src="scripts/services/ImageResizeService.js"></script>
+    <script src="scripts/services/ImageLocationService.js"></script>
+    <script src="scripts/services/LocationFinderService.js"></script>
+    <script src="scripts/services/LoginService.js"></script>
+    <script src="scripts/directive/loginDirective.js"></script>
     <!-- endbuild -->
   </body>
 </html>
