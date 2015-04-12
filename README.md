@@ -10,7 +10,6 @@ $ git clone git@github.com:Krigu/lurinfacts.git
 $ cd lurinfacts
 $ npm install --save-dev
 $ bower install
-$ bower install --save https://github.com/woothemes/FlexSlider.git
 $ gulp serve
 
 ```
