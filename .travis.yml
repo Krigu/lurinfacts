@@ -1,7 +1,13 @@
+env:
+  global:
+  - secure: TfzmuJl92hG7XVoVsBKhqay8MLzWN2smOUlO1pZvK/Ftf8z97Kq7eyvZg/ErdSpwQwUyf56gk4n9ohOj9tmsl/QPcDX5eWbBm1hwzJqorqxrcIxTVg5rz7KAHwuUllhCrnUWIXfSSRGkKT3qhlMK4IXTh00L8u84TRusU08koaA=
+  - secure: jx2Ma4knvtNxT/A8g5IlTgqadz9G1XznikqLY4EHJCKFuunloelcwfueUXEA5VXLlvPiKze/4I8USD425iaYF+HEdtNNR3PIcIz9x4S9LUFSdxs0ncc0WM7aMRq1QwCCBRTv2369VSQve2LvTk8yrocjYyaQ/oIEhvkVc0ybMmQ=
+
 language: node_js
 node_js:
-  - "0.11"
-  - "0.10"
+- '0.11'
 before_script:
-  - npm install -g gulp
+- npm install -g gulp
 script: gulp build
+after_success:
+  "cd dist && find . -type f -exec curl --user $FTP_USER:$FTP_PW --ftp-create-dirs -T {} ftp://www.lurinfacts.ch/{} \;"
