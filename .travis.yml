@@ -10,4 +10,4 @@ before_script:
 - npm install -g gulp
 script: gulp build
 after_success:
-  "cd dist && find . -type f -exec curl --user $FTP_USER:$FTP_PW --ftp-create-dirs -T {} ftp://www.lurinfacts.ch/{} \;"
+  "cd dist && find . -type f -exec curl --user $FTP_USER:$FTP_PW --ftp-create-dirs -T {} ftp://www.lurinfacts.ch/{} \\;"
