@@ -1,28 +1,27 @@
-/**
- * Created by Käser on 07/04/2015.
- */
-angular.module('lurinfacts').factory('ImageLocationService', function ($q,$firebaseArray) {
+'use strict';
+
+angular.module('lurinfacts').factory('ImageLocationService', function ($q, $firebaseArray) {
   var firebaseRef = 'https://burning-inferno-892.firebaseio.com/';
 
   var saveLocation = function (metaData, image, thumbnail) {
     var uuid = guid();
 
     return $q.all([
-      saveMetadata(uuid, metaData,thumbnail),
+      saveMetadata(uuid, metaData, thumbnail),
       saveImage(uuid, image)
       //saveThumbnail(uuid, thumbnail)
-    ])
+    ]);
   };
 
-  var guid = function(){
-    return uuid = (S4() + S4() + "-" + S4() + "-4" + S4().substr(0,3) + "-" + S4() + "-" + S4() + S4() + S4()).toLowerCase();
+  var guid = function () {
+    return (S4() + S4() + '-' + S4() + '-4' + S4().substr(0, 3) + '-' + S4() + '-' + S4() + S4() + S4()).toLowerCase();
   };
 
-  var S4 = function() {
-    return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+  var S4 = function () {
+    return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1); // jshint ignore:line
   };
 
-  var saveMetadata = function (guid, metadata,thumbnail) {
+  var saveMetadata = function (guid, metadata, thumbnail) {
     var d = $q.defer();
     metadata.guid = guid;
     metadata.thumbnail = thumbnail;
@@ -44,17 +43,7 @@ angular.module('lurinfacts').factory('ImageLocationService', function ($q,$fireb
     return d.promise;
   };
 
-  //var saveThumbnail = function (guid, thumbnail) {
-  //  var d = $q.defer();
-  //  var firebaseThumbnail = new Firebase(firebaseRef + 'thumbnail/' + guid + '/filePayload');
-  //  firebaseThumbnail.set(thumbnail, function () {
-  //    console.log('thumbnail uploaded under hash:' + guid);
-  //    d.resolve(guid);
-  //  });
-  //  return d.promise;
-  //};
-
-  var locationsAsFirebaseArray = function(){
+  var locationsAsFirebaseArray = function () {
     // Get a reference to our posts
     var ref = new Firebase(firebaseRef + 'imageLocation/');
     return $firebaseArray(ref);
@@ -63,6 +52,6 @@ angular.module('lurinfacts').factory('ImageLocationService', function ($q,$fireb
 
   return {
     saveLocation: saveLocation,
-    locationsAsFirebaseArray : locationsAsFirebaseArray
+    locationsAsFirebaseArray: locationsAsFirebaseArray
   };
 });

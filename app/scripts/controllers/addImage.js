@@ -2,7 +2,7 @@
 
 /**
  * @ngdoc function
- * @name lurinfacts.controller:MapCtrl
+ * @name lurinfacts.controller:addImages
  * @description
  * # MapCtrl
  * Controller of lurinfacts
@@ -30,14 +30,14 @@ angular.module('lurinfacts')
         console.log('error on getPositionByAddress: ' + error);
       });
 
-    }
+    };
 
     vm.uploadedFileChanged = function(el) {
       var f = el.files[0];
       var reader = new FileReader();
-      reader.onload = (function(theFile) {
+      reader.onload = (function() {
         console.log('file read');
-        return function(e) {
+        return function() {
           vm.imageSource = reader.result;
           var promise = ImageResizeService.resize(reader.result,200);
           promise.then(function (img) {
@@ -47,7 +47,6 @@ angular.module('lurinfacts')
           }, function (reason) {
             console.log('Failed: ' + reason);
           });
-          //$scope.$apply();
         };
       })(f);
       reader.readAsDataURL(f);

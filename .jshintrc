@@ -21,6 +21,9 @@
   "globals": {
     "angular": false,
     "inject": false,
-    "google": false
-  }
+    "google": false,
+    "firebase": false,
+    "Firebase": false
+  },
+  "camelcase": false
 }
