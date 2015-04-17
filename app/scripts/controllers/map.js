@@ -60,7 +60,7 @@
                 m.setZoom(6);
 
                 $scope.showWindow(true);
-            }
+            };
 
 
         }]);

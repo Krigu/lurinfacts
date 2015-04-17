@@ -25,7 +25,7 @@
 
       $scope.isInvalid = function () {
         return $scope.factsForm.$dirty && $scope.factsForm.$invalid;
-      }
+      };
 
       $factsFactory.getFacts().success(function (data) {
         $scope.facts = data;
