@@ -5,6 +5,13 @@ angular.module('lurinfacts').factory('LoginService', function () {
   var UserIsLoggedIn = false;
   var firebaseRef = 'https://burning-inferno-892.firebaseio.com/';
   var ref = new Firebase(firebaseRef);
+  var authData = ref.getAuth();
+if (authData) {
+  console.log("User " + authData.uid + " is logged in with " + authData.provider);
+} else {
+  console.log("User is logged out");
+}
+    /*
   new FirebaseAuthClient(ref, function (error, user) {
     if (error) {
       alert(error);
@@ -15,8 +22,12 @@ angular.module('lurinfacts').factory('LoginService', function () {
   var isUserLoggedIn = function(){
     return UserIsLoggedIn;
   };
-
-  var doUserLogin = function (email, password,iAmLazy) {
+*/
+   var isUserLoggedIn = function () {
+    return UserIsLoggedIn;
+   }
+    
+    var doUserLogin = function (email, password,iAmLazy) {
     ref.authWithPassword({
       email    :email,
       password : password,

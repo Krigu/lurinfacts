@@ -1,7 +1,27 @@
-<div class="jumbotron">
-    <div ng-controller="map as vm" ng-cloak>
-        <google-map center="vm.map.center" draggable="true" zoom="vm.map.zoom">
+<div ng-controller="MapCtrl as mapCtrl">
 
-        </google-map>
+    <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options" control="control" >
+
+        <ui-gmap-window coords="selectedMarker" show="windowOptions.show" click="onClose">
+            <div class="markerPopUp">
+                <h4>Lurin in {{selectedMarker.title}}</h4>
+                <img class="thumb" ng-src="{{selectedMarker.imageUrl}}"/>
+            </div>
+        </ui-gmap-window>
+
+        <ui-gmap-markers models="markers" coords="'self'" icon="'icon'" click="onClick">
+
+        </ui-gmap-markers>
+    </ui-gmap-google-map>
+
+    <div >
+        <flex-slider id="mapFooter" animation="slide" animation-loop="false" item-width="150" item-margin="0" slideshow-speed="700"
+                     slide="marker in markers track by $index" control-nav="false" touch="true" pause-on-hover="true" keyboard="true">
+            <li>
+                <img ng-src="{{marker.imageUrl}}" ng-click="zoom(marker)">
+            </li>
+        </flex-slider>
     </div>
+
 </div>
+

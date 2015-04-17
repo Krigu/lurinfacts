@@ -8,6 +8,7 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
+    <link rel="stylesheet" href="../bower_components/FlexSlider/flexslider.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -44,29 +45,39 @@
 
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
     <script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/firebase/firebase.js"></script>
+    <script src="../bower_components/angularfire/dist/angularfire.js"></script>
     <script src="../bower_components/angular-route/angular-route.js"></script>
     <script src="../bower_components/angular-mocks/angular-mocks.js"></script>
+    <script src="../bower_components/lodash/dist/lodash.compat.js"></script>
+    <script src="../bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
+    <script src="../bower_components/angular-flexslider/angular-flexslider.js"></script>
+    <script src="../bower_components/FlexSlider/jquery.flexslider.js"></script>
+    <script src="../bower_components/angular-strap/dist/angular-strap.js"></script>
+    <script src="../bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
+    <script src="../bower_components/angular-messages/angular-messages.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
-    <!-- Firebase -->
-    <script src="https://cdn.firebase.com/js/client/2.2.2/firebase.js"></script>
-    <!-- AngularFire -->
-    <script src="https://cdn.firebase.com/libs/angularfire/1.0.0/angularfire.min.js"></script>
-    <script src="https://cdn.firebase.com/v0/firebase-auth-client.js"></script>
-
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
-    <script src="scripts/app.js"></script>
-    <script src="scripts/controllers/main.js"></script>
+    <script src="https://cdn.firebase.com/js/simple-login/1.6.4/firebase-simple-login.js"></script>
+      <script src="scripts/app.js"></script>
+
     <script src="scripts/controllers/addImage.js"></script>
     <script src="scripts/controllers/manageImage.js"></script>
+    <script src="scripts/controllers/facts.js"></script>
     <script src="scripts/controllers/map.js"></script>
     <script src="scripts/services/ImageResizeService.js"></script>
     <script src="scripts/services/ImageLocationService.js"></script>
     <script src="scripts/services/LocationFinderService.js"></script>
     <script src="scripts/services/LoginService.js"></script>
     <script src="scripts/directive/loginDirective.js"></script>
+    <script src="scripts/services/markerFactory.js"></script>
+    <script src="scripts/services/factsFactory.js"></script>
+    
     <!-- endbuild -->
+   
   </body>
 </html>

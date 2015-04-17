@@ -10,23 +10,29 @@
  */
 angular
   .module('lurinfacts', [
-    'ngRoute',
+    'ngMessages', 'ngRoute', 'uiGmapgoogle-maps',  'angular-flexslider', 'mgcrea.ngStrap',
     'firebase'
   ])
-  .config(function($routeProvider) {
+  .config(function ($routeProvider) {
     $routeProvider
+      .when('/facts', {
+        templateUrl: 'views/facts.html',
+        controller: 'FactsCtrl'})
       .when('/admin/addImage', {
         templateUrl: 'views/admin/addImage.html',
         controller: 'AddImageCtrl'
-      }).when('/admin/manageImage', {
+      })
+          .when('/admin/manageImage', {
         templateUrl: 'views/admin/manageImage.html',
         controller: 'ManageImageCtrl'
       })
-      .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+      .when('/map', {
+        templateUrl: 'views/map.html',
+        controller: 'MapCtrl'
       })
-      .otherwise({
-        redirectTo: '/'
-      });
+      .when('/contribute', {
+        templateUrl: 'views/contribute.html',
+        controller: 'FactsCtrl'
+      })
+      .otherwise({ redirectTo: '/facts' });
   });

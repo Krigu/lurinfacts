@@ -1,0 +1,32 @@
+<div class="jumbotron" ng-controller="FactsCtrl as factsCtrl">
+    <form name="factsForm" novalidate>
+
+
+        <div class="form-group">
+            <label for="inputFact" class="control-label">Your awesome fact about Lurin</label>
+
+            <div ng-class="{'has-error': isInvalid()}">
+                <textarea class="form-control" rows="3" id="inputFact" name="inputFact"
+                          placeholder="Enter your new lurinfact here" ng-model="fact.text" required
+                          ng-minlength="5" ng-maxlength="160"></textarea>
+                <div ng-messages="factsForm.$error" ng-if="factsForm.$dirty" class="control-label">
+                    <span ng-message="required">Required!</span>
+                    <span ng-message="minlength">Too short!</span>
+                    <span ng-message="maxlength">Too long!</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div>
+                <button type="submit" class="btn btn-default" ng-click="update(fact)"
+                        ng-disabled="factsForm.$invalid">Submit
+                </button>
+            </div>
+        </div>
+        <pre>form = {{facts | json}}</pre>
+
+    </form>
+
+
+</div>
