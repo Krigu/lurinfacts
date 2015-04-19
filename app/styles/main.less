@@ -1,16 +1,25 @@
 // bower:less
 @import "../../bower_components/bootstrap/less/bootstrap.less";
+
 // endbower
 
 @icon-font-path: '../bower_components/bootstrap/fonts/';
 
+@lurinyellow: #F2EA00;
+
 body, html {
   height: 100%;
-  background-image: url('../images/bg.jpg');
 }
 
 body {
-  padding-top: 70px;
+  padding-top: 240px;
+  background-color: #F2F2F2;
+}
+
+@media (max-width: 979px) {
+  body {
+    padding-top: 0px;
+  }
 }
 
 .ng-scope {
@@ -60,12 +69,48 @@ ul {
   }
 }
 
-.contentItems {
-  li {
-    border-bottom: 1px dotted black;
-    margin: 0;
-    padding: 1em;
-    height: 35px;
-    clear: both;
+.navbar {
+  border-top: 15px solid @lurinyellow;
+  height: 230px;
+  background-color: white;
+  img {
+    margin: 0 auto;
   }
+}
+
+.navbar-collapse {
+  margin-top: 10px;
+}
+
+.contentItems {
+  ul li span {
+    height: 100px;
+    display: table-cell;
+    vertical-align: middle;
+  }
+  span {
+    padding: 10px;
+  }
+  ul {
+    padding: 0px;
+  }
+  li {
+    border-bottom: 1px black;
+    margin-top: 25px;
+    height: 100px;
+    clear: both;
+    background-color: white;
+    border-top: 5px solid @lurinyellow;
+  }
+}
+
+.jumbotron {
+  background-color: white;
+  .shadow
+}
+
+.shadow {
+  -webkit-box-shadow: 0 10px 6px -6px #777;
+  -moz-box-shadow: 0 10px 6px -6px #777;
+  box-shadow: 0 10px 6px -6px #777;
 }
