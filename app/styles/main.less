@@ -1,6 +1,5 @@
 // bower:less
 @import "../../bower_components/bootstrap/less/bootstrap.less";
-
 // endbower
 
 @icon-font-path: '../bower_components/bootstrap/fonts/';
@@ -9,6 +8,10 @@
 
 body, html {
   height: 100%;
+}
+
+h1{
+    font-size: 24px;
 }
 
 body {
@@ -113,4 +116,12 @@ ul {
   -webkit-box-shadow: 0 10px 6px -6px #777;
   -moz-box-shadow: 0 10px 6px -6px #777;
   box-shadow: 0 10px 6px -6px #777;
+}
+
+// this goes into a css file loaded after the compiled bootstrap.min.css
+.editContainer [class^="col-"] {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    min-height: 50px;
+    border-top: 1px solid #444444;
 }

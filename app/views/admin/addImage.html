@@ -1,26 +1,61 @@
 <div class="jumbotron">
     <div ng-controller="AddImageCtrl as vm" ng-cloak>
         <fire-base-login></fire-base-login>
-       <h1>{{vm.title}}</h1>
-    Name:
-        <input type="text" ng-model="vm.newPoint.imageTitle"/><br/>
-        FunFact:
-        <input type="text" ng-model="vm.newPoint.funFact"/><br/>
-    Image:
-        <input type="file" accept="image/*" multiple onchange="angular.element(this).scope().vm.uploadedFileChanged(this);" capture="camera" id="file-upload">
-        <img ng-src="{{vm.imageSource}}" style="width:200px;height:200px" />
-        <img ng-src="{{vm.imageThumb}}" />
-    <br/>
-    Address:
-    <input type="text" ng-model="vm.newPoint.address"/>
-    <input type="button" ng-click="vm.getPositionByAddress()" value="Get Coords"/>
-    <br/>
-    Adresse:{{vm.newPoint.title}}<br/>
-    Country:{{vm.newPoint.country}}<br/>
-    Lat:{{vm.newPoint.lat}}<br/>
-    Lang:{{vm.newPoint.lng}}<br/>
+        <h3>{{vm.title}}</h3>
+        <div class="editContainer">
+            <div class="row">
+                <div class="col-sm-4">Title</div>
+                <div class="col-sm-8">
+                    <input type="text" ng-model="vm.newPoint.imageTitle" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">FunFact</div>
+                <div class="col-sm-8">
+                    <input type="text" ng-model="vm.newPoint.funFact" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">Image</div>
+                <div class="col-sm-4">
+                    <input type="file" accept="image/*" multiple onchange="angular.element(this).scope().vm.uploadedFileChanged(this);" capture="camera" id="file-upload">
+                </div>
+                <div class="col-sm-4">
+                    <span ng-show="vm.imageThumb"><span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Thumbnail ready!</span>
+                    <span ng-show="vm.imageSource"><span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Image ready!</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">Location</div>
+            </div>
+        </div>
 
-        <input type="button" ng-click="vm.SavePicture()" value="Save new Image Location"/>
 
-</div>
+        <div class="row">
+            <div class="col-sm-4">Selected:</div>
+            <div class="col-sm-4">Choose by address:</div>
+            <div class="col-sm-4">Choose by map:</div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                {{vm.newPoint.title}}
+                <br/> {{vm.newPoint.country}}
+                <br/> Lat:{{vm.newPoint.lat}}
+                <br/> Lang:{{vm.newPoint.lng}}
+            </div>
+            <div class="col-sm-4">
+                <input type="text" ng-model="vm.newPoint.address" />
+                <input type="button" class="btn" ng-click="vm.getPositionByAddress()" value="Get Coords" />
+
+            </div>
+            <div class="col-sm-4">Todo</div>
+        </div>
+        <div class="editContainer">
+            <div class="row">
+                <div class="col-sm-12">
+                    <input type="button" class="btn" style="float:right" ng-click="vm.SavePicture()" value="save everything" />
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
