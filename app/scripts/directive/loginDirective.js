@@ -10,7 +10,7 @@ angular.module('lurinfacts').directive('fireBaseLogin', function ($sce, LoginSer
         link: function (scope) {
             scope.isLoggedIn = LoginService.isUserLoggedIn();
             scope.$watch(LoginService.isUserLoggedIn, function (newVal) {
-                console.log("login status changed: user logged in" + newVal);
+                console.log('login status changed: user logged in' + newVal);
                 scope.isLoggedIn = newVal;
             });
 

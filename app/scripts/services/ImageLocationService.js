@@ -1,11 +1,10 @@
 'use strict';
 
-angular.module('lurinfacts').factory('ImageLocationService', function ($q, $firebaseArray) {
+angular.module('lurinfacts').factory('ImageLocationService', function ($q, $firebaseArray, GuidService) {
     var firebaseRef = 'https://burning-inferno-892.firebaseio.com/';
 
     var saveLocation = function (metaData, image, thumbnail) {
-        var uuid = guid();
-
+        var uuid = GuidService.newGuid();
         return $q.all([
       saveMetadata(uuid, metaData, thumbnail),
       saveImage(uuid, image)
@@ -13,13 +12,6 @@ angular.module('lurinfacts').factory('ImageLocationService', function ($q, $fire
     ]);
     };
 
-    var guid = function () {
-        return (S4() + S4() + '-' + S4() + '-4' + S4().substr(0, 3) + '-' + S4() + '-' + S4() + S4() + S4()).toLowerCase();
-    };
-
-    var S4 = function () {
-        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1); // jshint ignore:line
-    };
 
     var saveMetadata = function (guid, metadata, thumbnail) {
         var d = $q.defer();

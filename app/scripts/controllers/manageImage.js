@@ -18,10 +18,10 @@ angular.module('lurinfacts')
 
         vm.deleteImage = function (guid) {
 
-            console.log("delete image:" + guid);
+            console.log('delete image:' + guid);
 
             ImageLocationService.deleteLocation(guid);
 
-        }
+        };
 
     });
