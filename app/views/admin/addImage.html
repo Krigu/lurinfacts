@@ -38,20 +38,20 @@
         </div>
         <div class="row">
             <div class="col-sm-4">
-                {{vm.newPoint.title}}
-                <br/> {{vm.newPoint.country}}
-                <br/> Lat:{{vm.newPoint.lat}}
-                <br/> Lang:{{vm.newPoint.lng}}
+                {{vm.newPoint.location.address}}
+                <br/> {{vm.newPoint.location.country}}
+                <br/> Lat:{{vm.newPoint.location.lat}}
+                <br/> Lang:{{vm.newPoint.location.lng}}
             </div>
             <div class="col-sm-4">
-                <input type="text" ng-model="vm.newPoint.address" />
+                <input type="text" ng-model="vm.newPoint.location.address" />
                 <input type="button" class="btn" ng-click="vm.getPositionByAddress()" value="Get Coords" />
 
             </div>
             <div class="col-sm-4" style="height:300px;width:300px">
 
-                <ui-gmap-google-map center="vm.map.center" zoom="vm.map.zoom" draggable="true" options="vm.map.options" control="vm.map.control">
-
+                <ui-gmap-google-map center="vm.map.center" events="vm.map.events" zoom="vm.map.zoom" draggable="true" options="vm.map.options" control="vm.map.control">
+                    <ui-gmap-marker coords="vm.marker.coords" options="{draggable:true}" events="vm.markerevents" idkey="vm.marker.key" />
                 </ui-gmap-google-map>
 
 

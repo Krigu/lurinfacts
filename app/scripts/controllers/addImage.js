@@ -9,31 +9,67 @@
      * Controller of lurinfacts
      */
     angular.module('lurinfacts')
-        .controller('AddImageCtrl', function ($scope, ImageResizeService, ImageLocationService, LocationFinderService) {
+        .controller('AddImageCtrl', function ($scope, ImageResizeService, ImageLocationService, GeoLocationService) {
             var vm = this;
             vm.title = 'Neues Bild hinzufügen';
-            vm.map = {};
-            vm.map.center = {
-                latitude: 26.949573,
-                longitude: 7.446969
+            vm.newPoint = {
+                funFact: '',
+                imageTitle: '',
+                location: ''
             };
-            vm.map.zoom = 3;
+            vm.map = {};
             vm.map.options = {};
             vm.map.control = {};
+            vm.map.zoom = 5;
 
-            vm.showPosition = function (position) {
-                LocationFinderService.getPositionByCoords(position.coords.latitude, position.coords.longitude).then(function (newPoint) {
-                    vm.newPoint = newPoint;
-                    vm.newPoint.imageTitle = 'Your location';
-                    vm.newPoint.imageUrl = 'uploadyourphotonow.jpg';
+            vm.markerevents = {
+                dragend: function (marker) {
+                    console.log('marker dragend');
+                    var lat = marker.getPosition().lat();
+                    var lon = marker.getPosition().lng();
+                    var coords = {
+                        latitude: lat,
+                        longitude: lon
+                    };
+                    vm.SetMarker(coords);
+                    vm.updateLocationByCoords(coords);
+                }
+            };
+            vm.SetMarker = function (coords) {
+                vm.marker = {
+                    coords: coords,
+                    key: new Date().getTime()
+                };
+            };
+            vm.SetMap = function (coords) {
+                console.log('new marker position');
+                vm.map.center = coords;
+            };
+
+            vm.currentPositionLoaded = function (position) {
+                vm.updateLocationByCoords(position.coords);
+                vm.SetMap(position.coords);
+                vm.SetMarker(position.coords);
+            };
+
+            vm.updateLocationByCoords = function (coords) {
+                GeoLocationService.getPositionByCoords(coords.latitude, coords.longitude).then(function (location) {
+                    vm.newPoint.location = location;
                 }, function (error) {
                     console.log('error on getPositionByCoords: ' + error);
                 });
             };
 
             vm.getPositionByAddress = function () {
-                LocationFinderService.getPositionByAddress(vm.newPoint.address).then(function (newPoint) {
-                    vm.newPoint = newPoint;
+                GeoLocationService.getPositionByAddress(vm.newPoint.location.address).then(function (location) {
+                    vm.newPoint.location = location;
+                    var coords = {
+                        latitude: location.lat,
+                        longitude: location.lng
+                    };
+                    vm.SetMap(coords);
+                    vm.SetMarker(coords);
+
                 }, function (error) {
                     console.log('error on getPositionByAddress: ' + error);
                 });
@@ -70,14 +106,9 @@
             };
 
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(vm.showPosition);
+                navigator.geolocation.getCurrentPosition(vm.currentPositionLoaded);
             } else {
-                vm.newPoint = {
-                    imageTitle: 'Devils Marble, Australia',
-                    imageUrl: 'start.jpg',
-                    country: 'Australia',
-                    address: 'Devils Marble, Australia'
-                };
+                vm.getPositionByAddress('schilthorn, mürren');
             }
         });
 }());

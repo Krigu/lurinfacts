@@ -12,8 +12,8 @@
                         <b>{{ location.imageTitle }}</b>
                         <br/>{{ location.funFact }}
                         <br/> {{ location.imageUrl }}
-                        <br/> Lat: {{location.lat}} Lng: {{location.lng}}
-                        <br/> {{location.address}}</div>
+                        <br/> Lat: {{location.location.lat}} Lng: {{location.location.lng}}
+                        <br/> {{location.location.address}}</div>
                     <div class="col-sm-2">
                         <input type="button" class="btn" ng-click="vm.deleteImage(location.guid)" value="delete" />
                     </div>
