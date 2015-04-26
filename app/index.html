@@ -26,7 +26,7 @@
     <!-- Add your site or application content here -->
     <header>
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation" bs-navbar>
-            <div class="container">
+            <div class="container" ng-controller="MenuCtrl as vm" ng-cloak>
                 <img src="images/header.png" class="img-responsive center-block">
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse center-block">
@@ -37,10 +37,18 @@
                         </li>
                         <li data-match-route="/map"><a href="#/map">Map</a>
                         </li>
+                        </li>
                     </ul>
-
-
                     <ul class="nav navbar-nav navbar-right">
+                        <li data-match-route="/admin/manageFacts" ng-show="vm.isLoggedIn"><a href="#/admin/manageFacts">Manage Facts</a>
+                        </li>
+                        <li data-match-route="/admin/addImage" ng-show="vm.isLoggedIn"><a href="#/admin/addImage">Add Image</a>
+                        </li>
+                        <li data-match-route="/admin/manageImage" ng-show="vm.isLoggedIn"><a href="#/admin/manageImage">Manage Image</a>
+                        </li>
+                        <li>
+                            <fire-base-login class="login"></fire-base-login>
+                        </li>
                         <li data-match-route="#/about"><a href="#/about">About</a>
                         </li>
                     </ul>
@@ -88,8 +96,8 @@
     <script src="../bower_components/angular-mocks/angular-mocks.js"></script>
     <script src="../bower_components/lodash/dist/lodash.compat.js"></script>
     <script src="../bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
-    <script src="../bower_components/FlexSlider/jquery.flexslider.js"></script>
     <script src="../bower_components/angular-flexslider/angular-flexslider.js"></script>
+    <script src="../bower_components/FlexSlider/jquery.flexslider.js"></script>
     <script src="../bower_components/angular-strap/dist/angular-strap.js"></script>
     <script src="../bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
     <script src="../bower_components/angular-messages/angular-messages.js"></script>
@@ -100,6 +108,7 @@
     <script src="https://cdn.firebase.com/js/simple-login/1.6.4/firebase-simple-login.js"></script>
     <script src="scripts/app.js"></script>
 
+    <script src="scripts/controllers/menu.js"></script>
     <script src="scripts/controllers/addImage.js"></script>
     <script src="scripts/controllers/manageImage.js"></script>
     <script src="scripts/controllers/manageFacts.js"></script>
