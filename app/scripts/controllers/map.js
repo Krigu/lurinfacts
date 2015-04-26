@@ -39,7 +39,7 @@
                 show: false
             };
 
-            $scope.showWindow = function(show){
+            $scope.showWindow = function (show) {
                 $scope.windowOptions.show = show;
             };
 

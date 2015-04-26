@@ -48,7 +48,14 @@
                 <input type="button" class="btn" ng-click="vm.getPositionByAddress()" value="Get Coords" />
 
             </div>
-            <div class="col-sm-4">Todo</div>
+            <div class="col-sm-4" style="height:300px;width:300px">
+
+                <ui-gmap-google-map center="vm.map.center" zoom="vm.map.zoom" draggable="true" options="vm.map.options" control="vm.map.control">
+
+                </ui-gmap-google-map>
+
+
+            </div>
         </div>
         <div class="editContainer">
             <div class="row">

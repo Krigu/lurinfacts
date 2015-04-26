@@ -1,0 +1,50 @@
+<div class="jumbotron">
+    <div ng-controller="ManageFactsCtrl as vm" ng-cloak>
+
+        <h3>Add a fact</h3>
+
+        <div class="editContainer">
+            <div class="row">
+                <div class="col-sm-4">Fatct</div>
+                <div class="col-sm-8">
+                    <input type="text" ng-model="vm.newFact.fact" maxlength="160" style="width:100%" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">InsertDate</div>
+                <div class="col-sm-8">{{ vm.newFact.insertTime | date:'medium' }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">Contributor</div>
+                <div class="col-sm-8">
+                    <input type="text" ng-model="vm.newFact.contributor" />
+                </div>
+            </div>
+        </div>
+        <div class="editContainer">
+            <div class="row">
+                <div class="col-sm-12">
+                    <input type="button" class="btn" style="float:right" ng-click="vm.saveFact()" value="save everything" />
+                </div>
+            </div>
+        </div>
+
+        <h3>Contributed a fact</h3> Search for a fact:
+        <p>
+            <input type="text" ng-model="vm.search_fact">
+        </p>
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="fact in vm.facts | filter:vm.search_fact" style="height:60px">
+                <div class="row">
+                    <div class="col-sm-10">
+                        <b>{{ fact.fact }}</b>
+                        <br/> @ {{ fact.insertTime | date:'medium' }} | by {{ fact.contributor }}
+                    </div>
+                    <div class="col-sm-2">
+                        <input type="button" class="btn" ng-click="vm.deleteFact(fact.guid)" value="delete" />
+                    </div>
+                </div>
+            </li>
+    </div>
+</div>
