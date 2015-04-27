@@ -154,3 +154,30 @@ ul {
   min-height: 50px;
   border-top: 1px solid #444444;
 }
+
+.headerImage {
+  position: relative;
+  img {
+    padding-right: 10px;
+    padding-left: 5px;
+  }
+  a, a:hover, a:visited {
+    color: black;
+  }
+  span {
+    display: block;
+    position: absolute;
+    right: 15px;
+    bottom: 80px;
+    border-radius: 4px;
+    background-color: @lurinyellow;
+    width: 190px;
+    height: 26px;
+  }
+}
+
+@media (max-width: 768px) {
+  .headerImage span {
+    display: none;
+  }
+}
