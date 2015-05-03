@@ -9,7 +9,7 @@
      * Controller of lurinfacts
      */
     angular.module('lurinfacts')
-        .controller('ManageFactsCtrl', function ($scope, factsFactory) {
+        .controller('ManageFactsCtrl', function ($scope, factsFactory, NotificationService) {
             var vm = this;
             vm.title = 'Vorhandene Facts';
             vm.newFact = [];
