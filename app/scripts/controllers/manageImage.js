@@ -8,7 +8,7 @@
  * Controller of lurinfacts
  */
 angular.module('lurinfacts')
-    .controller('ManageImageCtrl', function ($scope, ImageLocationService) {
+    .controller('ManageImageCtrl', function ($scope, ImageLocationService, NotificationService) {
         var vm = this;
         vm.title = 'Vorhandene Bilder';
 
@@ -20,7 +20,11 @@ angular.module('lurinfacts')
 
             console.log('delete image:' + guid);
 
-            ImageLocationService.deleteLocation(guid);
+            ImageLocationService.deleteLocation(guid).then(function () {
+                NotificationService.success('image delete');
+            }, function () {
+                NotificationService.error('lurin hijacked the image, it can\'t be deleted');
+            });
 
         };
 

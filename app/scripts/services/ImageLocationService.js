@@ -19,9 +19,13 @@ angular.module('lurinfacts').factory('ImageLocationService', function ($q, $fire
         metadata.guid = guid;
         metadata.thumbnail = thumbnail;
         var firebaseMetaData = new Firebase(firebaseRef_imageMetaData + guid);
-        firebaseMetaData.set(metadata, function () {
-            console.log('metadata uploaded under hash:' + guid);
-            d.resolve(guid);
+        firebaseMetaData.set(metadata, function (error) {
+            if (error) {
+                d.reject(error);
+            } else {
+                console.log('metadata uploaded under hash:' + guid);
+                d.resolve(guid);
+            }
         });
         return d.promise;
     };
@@ -29,9 +33,13 @@ angular.module('lurinfacts').factory('ImageLocationService', function ($q, $fire
     var deleteMetadata = function (guid) {
         var d = $q.defer();
         var firebaseMetaData = new Firebase(firebaseRef_imageMetaData + guid);
-        firebaseMetaData.remove(function () {
-            console.log('image delete with hash:' + guid);
-            d.resolve(guid);
+        firebaseMetaData.remove(function (error) {
+            if (error) {
+                d.reject(error);
+            } else {
+                console.log('metadata delete with hash:' + guid);
+                d.resolve(guid);
+            }
         });
         return d.promise;
     };
@@ -39,9 +47,13 @@ angular.module('lurinfacts').factory('ImageLocationService', function ($q, $fire
     var deleteImage = function (guid) {
         var d = $q.defer();
         var firebasePicture = new Firebase(firebaseRef_image + guid);
-        firebasePicture.remove(function () {
-            console.log('metadata delete with hash:' + guid);
-            d.resolve(guid);
+        firebasePicture.remove(function (error) {
+            if (error) {
+                d.reject(error);
+            } else {
+                console.log('image delete with hash:' + guid);
+                d.resolve(guid);
+            }
         });
         return d.promise;
     };
@@ -49,9 +61,13 @@ angular.module('lurinfacts').factory('ImageLocationService', function ($q, $fire
     var saveImage = function (guid, image) {
         var d = $q.defer();
         var firebasePicture = new Firebase(firebaseRef_image + guid);
-        firebasePicture.set(image, function () {
-            console.log('image uploaded under hash:' + guid);
-            d.resolve(guid);
+        firebasePicture.set(image, function (error) {
+            if (error) {
+                d.reject(error);
+            } else {
+                console.log('image uploaded under hash:' + guid);
+                d.resolve(guid);
+            }
         });
         return d.promise;
     };

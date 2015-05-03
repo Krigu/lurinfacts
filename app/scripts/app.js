@@ -10,8 +10,7 @@
  */
 angular
     .module('lurinfacts', [
-    'ngMessages', 'ngRoute', 'uiGmapgoogle-maps', 'angular-flexslider', 'mgcrea.ngStrap',
-    'firebase'
+    'ngMessages', 'ngRoute', 'uiGmapgoogle-maps', 'angular-flexslider', 'mgcrea.ngStrap', 'ngNotify', 'firebase'
   ])
     .config(function ($routeProvider) {
         $routeProvider

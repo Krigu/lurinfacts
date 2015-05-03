@@ -3,12 +3,12 @@
 
         <h3>{{vm.title}}</h3>
         <ul class="list-group">
-            <li class="list-group-item" ng-repeat="location in vm.locations" style="height:120px">
+            <li class="list-group-item" ng-repeat="location in vm.locations" style="min-height:120px">
                 <div class="row">
-                    <div class="col-sm-2">
+                    <div class="col-sm-3">
                         <img ng-show="location.guid" src="{{location.thumbnail}}" />
                     </div>
-                    <div class="col-sm-8">
+                    <div class="col-sm-7">
                         <b>{{ location.imageTitle }}</b>
                         <br/>{{ location.funFact }}
                         <br/> {{ location.imageUrl }}

@@ -9,7 +9,7 @@
      * Controller of lurinfacts
      */
     angular.module('lurinfacts')
-        .controller('AddImageCtrl', function ($scope, ImageResizeService, ImageLocationService, GeoLocationService) {
+        .controller('AddImageCtrl', function ($scope, ImageResizeService, ImageLocationService, GeoLocationService, NotificationService) {
             var vm = this;
             vm.title = 'Neues Bild hinzufügen';
             vm.newPoint = {
@@ -82,26 +82,43 @@
                 reader.onload = (function () {
                     console.log('file read');
                     return function () {
-                        vm.imageSource = reader.result;
-                        var promise = ImageResizeService.resize(reader.result, 200);
-                        promise.then(function (img) {
+                        //vm.imageSource = reader.result;
+                        var promiseThumb = ImageResizeService.resize(reader.result, 200);
+                        promiseThumb.then(function (img) {
                             vm.imageThumb = img;
                             console.log('thumb created');
                             // $scope.$apply();
                         }, function (reason) {
-                            console.log('Failed: ' + reason);
+                            console.log('thumb create failed: ' + reason);
+                        });
+                        var promise = ImageResizeService.resize(reader.result, 1024);
+                        promise.then(function (img) {
+                            vm.imageSource = img;
+                            console.log('image created');
+                            // $scope.$apply();
+                        }, function (reason) {
+                            console.log('image created failed: ' + reason);
                         });
                     };
                 })(f);
                 reader.readAsDataURL(f);
+            };
+            vm.imagesLoaded = function () {
+                return vm.imageThumb && vm.imageSource;
+
             };
 
             vm.SavePicture = function () {
                 console.log('start saving everything');
                 ImageLocationService.saveLocation(vm.newPoint, vm.imageSource, vm.imageThumb).then(function (data) {
                     console.log('everything saved under: ' + data[0]);
+                    vm.imageThumb = null;
+                    vm.imageSource = null;
+                    vm.newPoint = null;
+                    NotificationService.success('image successfully saved!');
                 }, function (error) {
                     console.log('error during save: ' + error);
+                    NotificationService.error('lurin hacked the application, something went wrong during save.');
                 });
             };
 

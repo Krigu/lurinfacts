@@ -1,68 +1,66 @@
 <div class="jumbotron">
     <div ng-controller="AddImageCtrl as vm" ng-cloak>
+        <form name="addImage">
+            <h3>{{vm.title}}</h3>
+            <div class="editContainer">
+                <div class="row">
+                    <div class="col-sm-4">Title</div>
+                    <div class="col-sm-8">
+                        <input type="text" ng-model="vm.newPoint.imageTitle" placeholder="Lurin in ..." required/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">FunFact</div>
+                    <div class="col-sm-8">
+                        <input type="text" ng-model="vm.newPoint.funFact" style="width:400px" placeholder="Lurin was here before you" required />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">Image</div>
+                    <div class="col-sm-8">
+                        <input type="file" accept="image/*" multiple onchange="angular.element(this).scope().vm.uploadedFileChanged(this);" capture="camera" id="file-upload">
 
-        <h3>{{vm.title}}</h3>
-        <div class="editContainer">
-            <div class="row">
-                <div class="col-sm-4">Title</div>
-                <div class="col-sm-8">
-                    <input type="text" ng-model="vm.newPoint.imageTitle" />
+                        <img ng-src="{{vm.imageThumb}}" height="50px" width="80px" ng-show="vm.imageThumb" />
+                        <span ng-show="vm.imageThumb"><span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Thumbnail ready!</span>
+                        <span ng-show="vm.imageSource"><span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Image ready!</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">Location</div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-4">FunFact</div>
-                <div class="col-sm-8">
-                    <input type="text" ng-model="vm.newPoint.funFact" />
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-4">Image</div>
                 <div class="col-sm-4">
-                    <input type="file" accept="image/*" multiple onchange="angular.element(this).scope().vm.uploadedFileChanged(this);" capture="camera" id="file-upload">
+                    Selected:
+                    <br/> {{vm.newPoint.location.address}}
+                    <br/> {{vm.newPoint.location.country}}
+                    <br/> Lat:{{vm.newPoint.location.lat}}
+                    <br/> Lang:{{vm.newPoint.location.lng}}
                 </div>
-                <div class="col-sm-4">
-                    <span ng-show="vm.imageThumb"><span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Thumbnail ready!</span>
-                    <span ng-show="vm.imageSource"><span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Image ready!</span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">Location</div>
-            </div>
-        </div>
+                <div class="col-sm-8" style="height:400px">
+                    <div>
+                        Choose by address:
+                        <br/>
+                        <input type="text" ng-model="vm.newPoint.location.address" />
+                        <input type="button" ng-click="vm.getPositionByAddress()" value="Get Coords" />
 
+                        <div> Choose by map:</div>
+                    </div>
+                    <div style="position:relative;height:300px;width:300px">
+                        <ui-gmap-google-map style="top:20px" center="vm.map.center" events="vm.map.events" zoom="vm.map.zoom" draggable="true" options="vm.map.options" control="vm.map.control">
+                            <ui-gmap-marker coords="vm.marker.coords" options="{draggable:true}" events="vm.markerevents" idkey="vm.marker.key" />
+                        </ui-gmap-google-map>
+                    </div>
 
-        <div class="row">
-            <div class="col-sm-4">Selected:</div>
-            <div class="col-sm-4">Choose by address:</div>
-            <div class="col-sm-4">Choose by map:</div>
-        </div>
-        <div class="row">
-            <div class="col-sm-4">
-                {{vm.newPoint.location.address}}
-                <br/> {{vm.newPoint.location.country}}
-                <br/> Lat:{{vm.newPoint.location.lat}}
-                <br/> Lang:{{vm.newPoint.location.lng}}
-            </div>
-            <div class="col-sm-4">
-                <input type="text" ng-model="vm.newPoint.location.address" />
-                <input type="button" class="btn" ng-click="vm.getPositionByAddress()" value="Get Coords" />
-
-            </div>
-            <div class="col-sm-4" style="height:300px;width:300px">
-
-                <ui-gmap-google-map center="vm.map.center" events="vm.map.events" zoom="vm.map.zoom" draggable="true" options="vm.map.options" control="vm.map.control">
-                    <ui-gmap-marker coords="vm.marker.coords" options="{draggable:true}" events="vm.markerevents" idkey="vm.marker.key" />
-                </ui-gmap-google-map>
-
-
-            </div>
-        </div>
-        <div class="editContainer">
-            <div class="row">
-                <div class="col-sm-12">
-                    <input type="button" class="btn" style="float:right" ng-click="vm.SavePicture()" value="save everything" />
                 </div>
             </div>
-        </div>
+            <div class="editContainer">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <input type="button" class="btn" ng-disabled="!addImage.$valid || !vm.imagesLoaded()" style="float:right" ng-click="vm.SavePicture()" value="save everything" />
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 </div>

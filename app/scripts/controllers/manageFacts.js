@@ -18,7 +18,11 @@
 
             vm.deleteFact = function (guid) {
                 console.log('delete fact:' + guid);
-                factsFactory.deleteFact(guid);
+                factsFactory.deleteFact(guid).then(function () {
+                    NotificationService.success('fact delete');
+                }, function () {
+                    NotificationService.error('lurin didn\'t let you delete this fact.');
+                });
 
             };
 
@@ -27,6 +31,9 @@
                     vm.newFact.insertTime = new Date().getTime();
                     vm.newFact.fact = '';
                     vm.newFact.contributor = '';
+                    NotificationService.success('fact added');
+                }, function () {
+                    NotificationService.error('lurin doesn\'t like this fact, error during save.');
                 });
             };
 
