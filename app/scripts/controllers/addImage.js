@@ -79,8 +79,8 @@
                 GeoLocationService.getPositionByAddress(vm.newPoint.location.address).then(function (location) {
                     vm.newPoint.location = location;
                     var coords = {
-                        latitude: location.lat,
-                        longitude: location.lng
+                        latitude: location.latitude,
+                        longitude: location.longitude
                     };
                     vm.SetMap(coords);
                     vm.SetMarker(coords);

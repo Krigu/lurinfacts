@@ -9,8 +9,8 @@
  */
 (function () {
     angular.module('lurinfacts')
-        .controller('MapCtrl', ['$scope', 'markerFactory', 'uiGmapGoogleMapApi', function ($scope, markerFactory, uiGmapGoogleMapApi) {
-
+        .controller('MapCtrl', ['$scope', 'markerFactory', 'ImageLocationService', 'uiGmapGoogleMapApi', function ($scope, markerFactory, ImageLocationService, uiGmapGoogleMapApi) {
+            var vm = this;
             $scope.map = {};
 
             $scope.markers = {};
@@ -19,9 +19,15 @@
 
             $scope.control = {};
 
-            markerFactory.getMarkers().success(function (data) {
-                $scope.markers = data;
-            });
+            vm.markers = ImageLocationService.locationsAsFirebaseArray();
+            /*
+                        ImageLocationService.locationsAsArray().once("child_added", function (data) {
+                            $scope.markers = data;
+                        });
+                        */
+            //            markerFactory.getMarkers().success(function (data) {
+            //                $scope.markers = data;
+            //            });
 
             uiGmapGoogleMapApi.then(function () {
                 angular.extend($scope.map, {
@@ -45,7 +51,7 @@
 
             $scope.onClick = function (marker) {
                 $scope.selectedMarker = marker.model;
-                $scope.showWindow(!$scope.windowOptions.show);
+                $scope.showWindow(true);
             };
 
             $scope.closeClick = function () {
@@ -54,7 +60,6 @@
 
             $scope.zoom = function (marker) {
                 $scope.selectedMarker = marker;
-
                 var m = $scope.control.getGMap();
                 m.panTo(new google.maps.LatLng(marker.latitude, marker.longitude));
                 m.setZoom(6);

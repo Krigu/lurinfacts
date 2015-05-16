@@ -25,13 +25,13 @@ angular.module('lurinfacts').factory('GeoLocationService', function ($http, $q) 
                 console.log(data);
                 if (data.results.length > 0) {
                     var res0 = data.results[0];
-                    var newPoint = {};
-                    newPoint.lng = res0.geometry.location.lng;
-                    newPoint.lat = res0.geometry.location.lat;
+                    var location = {};
+                    location.latitude = res0.geometry.location.lat;
+                    location.longitude = res0.geometry.location.lng;
                     //newPoint.title = res0.formatted_address;
-                    newPoint.address = res0.formatted_address;
-                    newPoint.country = res0.address_components[res0.address_components.length - 2].long_name;
-                    resolve(newPoint);
+                    location.address = res0.formatted_address;
+                    location.country = res0.address_components[res0.address_components.length - 2].long_name;
+                    resolve(location);
                 }
                 // this callback will be called asynchronously
                 // when the response is available

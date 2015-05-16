@@ -18,7 +18,6 @@ angular.module('lurinfacts')
 
         vm.deleteImage = function (metaData, imageKey) {
             console.log('delete metadata:' + metaData + ' with imageKey: ' + imageKey);
-
             ImageLocationService.deleteLocation(metaData, imageKey).then(function () {
                 NotificationService.success('image delete');
             }, function () {
