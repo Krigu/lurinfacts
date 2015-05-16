@@ -16,11 +16,10 @@ angular.module('lurinfacts')
 
         vm.locations = ImageLocationService.locationsAsFirebaseArray();
 
-        vm.deleteImage = function (guid) {
+        vm.deleteImage = function (metaData, imageKey) {
+            console.log('delete metadata:' + metaData + ' with imageKey: ' + imageKey);
 
-            console.log('delete image:' + guid);
-
-            ImageLocationService.deleteLocation(guid).then(function () {
+            ImageLocationService.deleteLocation(metaData, imageKey).then(function () {
                 NotificationService.success('image delete');
             }, function () {
                 NotificationService.error('lurin hijacked the image, it can\'t be deleted');

@@ -8,28 +8,36 @@
  * Controller of lurinfacts
  */
 (function () {
-  angular.module('lurinfacts')
-    .controller('FactsCtrl', ['$scope', 'factsFactory', function ($scope, $factsFactory) {
+    angular.module('lurinfacts')
+        .controller('FactsCtrl', ['$scope', 'factsFactory', 'NotificationService', function ($scope, $factsFactory, NotificationService) {
 
-      $scope.name = 'FactsCtrl';
+            $scope.name = 'FactsCtrl';
 
-      $scope.facts = {};
+            $scope.facts = {};
 
-      $scope.update = function (fact) {
-        $scope.facts.push(angular.copy(fact));
+            $scope.update = function (fact) {
+                fact.insertTime = new Date().getTime();
+                $factsFactory.saveProposal(fact).then(function () {
+                    $scope.fact = {};
+                    $scope.factsForm.$setPristine();
+                    NotificationService.success('fact added, lurin will decide if it\'s worth it');
+                }, function () {
+                    NotificationService.error('lurin doesn\'t like this fact, error during save.');
+                });
+                //$scope.facts.push(angular.copy(fact));
 
-        $scope.factsForm.$setPristine();
 
-        $scope.fact = {};
-      };
+                //$scope.fact = {};
+            };
 
-      $scope.isInvalid = function () {
-        return $scope.factsForm.$dirty && $scope.factsForm.$invalid;
-      };
-
-      $factsFactory.getFacts().success(function (data) {
-        $scope.facts = data;
-      });
+            $scope.isInvalid = function () {
+                return $scope.factsForm.$dirty && $scope.factsForm.$invalid;
+            };
+            $scope.facts = $factsFactory.factsAsFirebaseArray();
+            /*
+              $factsFactory.getFacts().success(function (data) {
+                $scope.facts = data;
+              });*/
 
     }]);
 })();

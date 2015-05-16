@@ -16,9 +16,9 @@
             vm.newFact.insertTime = new Date().getTime();
             vm.facts = factsFactory.factsAsFirebaseArray();
 
-            vm.deleteFact = function (guid) {
-                console.log('delete fact:' + guid);
-                factsFactory.deleteFact(guid).then(function () {
+            vm.deleteFact = function (fact) {
+                console.log('delete fact:' + fact);
+                vm.facts.$remove(fact).then(function () {
                     NotificationService.success('fact delete');
                 }, function () {
                     NotificationService.error('lurin didn\'t let you delete this fact.');

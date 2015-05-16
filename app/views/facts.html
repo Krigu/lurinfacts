@@ -1,12 +1,12 @@
 <div class="contentItems">
 
     <ul>
-        <li  ng-repeat="fact in facts" ng-controller="FactsCtrl as factsCtrl" class="shadow">
-            <span>{{ fact.text }}</span>
+        <li ng-repeat="fact in facts" ng-controller="FactsCtrl as factsCtrl" class="shadow">
+            <span>                        
+                <b>{{ fact.fact }}</b>
+                        <br/> @ {{ fact.insertTime | date:'medium' }} | by {{ fact.contributor }}
+            </span>
         </li>
 
     </ul>
 </div>
-
-
-

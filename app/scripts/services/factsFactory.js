@@ -8,8 +8,10 @@
      * # PictureService
      * Service in the lurinfactsApp.
      */
-    angular.module('lurinfacts').factory('factsFactory', function ($http, $q, $firebaseArray, GuidService) {
-        var firebaseRef = 'https://burning-inferno-892.firebaseio.com/facts/';
+    angular.module('lurinfacts').factory('factsFactory', function ($http, $q, $firebaseArray) {
+        var fireBase = new Firebase('https://burning-inferno-892.firebaseio.com/');
+        var firebaseFacts = fireBase.child('facts');
+        var firebaseProposal = fireBase.child('factsProposal');
 
         var getFacts = function () {
             return $http({
@@ -20,33 +22,53 @@
 
         var saveFact = function (fact) {
             var d = $q.defer();
-            fact.guid = GuidService.newGuid();
-            var firebaseMetaData = new Firebase(firebaseRef + fact.guid);
-            firebaseMetaData.set(fact, function () {
-                console.log('fact uploaded under guid:' + fact.guid);
-                d.resolve(fact.guid);
+            var factsRef = firebaseFacts.push();
+            factsRef.set(fact, function (error) {
+                if (error) {
+                    d.reject(error);
+                } else {
+                    console.log('fact uploaded under key:' + factsRef.key());
+                    d.resolve(fact.key);
+                }
             });
             return d.promise;
         };
 
         var factsAsFirebaseArray = function () {
             // Get a reference to our posts
-            var ref = new Firebase(firebaseRef);
-            return $firebaseArray(ref);
+            return $firebaseArray(firebaseFacts);
         };
 
 
-        var deleteFact = function (guid) {
+        var saveProposal = function (fact) {
             var d = $q.defer();
-            var firebaseFact = new Firebase(firebaseRef + guid);
-            firebaseFact.remove(function () {
-                console.log('fact delete with guid:' + guid);
-                d.resolve(guid);
+            var proposalRef = firebaseProposal.push();
+            proposalRef.set(fact, function (error) {
+                if (error) {
+                    d.reject(error);
+                } else {
+                    console.log('fact proposal uploaded under key:' + proposalRef.key());
+                    d.resolve(fact.key);
+                }
+            });
+            return d.promise;
+        };
+
+        var deleteFact = function (key) {
+            var d = $q.defer();
+            factsAsFirebaseArray.$remove(key).then(function (error) {
+                if (error) {
+                    d.reject(error);
+                } else {
+                    d.resolve(key);
+                    console.log('fact delete with key:' + key);
+                }
             });
             return d.promise;
         };
 
         return {
+            saveProposal: saveProposal,
             getFacts: getFacts,
             saveFact: saveFact,
             deleteFact: deleteFact,

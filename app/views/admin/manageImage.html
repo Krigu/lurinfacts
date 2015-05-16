@@ -6,7 +6,7 @@
             <li class="list-group-item" ng-repeat="location in vm.locations" style="min-height:120px">
                 <div class="row">
                     <div class="col-sm-3">
-                        <img ng-show="location.guid" src="{{location.thumbnail}}" />
+                        <img ng-show="location.imageTitle" src="{{location.thumbnail}}" />
                     </div>
                     <div class="col-sm-7">
                         <b>{{ location.imageTitle }}</b>
@@ -15,7 +15,7 @@
                         <br/> Lat: {{location.location.lat}} Lng: {{location.location.lng}}
                         <br/> {{location.location.address}}</div>
                     <div class="col-sm-2">
-                        <input type="button" class="btn" ng-click="vm.deleteImage(location.guid)" value="delete" />
+                        <input type="button" class="btn" ng-click="vm.deleteImage(location,location.imageKey)" value="delete" />
                     </div>
                 </div>
             </li>

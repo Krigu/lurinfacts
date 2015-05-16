@@ -35,14 +35,14 @@
             <input type="text" ng-model="vm.search_fact">
         </p>
         <ul class="list-group">
-            <li class="list-group-item" ng-repeat="fact in vm.facts | filter:vm.search_fact" style="height:60px">
+            <li class="list-group-item" ng-repeat="fact in vm.facts | filter:vm.search_fact" style="min-height:60px">
                 <div class="row">
                     <div class="col-sm-10">
                         <b>{{ fact.fact }}</b>
                         <br/> @ {{ fact.insertTime | date:'medium' }} | by {{ fact.contributor }}
                     </div>
                     <div class="col-sm-2">
-                        <input type="button" class="btn" ng-click="vm.deleteFact(fact.guid)" value="delete" />
+                        <input type="button" class="btn" ng-click="vm.deleteFact(fact)" value="delete" />
                     </div>
                 </div>
             </li>

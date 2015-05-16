@@ -9,8 +9,9 @@
      * Controller of lurinfacts
      */
     angular.module('lurinfacts')
-        .controller('AddImageCtrl', function ($scope, ImageResizeService, ImageLocationService, GeoLocationService, NotificationService) {
+        .controller('AddImageCtrl', function ($scope, ImageResizeService, ImageLocationService, GeoLocationService, NotificationService, uiGmapGoogleMapApi) {
             var vm = this;
+            vm.isMapInitialized = false;
             vm.title = 'Neues Bild hinzufügen';
             vm.newPoint = {
                 funFact: '',
@@ -19,12 +20,12 @@
             };
             vm.map = {};
             vm.map.options = {};
-            vm.map.control = {};
-            vm.map.zoom = 5;
-
+            vm.marker = {
+                key: new Date().getTime()
+            };
             vm.markerevents = {
                 dragend: function (marker) {
-                    console.log('marker dragend');
+                    console.log('marker dragged');
                     var lat = marker.getPosition().lat();
                     var lon = marker.getPosition().lng();
                     var coords = {
@@ -42,14 +43,28 @@
                 };
             };
             vm.SetMap = function (coords) {
-                console.log('new marker position');
-                vm.map.center = coords;
+
+                if (vm.isMapInitialized) {
+                    var m = vm.map.control.getGMap();
+                    m.panTo(new google.maps.LatLng(coords.latitude, coords.longitude));
+                } else {
+                    vm.isMapInitialized = true;
+                    uiGmapGoogleMapApi.then(function () {
+                        vm.map.center = {
+                            latitude: coords.latitude,
+                            longitude: coords.longitude
+                        };
+                        vm.map.zoom = 5;
+                        vm.map.control = {};
+                    });
+                    console.log('new marker position');
+                }
             };
 
             vm.currentPositionLoaded = function (position) {
                 vm.updateLocationByCoords(position.coords);
                 vm.SetMap(position.coords);
-                vm.SetMarker(position.coords);
+                //vm.SetMarker(position.coords);
             };
 
             vm.updateLocationByCoords = function (coords) {
