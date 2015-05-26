@@ -12,6 +12,8 @@
         var fireBase = new Firebase('https://burning-inferno-892.firebaseio.com/');
         var firebaseFacts = fireBase.child('facts');
         var firebaseProposal = fireBase.child('factsProposal');
+        var firebaseArrayProposal = $firebaseArray(firebaseProposal);
+        var firebaseArrayFacts = $firebaseArray(firebaseFacts);
 
         var getFacts = function () {
             return $http({
@@ -33,12 +35,37 @@
             });
             return d.promise;
         };
+        var approveProposal = function (proposal) {
+            var fact = {
+                insertTime: proposal.insertTime,
+                contributor: proposal.contributor,
+                fact: proposal.fact
+            };
+            var d = $q.defer();
+            this.saveFact(fact).then(function (error) {
+                if (error) {
+                    d.reject(error);
+                } else {
+                    proposalsAsFirebaseArray().$remove(proposal).then(function (error) {
+                        d.resolve(fact.key);
+                    }, function (error) {
+                        d.reject(error);
+                    });
+                }
+            }, function (error) {
+                d.reject(error);
+            });
+            return d.promise;
+        };
 
         var factsAsFirebaseArray = function () {
             // Get a reference to our posts
-            return $firebaseArray(firebaseFacts);
+            return firebaseArrayFacts;
         };
-
+        var proposalsAsFirebaseArray = function () {
+            // Get a reference to our posts
+            return firebaseArrayProposal;
+        };
 
         var saveProposal = function (fact) {
             var d = $q.defer();
@@ -54,9 +81,22 @@
             return d.promise;
         };
 
+        var deleteProposal = function (key) {
+            var d = $q.defer();
+            proposalsAsFirebaseArray().$remove(key).then(function (error) {
+                if (error) {
+                    d.reject(error);
+                } else {
+                    d.resolve(key);
+                    console.log('proposal delete with key:' + key);
+                }
+            });
+            return d.promise;
+        };
+
         var deleteFact = function (key) {
             var d = $q.defer();
-            factsAsFirebaseArray.$remove(key).then(function (error) {
+            factsAsFirebaseArray().$remove(key).then(function (error) {
                 if (error) {
                     d.reject(error);
                 } else {
@@ -69,11 +109,13 @@
 
         return {
             saveProposal: saveProposal,
+            approveProposal: approveProposal,
             getFacts: getFacts,
             saveFact: saveFact,
             deleteFact: deleteFact,
-            factsAsFirebaseArray: factsAsFirebaseArray
-
+            deleteProposal: deleteProposal,
+            factsAsFirebaseArray: factsAsFirebaseArray,
+            proposalsAsFirebaseArray: proposalsAsFirebaseArray
         };
 
     });

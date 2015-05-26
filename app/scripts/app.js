@@ -9,9 +9,7 @@
  * Main module of the application.
  */
 angular
-    .module('lurinfacts', [
-    'ngMessages', 'ngRoute', 'uiGmapgoogle-maps', 'angular-flexslider', 'mgcrea.ngStrap', 'ngNotify', 'firebase'
-  ])
+    .module('lurinfacts', ['ngMessages', 'ngRoute', 'uiGmapgoogle-maps', 'angular-flexslider', 'mgcrea.ngStrap', 'ngNotify', 'firebase'])
     .config(function ($routeProvider) {
         $routeProvider
             .when('/facts', {
@@ -29,6 +27,10 @@ angular
             .when('/admin/manageFacts', {
                 templateUrl: 'views/admin/manageFacts.html',
                 controller: 'ManageFactsCtrl'
+            })
+            .when('/admin/manageProposals', {
+                templateUrl: 'views/admin/manageProposals.html',
+                controller: 'ManageProposalCtrl'
             })
             .when('/map', {
                 templateUrl: 'views/map.html',
