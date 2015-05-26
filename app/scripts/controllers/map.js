@@ -60,8 +60,10 @@
 
             $scope.zoom = function (marker) {
                 $scope.selectedMarker = marker;
+                var lat = marker.location.latitude;
+                var long =  marker.location.longitude;
                 var m = $scope.control.getGMap();
-                m.panTo(new google.maps.LatLng(marker.latitude, marker.longitude));
+                m.panTo(new google.maps.LatLng(lat, long));
                 m.setZoom(6);
 
                 $scope.showWindow(true);
