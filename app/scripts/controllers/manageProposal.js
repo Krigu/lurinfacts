@@ -37,9 +37,7 @@
                 for (var i = vm.proposals.length - 1; i >= 0; i--) {
                     vm.proposals.$remove(vm.proposals[i]).then(function () {
                         //do nothing if success                           
-                    }, function () {
-                        NotificationService.error('lurin didn\'t let you delete this proposals.');
-                    });
+                    }, NotificationService.error('lurin didn\'t let you delete this proposals.'));
                     NotificationService.success('proposals delete');
                 }
             };

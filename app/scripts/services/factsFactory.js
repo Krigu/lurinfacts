@@ -46,7 +46,7 @@
                 if (error) {
                     d.reject(error);
                 } else {
-                    proposalsAsFirebaseArray().$remove(proposal).then(function (error) {
+                    proposalsAsFirebaseArray().$remove(proposal).then(function () {
                         d.resolve(fact.key);
                     }, function (error) {
                         d.reject(error);
