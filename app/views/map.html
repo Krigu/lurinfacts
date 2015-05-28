@@ -1,4 +1,4 @@
-<div ng-controller="MapCtrl as mapCtrl">
+<span ng-controller="MapCtrl as mapCtrl">
 
     <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options" control="control">
 
@@ -15,12 +15,10 @@
         </ui-gmap-markers>
     </ui-gmap-google-map>
 
-    <div>
-        <flex-slider id="mapFooter" animation="slide" animation-loop="false" item-width="150" item-margin="0" slideshow-speed="700" slide="marker in mapCtrl.markers track by $index" control-nav="false" touch="true" pause-on-hover="true" keyboard="true">
-            <li style="min-height:100px">
-                <img src="{{marker.thumbnail}}" ng-click="zoom(marker)">
-            </li>
-        </flex-slider>
-    </div>
+    <flex-slider class="container" id="mapFooter" animation="slide" animation-loop="false" item-width="150" item-margin="0" slideshow-speed="700" slide="marker in mapCtrl.markers track by $index" control-nav="false" touch="true" pause-on-hover="true" keyboard="true">
+        <li style="min-height:100px">
+            <img src="{{marker.thumbnail}}" ng-click="zoom(marker)">
+        </li>
+    </flex-slider>
 
-</div>
+</span>
