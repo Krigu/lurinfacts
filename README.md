@@ -1,4 +1,4 @@
-# Project Lurinfacts 2.0
+# Project Lurinfacts 2.0 [![BuildStatus](https://travis-ci.org/Krigu/lurinfacts.svg?branch=master)](https://travis-ci.org/Krigu/lurinfacts)
 An AngularJS application that pays tribute to one of the greatest tech guys ever. 
 
 ## Build 
