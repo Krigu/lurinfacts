@@ -8,8 +8,10 @@
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- bower:css -->
-    <link rel="stylesheet" href="../bower_components/FlexSlider/flexslider.css" />
-    <link rel="stylesheet" href="../bower_components/ng-notify/src/styles/ng-notify.css" />
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="../bower_components/flexslider/flexslider.css"/>
+    <link rel="stylesheet" href="../bower_components/FlexSlider/flexslider.css"/>
+    <link rel="stylesheet" href="../bower_components/ng-notify/src/styles/ng-notify.css"/>
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -18,129 +20,144 @@
 </head>
 
 <body ng-app="lurinfacts">
-    <!--[if lt IE 7]>
+<!--[if lt IE 7]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
     your browser</a> to improve your experience.</p>
 <![endif]-->
 
-    <!-- Add your site or application content here -->
-    <header>
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" bs-navbar>
-            <div class="center-block container headerImage">
-                <img src="images/header.png" class="img-responsive center-block">
-                <a href="https://twitter.com/lurin_tha_one">-
-                    <span><img src="images/twitter_logo.png">Follow Lurin on Twitter!</span>
-                </a>
-            </div>
-
-
-            <div class="container" ng-controller="MenuCtrl as vm" ng-cloak>
-
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse center-block">
-                    <ul class="nav navbar-nav">
-                        <li data-match-route="/facts"><a href="#/facts">Facts</a>
-                        </li>
-                        <li data-match-route="/contribute"><a href="#/contribute">Contribute</a>
-                        </li>
-                        <li data-match-route="/map"><a href="#/map">Map</a>
-                        </li>
-                        </li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li data-match-route="/admin/manageFacts" ng-show="vm.isLoggedIn"><a href="#/admin/manageFacts">Manage
-                        Facts</a>
-                        </li>
-                        <li data-match-route="/admin/manageProposals" ng-show="vm.isLoggedIn"><a href="#/admin/manageProposals">Manage
-                        Proposals</a>
-                        </li>
-                        <li data-match-route="/admin/addImage" ng-show="vm.isLoggedIn"><a href="#/admin/addImage">Add
-                        Image</a>
-                        </li>
-                        <li data-match-route="/admin/manageImage" ng-show="vm.isLoggedIn"><a href="#/admin/manageImage">Manage
-                        Image</a>
-                        </li>
-                        <li>
-                            <fire-base-login class="login"></fire-base-login>
-                        </li>
-                        <li data-match-route="#/about"><a href="#/about">About</a>
-                        </li>
-                    </ul>
+<!-- Add your site or application content here -->
+<header>
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" bs-navbar>
+        <div class="container">
+            <div class="container navbar-header center-block">
+                <div class="headerImage">
+                    <img src="images/header.png" class="img-responsive center-block">
+                    <span>
+                        <a href="https://twitter.com/lurin_tha_one">-
+                            <img src="images/twitter_logo.png">Follow Lurin on Twitter!
+                        </a>
+                    </span>
                 </div>
+
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
             </div>
-        </nav>
-    </header>
 
-    <div class="container">
-        <div ng-view></div>
-    </div>
 
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-    <script>
-        (function (i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+            <div id="navbar" class="collapse navbar-collapse" ng-controller="MenuCtrl as vm"
+                 ng-cloak>
 
-        ga('create', 'UA-XXXXX-X');
-        ga('send', 'pageview');
-    </script>
+                <ul class="nav navbar-nav">
+                    <li data-match-route="/facts"><a href="#/facts">Facts</a>
+                    </li>
+                    <li data-match-route="/contribute"><a href="#/contribute">Contribute</a>
+                    </li>
+                    <li data-match-route="/map"><a href="#/map">Map</a>
+                    </li>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li data-match-route="/admin/manageFacts" ng-show="vm.isLoggedIn"><a href="#/admin/manageFacts">Manage
+                        Facts</a>
+                    </li>
+                    <li data-match-route="/admin/manageProposals" ng-show="vm.isLoggedIn"><a
+                        href="#/admin/manageProposals">Manage
+                        Proposals</a>
+                    </li>
+                    <li data-match-route="/admin/addImage" ng-show="vm.isLoggedIn"><a href="#/admin/addImage">Add
+                        Image</a>
+                    </li>
+                    <li data-match-route="/admin/manageImage" ng-show="vm.isLoggedIn"><a href="#/admin/manageImage">Manage
+                        Image</a>
+                    </li>
+                    <li>
+                        <fire-base-login class="login"></fire-base-login>
+                    </li>
+                    <li data-match-route="#/about"><a href="#/about">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
 
-    <!-- build:js scripts/oldieshim.js -->
-    <!--[if lt IE 9]>
+<div class="container">
+    <div ng-view></div>
+</div>
+
+<!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-XXXXX-X');
+    ga('send', 'pageview');
+</script>
+
+<!-- build:js scripts/oldieshim.js -->
+<!--[if lt IE 9]>
 <script src="../bower_components/es5-shim/es5-shim.js"></script>
 <script src="../bower_components/json3/lib/json3.js"></script>
 <![endif]-->
-    <!-- endbuild -->
+<!-- endbuild -->
 
-    <!-- build:js scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="../bower_components/jquery/dist/jquery.js"></script>
-    <script src="../bower_components/angular/angular.js"></script>
-    <script src="../bower_components/firebase/firebase.js"></script>
-    <script src="../bower_components/angularfire/dist/angularfire.js"></script>
-    <script src="../bower_components/angular-route/angular-route.js"></script>
-    <script src="../bower_components/angular-mocks/angular-mocks.js"></script>
-    <script src="../bower_components/lodash/dist/lodash.compat.js"></script>
-    <script src="../bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
-    <script src="../bower_components/angular-flexslider/angular-flexslider.js"></script>
-    <script src="../bower_components/FlexSlider/jquery.flexslider.js"></script>
-    <script src="../bower_components/angular-strap/dist/angular-strap.js"></script>
-    <script src="../bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
-    <script src="../bower_components/angular-messages/angular-messages.js"></script>
-    <script src="../bower_components/ng-notify/src/scripts/ng-notify.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
+<!-- build:js scripts/vendor.js -->
+<!-- bower:js -->
+<script src="../bower_components/jquery/dist/jquery.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/firebase/firebase.js"></script>
+<script src="../bower_components/angularfire/dist/angularfire.js"></script>
+<script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="../bower_components/angular-route/angular-route.js"></script>
+<script src="../bower_components/angular-mocks/angular-mocks.js"></script>
+<script src="../bower_components/lodash/dist/lodash.compat.js"></script>
+<script src="../bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
+<script src="../bower_components/flexslider/jquery.flexslider.js"></script>
+<script src="../bower_components/FlexSlider/jquery.flexslider.js"></script>
+<script src="../bower_components/angular-flexslider/angular-flexslider.js"></script>
+<script src="../bower_components/angular-strap/dist/angular-strap.js"></script>
+<script src="../bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
+<script src="../bower_components/angular-messages/angular-messages.js"></script>
+<script src="../bower_components/ng-notify/src/scripts/ng-notify.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
 
-    <!-- build:js({.tmp,app}) scripts/scripts.js -->
-    <script src="https://cdn.firebase.com/js/simple-login/1.6.4/firebase-simple-login.js"></script>
-    <script src="scripts/app.js"></script>
+<!-- build:js({.tmp,app}) scripts/scripts.js -->
+<script src="https://cdn.firebase.com/js/simple-login/1.6.4/firebase-simple-login.js"></script>
+<script src="scripts/app.js"></script>
 
-    <script src="scripts/controllers/menu.js"></script>
-    <script src="scripts/controllers/addImage.js"></script>
-    <script src="scripts/controllers/manageImage.js"></script>
-    <script src="scripts/controllers/manageFacts.js"></script>
-    <script src="scripts/controllers/manageProposal.js"></script>
-    <script src="scripts/controllers/facts.js"></script>
-    <script src="scripts/controllers/map.js"></script>
-    <script src="scripts/directive/loginDirective.js"></script>
-    <script src="scripts/services/GuidService.js"></script>
-    <script src="scripts/services/ImageResizeService.js"></script>
-    <script src="scripts/services/NotificationService.js"></script>
-    <script src="scripts/services/ImageLocationService.js"></script>
-    <script src="scripts/services/GeoLocationService.js"></script>
-    <script src="scripts/services/LoginService.js"></script>
-    <script src="scripts/services/markerFactory.js"></script>
-    <script src="scripts/services/factsFactory.js"></script>
+<script src="scripts/controllers/menu.js"></script>
+<script src="scripts/controllers/addImage.js"></script>
+<script src="scripts/controllers/manageImage.js"></script>
+<script src="scripts/controllers/manageFacts.js"></script>
+<script src="scripts/controllers/manageProposal.js"></script>
+<script src="scripts/controllers/facts.js"></script>
+<script src="scripts/controllers/map.js"></script>
+<script src="scripts/directive/loginDirective.js"></script>
+<script src="scripts/services/GuidService.js"></script>
+<script src="scripts/services/ImageResizeService.js"></script>
+<script src="scripts/services/NotificationService.js"></script>
+<script src="scripts/services/ImageLocationService.js"></script>
+<script src="scripts/services/GeoLocationService.js"></script>
+<script src="scripts/services/LoginService.js"></script>
+<script src="scripts/services/markerFactory.js"></script>
+<script src="scripts/services/factsFactory.js"></script>
 
-    <!-- endbuild -->
+<!-- endbuild -->
 
 </body>
 
