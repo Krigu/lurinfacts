@@ -10,7 +10,13 @@
  */
 angular
     .module('lurinfacts', ['ngMessages', 'ngRoute', 'uiGmapgoogle-maps', 'angular-flexslider', 'mgcrea.ngStrap', 'ngNotify', 'firebase'])
-    .config(function ($routeProvider) {
+    .config(function ($routeProvider,uiGmapGoogleMapApiProvider) {
+     
+        uiGmapGoogleMapApiProvider.configure({
+            key: 'AIzaSyCkg9lEDwpI3a_YteembM0t_iOmR3jdOD8',
+            libraries: 'weather,geometry,visualization'
+        });
+        
         $routeProvider
             .when('/facts', {
                 templateUrl: 'views/facts.html',
