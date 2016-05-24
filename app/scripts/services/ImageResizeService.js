@@ -19,8 +19,9 @@ angular.module('lurinfacts').factory('ImageResizeService', function ($q) {
 
     var resizeLoadedImage = function (image, size) {
       var mainCanvas = document.createElement('canvas');
-      mainCanvas.width = 1024;
-      mainCanvas.height = 768;
+      //portrait or landscape image?
+      mainCanvas.width = image.width < image.height ?  768 : 1024;
+      mainCanvas.height = image.width > image.height ?  768 : 1024;
       var ctx = mainCanvas.getContext('2d');
       ctx.drawImage(image, 0, 0, mainCanvas.width, mainCanvas.height);
       //size = parseInt($('#size').get(0).value, 10);
