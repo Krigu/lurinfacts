@@ -32,7 +32,7 @@
         vm.markers = ImageLocationService.locationsAsFirebaseArray();
 
         uiGmapGoogleMapApi.then(function () {
-            console.log('uiGmapGoogleMapApi ready.')
+            console.log('uiGmapGoogleMapApi ready.');
         });
 
         $scope.windowOptions = {
@@ -73,6 +73,5 @@
                 //$scope.$apply();
             }
         };
-
-    };
+    }
 })();
