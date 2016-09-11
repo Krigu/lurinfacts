@@ -27,6 +27,14 @@
                 });
         };
 
+        var resetPasswordRequest = function (email) {
+           return auth.sendPasswordResetEmail(email)
+                .catch(function (error) {
+                    console.log('sendPasswordResetEmail Failed!', error);
+                    UserIsLoggedIn = false;
+                });
+        };
+
         var logout = function () {
             firebase.auth().signOut();
             UserIsLoggedIn = false;
@@ -35,7 +43,8 @@
         return {
             doUserLogin: doUserLogin,
             logout: logout,
-            isUserLoggedIn: isUserLoggedIn
+            isUserLoggedIn: isUserLoggedIn,
+            resetPasswordRequest : resetPasswordRequest
         };
     });
 } ());
