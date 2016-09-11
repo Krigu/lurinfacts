@@ -17,8 +17,14 @@
         </ui-gmap-markers>
     </ui-gmap-google-map>
 
-    <flex-slider class="container" id="mapFooter" animation="slide" animation-loop="false" item-width="150" item-margin="0" slideshow-speed="700" slide="marker in mapCtrl.markers track by $index" control-nav="false" touch="true" pause-on-hover="true" keyboard="true">
-        <li style="min-height:100px">
+    <flex-slider class="container" id="mapFooter" 
+    animation="slide" animation-loop="false" 
+    item-width="150" item-margin="0" 
+    slideshow-speed="5000" initDelay="2000"
+    slide="marker in mapCtrl.markers track by $index" 
+    control-nav="false" touch="true" 
+    pause-on-hover="true" keyboard="true">
+        <li style="min-height:100px;cursor:pointer">
             <img ng-src="{{marker.thumbnail}}" ng-click="zoom(marker)" max-height="100px">
         </li>
     </flex-slider>
