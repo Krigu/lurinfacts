@@ -24,20 +24,11 @@
                 }, function () {
                     NotificationService.error('lurin doesn\'t like this fact, error during save.');
                 });
-                //$scope.facts.push(angular.copy(fact));
-
-
-                //$scope.fact = {};
             };
 
             $scope.isInvalid = function () {
                 return $scope.factsForm.$dirty && $scope.factsForm.$invalid;
             };
             $scope.facts = $factsFactory.factsAsFirebaseArray();
-            /*
-              $factsFactory.getFacts().success(function (data) {
-                $scope.facts = data;
-              });*/
-
     }]);
 })();

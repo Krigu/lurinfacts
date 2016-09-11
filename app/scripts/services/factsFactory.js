@@ -9,9 +9,9 @@
      * Service in the lurinfactsApp.
      */
     angular.module('lurinfacts').factory('factsFactory', function ($http, $q, $firebaseArray) {
-        var fireBase = new Firebase('https://burning-inferno-892.firebaseio.com/');
-        var firebaseFacts = fireBase.child('facts');
-        var firebaseProposal = fireBase.child('factsProposal');
+        var fb = firebase.database().ref()
+        var firebaseFacts = fb.child('facts');
+        var firebaseProposal = fb.child('factsProposal');
         var firebaseArrayProposal = $firebaseArray(firebaseProposal);
         var firebaseArrayFacts = $firebaseArray(firebaseFacts);
 
@@ -29,7 +29,7 @@
                 if (error) {
                     d.reject(error);
                 } else {
-                    console.log('fact uploaded under key:' + factsRef.key());
+                    console.log('fact uploaded under key:' + factsRef.key);
                     d.resolve(fact.key);
                 }
             });
@@ -74,7 +74,7 @@
                 if (error) {
                     d.reject(error);
                 } else {
-                    console.log('fact proposal uploaded under key:' + proposalRef.key());
+                    console.log('fact proposal uploaded under key:' + proposalRef.key);
                     d.resolve(fact.key);
                 }
             });

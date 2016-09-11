@@ -12,15 +12,10 @@ angular.module('lurinfacts').directive('fireBaseLogin', function ($sce, LoginSer
                 console.log('login status changed: user logged in' + newVal);
                 scope.isLoggedIn = newVal;
             });
-            scope.loginCallback = function (isLoggedInNow) {
-                console.log('callbacked isLoggedInNow: ' + isLoggedInNow);
-                scope.isLoggedIn = isLoggedInNow;
-                scope.$apply();
-            };
 
             scope.login = function () {
                 console.log('login for: ' + scope.user);
-                LoginService.doUserLogin(scope.user, scope.password, true, scope.loginCallback);
+                LoginService.doUserLogin(scope.user, scope.password);
             };
 
             scope.logout = function () {

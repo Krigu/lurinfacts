@@ -23,7 +23,6 @@ module.exports = function(config) {
       '../bower_components/angular-route/angular-route.js',
       '../bower_components/angular-mocks/angular-mocks.js',
       '../bower_components/flexslider/jquery.flexslider.js',
-      '../bower_components/FlexSlider/jquery.flexslider.js',
       '../bower_components/angular-flexslider/angular-flexslider.js',
       '../bower_components/angular-strap/dist/angular-strap.js',
       '../bower_components/angular-strap/dist/angular-strap.tpl.js',

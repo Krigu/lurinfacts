@@ -18,8 +18,13 @@
                 imageTitle: '',
                 location: ''
             };
-            vm.map = {};
-            vm.map.options = {};
+            vm.map = {
+                options: {},
+                center: {
+                    latitude: 47,
+                    longitude: 9
+                }
+            };
             vm.marker = {
                 key: new Date().getTime()
             };
@@ -143,4 +148,4 @@
                 vm.getPositionByAddress('schilthorn, mürren');
             }
         });
-}());
+} ());
