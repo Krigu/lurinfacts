@@ -4,7 +4,7 @@ angular.module('lurinfacts').directive('fireBaseLogin', function ($sce, LoginSer
     return {
         restrict: 'EA',
         replace: true,
-        templateUrl: './../../views/loginDirective.html',
+        templateUrl: './../../views/admin/loginDirective.html',
         link: function (scope) {
             scope.showLogin = false;
             scope.isLoggedIn = LoginService.isUserLoggedIn;

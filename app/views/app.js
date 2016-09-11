@@ -19,31 +19,31 @@ angular
         
         $routeProvider
             .when('/facts', {
-                templateUrl: 'views/facts.html',
+                templateUrl: 'views/facts/facts.html',
                 controller: 'FactsCtrl'
             })
             .when('/admin/addImage', {
-                templateUrl: 'views/admin/addImage.html',
+                templateUrl: 'views/admin/image/addImage.html',
                 controller: 'AddImageCtrl'
             })
             .when('/admin/manageImage', {
-                templateUrl: 'views/admin/manageImage.html',
+                templateUrl: 'views/admin/image/manageImage.html',
                 controller: 'ManageImageCtrl'
             })
             .when('/admin/manageFacts', {
-                templateUrl: 'views/admin/manageFacts.html',
+                templateUrl: 'views/admin/facts/manageFacts.html',
                 controller: 'ManageFactsCtrl'
             })
             .when('/admin/manageProposals', {
-                templateUrl: 'views/admin/manageProposals.html',
+                templateUrl: 'views/admin/facts/manageProposals.html',
                 controller: 'ManageProposalCtrl'
             })
             .when('/map', {
-                templateUrl: 'views/map.html',
+                templateUrl: 'views/map/map.html',
                 controller: 'MapCtrl'
             })
             .when('/contribute', {
-                templateUrl: 'views/contribute.html',
+                templateUrl: 'views/facts/contribute.html',
                 controller: 'FactsCtrl'
             })
             .otherwise({
