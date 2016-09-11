@@ -9,7 +9,7 @@
      * Service in the lurinfactsApp.
      */
     angular.module('lurinfacts').factory('factsFactory', function ($http, $q, $firebaseArray) {
-        var fb = firebase.database().ref()
+        var fb = firebase.database().ref();
         var firebaseFacts = fb.child('facts');
         var firebaseProposal = fb.child('factsProposal');
         var firebaseArrayProposal = $firebaseArray(firebaseProposal);
