@@ -1,12 +1,11 @@
 env:
   global:
-  - secure: YnEtNKmAvTvzteefMBJL/QlLvKHRA9pIymBHRx2n6JSGfzO1HuL7AkVwvIMGn/6KTGlYFO51CivZyqq2OiLWEBvkLpgbrYUzE2GFrEdopdTC5saJaJmpyqAqQdKbuA8HskQOiUcBy5StxLiaEJJ0q/tve9ShFiDKMUdWpPWapd8=
-  - secure: bQ4o5ftLM80Oo4T3kyWQJadQfIBcTfUFHEs24wkhLBW7l39guBMWuRdBbKRUrxXQ53GUa35M4vq/WfZwoQD6efp0vlQPMup81La6KxFJbwuipc9v2y8iDztJJhoEQNhBaeTcvuGEjxACIJJUFNLOEwJQFQbs2GwLEPem5toCwSA=
+  - secure: A+jQGTwvAM6jzula1ZNSr8lDcGm0GCBx1Xr3vanhV2a22UqdH6H3Ras7cU+Ii8UHhQEeNeQl53TgWgE/V75fqeVv5zN9sCru2L230MwFbWuOmZW7DnTu/dHItqjoGu+67n9KlfGKFVtwD9ENX+mgjLjebHoN1A44BS+KbP3M16w=
+  - secure: blZZrKSStJHa0QPnI+DyEX+NCdQEqBD8BNKyPSPv8EyBblP7rHtK3D/9pFBjJX0pieDhSmI6vOspK9x3RVmfzrcQpJuNkbcDAGuGrT9XxZVU6NTtpbAZ5goniWRCUkOwpwuQD/glzKDfjk0A7GQY5cggHcw6GJQBkUvBNHmJdhU=
 language: node_js
 node_js:
 - '0.11'
 before_script:
 - npm install -g gulp
 script: gulp build
-after_success: cd dist && find . -type f -exec curl --user $FTP_USER:$FTP_PW --ftp-create-dirs
-  -T {} ftp://www.lurinfacts.ch/{} \;
+after_success: "cd dist && find . -type f -exec curl --user $FTP_USER:$FTP_PW --ftp-create-dirs -T {} ftp://www.lurinfacts.ch/{} \\;"
