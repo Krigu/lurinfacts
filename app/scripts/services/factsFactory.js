@@ -62,6 +62,11 @@
             // Get a reference to our posts
             return firebaseArrayFacts;
         };
+
+        var latestFacts = function (amount) {
+            return firebaseFacts.orderByChild('insertTime').limitToLast(amount);
+        };
+
         var proposalsAsFirebaseArray = function () {
             // Get a reference to our posts
             return firebaseArrayProposal;
@@ -109,6 +114,7 @@
 
         return {
             saveProposal: saveProposal,
+            latestFacts: latestFacts, 
             approveProposal: approveProposal,
             getFacts: getFacts,
             saveFact: saveFact,

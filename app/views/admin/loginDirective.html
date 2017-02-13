@@ -2,13 +2,13 @@
     <div ng-hide="isLoggedIn || !showLogin">User:
         <input type="text" ng-model="user" /> Password:
         <input type="password" ng-model="password" />
-        <input type="button" class="btn" value="OK" data-ng-click="login()">
-        <input type="button" class="btn" value="X" data-ng-click="showLogin = !showLogin">
+        <input type="button" class="btn btn-primary" value="OK" data-ng-click="login()">
+        <input type="button" class="btn btn-primary" value="X" data-ng-click="showLogin = !showLogin">
     </div>
     <div ng-show="isLoggedIn">
-        <input class="btn" type="button" data-ng-click="logout()" value="Logout" />
+        <input class="btn btn-primary" type="button" data-ng-click="logout()" value="Logout" />
     </div>
     <div ng-hide="isLoggedIn || showLogin">
-        <input class="btn" type="button" data-ng-click="showLogin = !showLogin" value="Login" />
+        <input class="btn btn-primary" type="button" data-ng-click="showLogin = !showLogin" value="Login" />
     </div>
 </div>

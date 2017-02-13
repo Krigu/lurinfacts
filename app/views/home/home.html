@@ -1,0 +1,40 @@
+<div class="contentItems">
+    <div class="modal-body row">
+        <div class="col-md-6">
+            <h2>Latest facts</h2>
+            <ul>
+                <li ng-repeat="fact in facts | orderBy:'insertTime':true" class="shadow">
+                    <span>                        
+                <b>{{ fact.fact }}</b>
+                        <br/> @ {{ fact.insertTime | date:'medium' }} | by {{ fact.contributor }}
+            </span>
+                </li>
+            </ul>
+            <ul class="nav nav-pills">
+                <a href="#/contribute" class="btn btn-primary">Contribute</a>
+                <a href="#/facts" class="btn btn-primary">Show all</a>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <h2>Latest trips</h2>
+            <ul>
+                <li ng-repeat="location in locations" class="shadow" style="height:100%">
+                    <div>
+                        <div class="row">
+                            <div class="col-xs-4" style="padding:20px">
+                                <img ng-src="{{location.thumbnail}} " max-height="200px " style="padding-right:20px ">
+                            </div>
+                            <div class="col-xs-8">
+                                <h3>{{location.imageTitle}}</h3>
+                                {{location.funFact}}
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <ul class="nav nav-pills">
+                <a href="#/map" class="btn btn-primary ">Show map</a>
+            </ul>
+        </div>
+    </div>
+</div>

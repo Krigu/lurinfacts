@@ -22,6 +22,10 @@ angular
                 templateUrl: 'views/facts/facts.html',
                 controller: 'FactsCtrl'
             })
+             .when('/home', {
+                templateUrl: 'views/home/home.html',
+                controller: 'HomeCtrl'
+            })
             .when('/admin/addImage', {
                 templateUrl: 'views/admin/image/addImage.html',
                 controller: 'AddImageCtrl'
@@ -51,6 +55,6 @@ angular
                 controller: 'FactsCtrl'
             })
             .otherwise({
-                redirectTo: '/facts'
+                redirectTo: '/home'
             });
     });

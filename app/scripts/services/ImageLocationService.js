@@ -6,6 +6,10 @@ angular.module('lurinfacts').factory('ImageLocationService', function ($q, $fire
     var firebaseImage = ref.child('image');
     var locationRef = $firebaseArray(firebaseMetaData);
 
+    var latestLocation = function(amount){
+            return firebaseMetaData.limitToLast(amount);
+    };
+
     var saveMetadata = function (metaData) {
         var d = $q.defer();
         var firebaseMetaDataRef = firebaseMetaData.push();
@@ -91,6 +95,7 @@ angular.module('lurinfacts').factory('ImageLocationService', function ($q, $fire
         saveLocation: saveLocation,
         deleteLocation: deleteLocation,
         locationsAsFirebaseArray: locationsAsFirebaseArray,
-        locationsAsArray: locationsAsArray
+        locationsAsArray: locationsAsArray,
+        latestLocation : latestLocation
     };
 });
