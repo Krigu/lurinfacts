@@ -18,7 +18,7 @@
                 <div class="row">
                     <div class="col-sm-4">Image</div>
                     <div class="col-sm-8">
-                        <input type="file" accept="image/*" multiple onchange="angular.element(this).scope().vm.uploadedFileChanged(this);" capture="camera" id="file-upload">
+                        <input type="file" accept="image/*" onchange="angular.element(this).scope().vm.uploadedFileChanged(this);" id="file-upload">
 
                         <img ng-src="{{vm.imageThumb}}" height="50px" width="80px" ng-show="vm.imageThumb" />
                         <span ng-show="vm.imageThumb"><span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Thumbnail ready!</span>
