@@ -10,8 +10,8 @@
  */
 angular
     .module('lurinfacts', ['ngMessages', 'ngRoute', 'uiGmapgoogle-maps', 'angular-flexslider', 'mgcrea.ngStrap', 'ngNotify', 'firebase'])
-    .config(function ($routeProvider, uiGmapGoogleMapApiProvider) {
-
+    .config(function ($routeProvider,$locationProvider, uiGmapGoogleMapApiProvider) {
+        $locationProvider.hashPrefix('');
         uiGmapGoogleMapApiProvider.configure({
             key: 'AIzaSyCkg9lEDwpI3a_YteembM0t_iOmR3jdOD8',
             libraries: 'weather,geometry,visualization'

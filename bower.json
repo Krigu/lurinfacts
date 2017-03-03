@@ -24,7 +24,7 @@
     "lodash": "^4.13.1"
   },
   "resolutions": {
-    "angular": "1.5.8",
+    "angular": "^1.5.8",
     "jquery": "2.1.4",
     "firebase": "3.x.x"
   },
