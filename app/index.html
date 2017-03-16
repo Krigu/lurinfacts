@@ -180,7 +180,7 @@
         };
         firebase.initializeApp(config);
 
-        const dbPromise = idb.open('lurinfacts', 1, upgradeDB => {
+        var dbPromise = idb.open('lurinfacts', 1, function(upgradeDB) {
             upgradeDB.createObjectStore('latestimages');
         });
     </script>
