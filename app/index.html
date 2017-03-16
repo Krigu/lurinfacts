@@ -113,7 +113,7 @@
 <script src="../bower_components/json3/lib/json3.js"></script>
 <![endif]-->
     <!-- endbuild -->
-    <script src="http://maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyCkg9lEDwpI3a_YteembM0t_iOmR3jdOD8"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCkg9lEDwpI3a_YteembM0t_iOmR3jdOD8"></script>
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
     <script src="../bower_components/jquery/dist/jquery.js"></script>
@@ -142,6 +142,7 @@
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="https://cdn.firebase.com/js/simple-login/1.6.4/firebase-simple-login.js"></script>
+    <script src="scripts/idb.js"></script>
     <script src="views/app.js"></script>
     <script src="views/menu.js"></script>
     <script src="views/admin/image/addImage.js"></script>
@@ -172,6 +173,11 @@
     storageBucket: "burning-inferno-892.appspot.com",
   };
   firebase.initializeApp(config);
+
+const dbPromise = idb.open('lurinfacts', 1, upgradeDB => {
+  upgradeDB.createObjectStore('latestimages');
+});
+
 </script>
 </body>
 
