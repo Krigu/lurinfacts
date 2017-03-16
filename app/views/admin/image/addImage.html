@@ -1,7 +1,7 @@
 <div class="jumbotron">
     <div ng-controller="AddImageCtrl as vm" ng-cloak>
         <form name="addImage">
-            <h3>{{vm.title}}</h3>
+            <h3>Neues Bild hinzufügen</h3>
             <div class="editContainer">
                 <div class="row">
                     <div class="col-sm-4">Title</div>
@@ -21,43 +21,47 @@
                         <input type="file" accept="image/*" onchange="angular.element(this).scope().vm.uploadedFileChanged(this);" id="file-upload">
 
                         <img ng-src="{{vm.imageThumb}}" height="50px" width="80px" ng-show="vm.imageThumb" />
-                        <span ng-show="vm.imageThumb"><span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Thumbnail ready!</span>
-                        <span ng-show="vm.imageSource"><span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Image ready!</span>
+                        <span ng-show="vm.imageThumb"><span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Thumbnail
+                        ready!
+                        </span>
+                        <span ng-show="vm.imageSource"><span class="glyphicon glyphicon-ok" aria-hidden="true" ></span> Image
+                        ready!
+                        </span>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-12">Location</div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    Selected:
-                    <br/> {{vm.newPoint.location.address}}
-                    <br/> {{vm.newPoint.location.country}}
-                    <br/> Lat:{{vm.newPoint.location.latitude}}
-                    <br/> Lang:{{vm.newPoint.location.longitude}}
-                </div>
-                <div class="col-sm-8" style="height:400px">
-                    <div>
-                        Choose by address:
-                        <br/>
-                        <input type="text" ng-model="vm.newPoint.location.address" />
-                        <input type="button" ng-click="vm.getPositionByAddress()" value="Get Coords" />
-
-                        <div> Choose by map:</div>
+                    <div class="col-sm-4">
+                        <b>Selected Location:</b>
+                        <br/> {{vm.newPoint.location.address}}
+                        <br/> {{vm.newPoint.location.country}}
+                        <br/> Lat:{{vm.newPoint.location.latitude}}
+                        <br/> Lang:{{vm.newPoint.location.longitude}}
                     </div>
-                    <div style="position:relative;height:300px;width:300px">
-                        <ui-gmap-google-map style="top:20px" center="vm.map.center" events="vm.map.events" zoom="vm.map.zoom" draggable="true" options="vm.map.options" control="vm.map.control">
-                            <ui-gmap-marker coords="vm.marker.coords" options="{draggable:true}" events="vm.markerevents" idkey="vm.marker.key" />
-                        </ui-gmap-google-map>
-                    </div>
+                    <div class="col-sm-8">
+                        <div>
+                            Choose by address:
+                            <br/>
+                            <input type="text" ng-model="vm.newPoint.location.address" />
+                            <input type="button" ng-click="vm.getPositionByAddress()" value="Get Coords" />
 
+                            <div> Choose by map:</div>
+                        </div>
+                        <div style="height:300px;width:300px">
+                            <ui-gmap-google-map center="vm.map.center" events="vm.map.events" zoom="vm.map.zoom" draggable="true" options="vm.map.options"
+                                control="vm.map.control">
+                                <ui-gmap-marker coords="vm.marker.coords" options="{draggable:true}" events="vm.markerevents" idkey="vm.marker.key" />
+                            </ui-gmap-google-map>
+                        </div>
+
+                    </div>
                 </div>
             </div>
             <div class="editContainer">
                 <div class="row">
                     <div class="col-sm-12">
-                        <input type="button" class="btn" ng-disabled="!addImage.$valid || !vm.imagesLoaded()" style="float:right" ng-click="vm.SavePicture()" value="save everything" />
+                        <input type="button" class="btn" ng-disabled="!addImage.$valid || !vm.imagesLoaded()" style="float:right" ng-click="vm.SavePicture()"
+                            value="save everything" />
+                        <input type="button" class="btn" style="float:right;margin-right: 20px" ng-click="vm.reset()" value="reset form" />
                     </div>
                 </div>
             </div>

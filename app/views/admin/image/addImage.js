@@ -11,20 +11,9 @@
     angular.module('lurinfacts')
         .controller('AddImageCtrl', function ($scope, ImageResizeService, ImageLocationService, GeoLocationService, NotificationService, uiGmapGoogleMapApi) {
             var vm = this;
-            vm.isMapInitialized = false;
-            vm.title = 'Neues Bild hinzufügen';
-            vm.newPoint = {
-                funFact: '',
-                imageTitle: '',
-                location: ''
-            };
-            vm.map = {
-                options: {},
-                center: {
-                    latitude: 47,
-                    longitude: 9
-                }
-            };
+            vm.newPoint = {};
+            vm.map = {};
+
             vm.marker = {
                 key: new Date().getTime()
             };
@@ -41,6 +30,22 @@
                     vm.updateLocationByCoords(coords);
                 }
             };
+
+            vm.reset = function () {
+                vm.map = {
+                    options: {},
+                    center: {
+                        latitude: 47,
+                        longitude: 9
+                    }
+                };
+                vm.newPoint = {
+                    funFact: '',
+                    imageTitle: '',
+                    location: {}
+                };
+            };
+
             vm.SetMarker = function (coords) {
                 vm.marker = {
                     coords: coords,
@@ -48,28 +53,19 @@
                 };
             };
             vm.SetMap = function (coords) {
-
-                if (vm.isMapInitialized) {
-                    var m = vm.map.control.getGMap();
-                    m.panTo(new google.maps.LatLng(coords.latitude, coords.longitude));
-                } else {
-                    vm.isMapInitialized = true;
-                    uiGmapGoogleMapApi.then(function () {
-                        vm.map.center = {
-                            latitude: coords.latitude,
-                            longitude: coords.longitude
-                        };
-                        vm.map.zoom = 5;
-                        vm.map.control = {};
-                    });
-                    console.log('new marker position');
-                }
+                uiGmapGoogleMapApi.then(function (map) {
+                    vm.map.center = {
+                        latitude: coords.latitude,
+                        longitude: coords.longitude
+                    };
+                    vm.map.zoom = 5;
+                });
+                console.log('new marker position');
             };
 
             vm.currentPositionLoaded = function (position) {
                 vm.updateLocationByCoords(position.coords);
                 vm.SetMap(position.coords);
-                //vm.SetMarker(position.coords);
             };
 
             vm.updateLocationByCoords = function (coords) {
@@ -93,7 +89,6 @@
                 }, function (error) {
                     console.log('error on getPositionByAddress: ' + error);
                 });
-
             };
 
             vm.uploadedFileChanged = function (el) {
@@ -136,6 +131,7 @@
                     vm.imageSource = null;
                     vm.newPoint = null;
                     NotificationService.success('image successfully saved!');
+                    vm.reset();
                 }, function (error) {
                     console.log('error during save: ' + error);
                     NotificationService.error('lurin hacked the application, something went wrong during save.');
@@ -147,5 +143,7 @@
             } else {
                 vm.getPositionByAddress('schilthorn, mürren');
             }
+
+            vm.reset();
         });
-} ());
+}());

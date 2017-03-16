@@ -21,10 +21,10 @@ angular.module('lurinfacts').factory('GeoLocationService', function ($http, $q) 
                 method: 'GET',
                 url: geoUrl
             }).
-            success(function (data) {
-                console.log(data);
-                if (data.results.length > 0) {
-                    var res0 = data.results[0];
+            then(function (data) {
+                console.log(data.data);
+                if (data.data.results.length > 0) {
+                    var res0 = data.data.results[0];
                     var location = {};
                     location.latitude = res0.geometry.location.lat;
                     location.longitude = res0.geometry.location.lng;
@@ -35,8 +35,7 @@ angular.module('lurinfacts').factory('GeoLocationService', function ($http, $q) 
                 }
                 // this callback will be called asynchronously
                 // when the response is available
-            }).
-            error(function (data) {
+            },function (data) {
                 console.log(data);
                 reject(data);
                 // called asynchronously if an error occurs
