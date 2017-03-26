@@ -1,0 +1,26 @@
+{
+  "name": "Lurinfacts",
+  "short_name": "Lurinfacts",
+  "description": "Lurinfacts, the site about the world greatest coder",
+  "icons": [
+    {
+      "src": "images/logo48.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "images/logo96.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "images/logo192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": "/?utm_source=homescreen",
+  "background_color": "#F2EA00",
+  "display": "standalone",
+  "theme_color": "#F2EA00"
+}

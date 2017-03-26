@@ -19,6 +19,7 @@
   "smarttabs": true,
   "jasmine": true,
   "globals": {
+    "idb" : false,
     "angular": false,
     "inject": false,
     "google": false,

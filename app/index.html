@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title></title>
+    <link rel="manifest" href="manifest.json">
     <meta name="author" content="Lurin and his contributors">
     <meta name="publisher" content="frickler.ch">
     <meta name="description" content="Did you google this website? Lurin knows it by mind!">
@@ -37,7 +38,7 @@
             <div class="container">
                 <div class="container navbar-header center-block">
                     <div class="headerImage">
-                        <img src="images/header.png" class="img-responsive center-block">
+                        <img src="images/header.png" alt="Lurinfacts header logo" class="img-responsive center-block">
                         <span>
                         <a href="https://twitter.com/lurin_tha_one">
                             <img src="images/twitter_logo.png">Follow Lurin on Twitter!
@@ -122,7 +123,6 @@
     <!-- endbuild -->
     <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCkg9lEDwpI3a_YteembM0t_iOmR3jdOD8"></script>
     <script src="https://cdn.firebase.com/js/simple-login/1.6.4/firebase-simple-login.js"></script>
-    <script src="idb.js"></script>
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
     <script src="../bower_components/jquery/dist/jquery.js"></script>
@@ -148,6 +148,9 @@
     <script src="../bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
+
+    <script src="scripts/init/idb.js"></script>
+    <script src="scripts/init/init.js"></script>
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="views/app.js"></script>

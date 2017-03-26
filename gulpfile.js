@@ -11,19 +11,20 @@ gulp.task('styles', function () {
   return gulp.src('app/styles/main.less')
     .pipe($.plumber())
     .pipe($.less())
-    .pipe($.autoprefixer({browsers: ['last 1 version']}))
+    .pipe($.autoprefixer({ browsers: ['last 1 version'] }))
     .pipe(gulp.dest('.tmp/styles'));
 });
 
 gulp.task('jshint', function () {
-  return gulp.src('app/scripts/**/*.js')
+  return gulp.src(
+    ['app/scripts/services/*.js'])
     .pipe($.jshint())
     .pipe($.jshint.reporter('jshint-stylish'))
     .pipe($.jshint.reporter('fail'));
 });
 
 gulp.task('jscs', function () {
-  return gulp.src('app/scripts/**/*.js')
+  return gulp.src('app/scripts/services/*.js')
     .pipe($.jscs());
 });
 
@@ -33,7 +34,7 @@ gulp.task('html', ['styles'], function () {
     .pipe($.csso)
     .pipe($.replace, 'bower_components/bootstrap/fonts', 'fonts');
 
-  var assets = $.useref.assets({searchPath: '{.tmp,app}'});
+  var assets = $.useref.assets({ searchPath: '{.tmp,app}' });
 
   return gulp.src('app/**/*.html')
     .pipe(assets)
@@ -42,7 +43,7 @@ gulp.task('html', ['styles'], function () {
     .pipe($.if('*.css', cssChannel()))
     .pipe(assets.restore())
     .pipe($.useref())
-    .pipe($.if('*.html', $.minifyHtml({conditionals: true, loose: true})))
+    .pipe($.if('*.html', $.minifyHtml({ conditionals: true, loose: true })))
     .pipe(gulp.dest('dist'));
 });
 
@@ -69,8 +70,16 @@ gulp.task('extras', function () {
     '!app/*.html',
     'node_modules/apache-server-configs/dist/.htaccess'
   ], {
-    dot: true
-  }).pipe(gulp.dest('dist'));
+      dot: true
+    }).pipe(gulp.dest('dist'));
+});
+
+gulp.task('extrasJs', function () {
+  return gulp.src([
+    'app/scripts/init/*.*'
+  ], {
+      dot: true
+    }).pipe(gulp.dest('dist/scripts/init'));
 });
 
 gulp.task('clean', require('del').bind(null, ['.tmp', 'dist']));
@@ -79,7 +88,7 @@ gulp.task('connect', ['styles'], function () {
   var serveStatic = require('serve-static');
   var serveIndex = require('serve-index');
   var app = require('connect')()
-    .use(require('connect-livereload')({port: 35729}))
+    .use(require('connect-livereload')({ port: 35729 }))
     .use(serveStatic('.tmp'))
     .use(serveStatic('app'))
     // paths to bower_components should be relative to the current file
@@ -121,11 +130,15 @@ gulp.task('wiredep', function () {
     .pipe(gulp.dest('app/styles'));
 
   gulp.src('app/*.html')
-    .pipe(wiredep({exclude: exclude}))
+    .pipe(wiredep({ exclude: exclude }))
     .pipe(gulp.dest('app'));
 
+  gulp.src('app/scripts/init/*.js')
+    .pipe(wiredep({ exclude: exclude }))
+    .pipe(gulp.dest('app/scripts/init'));
+
   gulp.src('test/*.js')
-    .pipe(wiredep({exclude: exclude, devDependencies: true}))
+    .pipe(wiredep({ exclude: exclude, devDependencies: true }))
     .pipe(gulp.dest('test'));
 });
 
@@ -144,9 +157,9 @@ gulp.task('watch', ['connect'], function () {
   gulp.watch('bower.json', ['wiredep']);
 });
 
-gulp.task('builddist', ['jshint', 'html', 'images', 'fonts', 'extras'],
+gulp.task('builddist', ['jshint', 'html', 'images', 'fonts', 'extras', 'extrasJs'],
   function () {
-    return gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
+    return gulp.src('dist/**/*').pipe($.size({ title: 'build', gzip: true }));
   });
 
 gulp.task('build', ['clean', 'bower'], function () {
