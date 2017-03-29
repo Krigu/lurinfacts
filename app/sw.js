@@ -4,6 +4,8 @@ var urlsToCache = [
   '/',
   '/index.html',
   '/views/home/home.html',
+  '/views/facts/facts.html',
+  '/views/images/images.html',
   '/styles/main.css',
   '/images/header.png',
   '/scripts/init/idb.js'
@@ -21,7 +23,7 @@ self.addEventListener('install', function(event) {
 });
 
 self.addEventListener('fetch', function(event) {
-  console.log("fetch  "+event.request);
+  //console.log("fetch  "+event.request);
   event.respondWith(
     caches.match(event.request)
     .then(function(response) {
@@ -35,7 +37,7 @@ self.addEventListener('fetch', function(event) {
       // once by cache and once by the browser for fetch, we need
       // to clone the response.
       var fetchRequest = event.request.clone();
-      console.log("not in cache "+event.request.clone());
+      //console.log("not in cache "+event.request.clone());
       return fetch(fetchRequest).then(
         function(response) {
           // Check if we received a valid response

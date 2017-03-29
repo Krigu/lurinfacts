@@ -65,7 +65,8 @@
                         </li>
                         <li data-match-route="/contribute"><a href="#/contribute">Contribute</a>
                         </li>
-                        <li data-match-route="/map"><a href="#/map">Map</a>
+                        <li ng-show="vm.isOnline" data-match-route="/map"><a href="#/map">Map</a>
+                        <li ng-hide="vm.isOnline" data-match-route="/images"><a href="#/images">Bilder</a>
                         </li>
                         </li>
                     </ul>
@@ -94,7 +95,7 @@
     </header>
 
     <div class="container">
-        <div ng-view></div>
+        <div ui-view></div>
     </div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -130,7 +131,6 @@
     <script src="../bower_components/firebase/firebase.js"></script>
     <script src="../bower_components/angularfire/dist/angularfire.js"></script>
     <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="../bower_components/angular-route/angular-route.js"></script>
     <script src="../bower_components/angular-mocks/angular-mocks.js"></script>
     <script src="../bower_components/flexslider/jquery.flexslider.js"></script>
     <script src="../bower_components/angular-flexslider/angular-flexslider.js"></script>
@@ -146,6 +146,7 @@
     <script src="../bower_components/google-maps-utility-library-v3-keydragzoom/dist/keydragzoom.js"></script>
     <script src="../bower_components/js-rich-marker/src/richmarker.js"></script>
     <script src="../bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
+    <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -163,11 +164,13 @@
     <script src="views/admin/loginDirective.js"></script>
     <script src="views/home/home.js"></script>
     <script src="views/facts/facts.js"></script>
+    <script src="views/images/images.js"></script>
     <script src="views/map/map.js"></script>
     <script src="scripts/services/GuidService.js"></script>
     <script src="scripts/services/ImageResizeService.js"></script>
     <script src="scripts/services/NotificationService.js"></script>
     <script src="scripts/services/ImageLocationService.js"></script>
+    <script src="scripts/services/OnlineService.js"></script>
     <script src="scripts/services/GeoLocationService.js"></script>
     <script src="scripts/services/LoginService.js"></script>
     <script src="scripts/services/markerFactory.js"></script>

@@ -20,7 +20,6 @@ module.exports = function(config) {
       '../bower_components/firebase/firebase.js',
       '../bower_components/angularfire/dist/angularfire.js',
       '../bower_components/bootstrap/dist/js/bootstrap.js',
-      '../bower_components/angular-route/angular-route.js',
       '../bower_components/angular-mocks/angular-mocks.js',
       '../bower_components/flexslider/jquery.flexslider.js',
       '../bower_components/angular-flexslider/angular-flexslider.js',
@@ -36,6 +35,7 @@ module.exports = function(config) {
       '../bower_components/google-maps-utility-library-v3-keydragzoom/dist/keydragzoom.js',
       '../bower_components/js-rich-marker/src/richmarker.js',
       '../bower_components/angular-google-maps/dist/angular-google-maps.js',
+      '../bower_components/angular-ui-router/release/angular-ui-router.js',
       // endbower
       '../app/scripts/**/*.js',
       //'../test/mock/**/*.js',

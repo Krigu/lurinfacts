@@ -24,7 +24,7 @@
                 };
 
                 FetchAll().then(function (allObjs) {
-                        console.log(allObjs);
+         //     console.log(allObjs);
                         allObjs.map(function (x) { $scope.locations.unshift(x) });
                 });
 
@@ -38,7 +38,7 @@
                 };
 
                 var DeleteOldEntry = function (img) {
-                        console.log('delete entry from indexedDB ' + img.imageTitle);
+                    //    console.log('delete entry from indexedDB ' + img.imageTitle);
                         dbPromise.then(function (db) {
                                 return db.transaction('latestimages', 'readwrite')
                                         .objectStore('latestimages').delete(img.imageKey);
@@ -47,7 +47,7 @@
 
                 var AddImageToCache = function (img) {
                         img.inserted = new Date();
-                        console.log('add entry to indexedDB ' + img.imageTitle, img.inserted);
+                        //console.log('add entry to indexedDB ' + img.imageTitle, img.inserted);
                         dbPromise.then(function (db) {
                                 const tx = db.transaction('latestimages', 'readwrite');
                                 tx.objectStore('latestimages').put(img, img.imageKey);
