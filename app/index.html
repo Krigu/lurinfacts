@@ -95,7 +95,7 @@
     </header>
 
     <div class="container">
-        <div ui-view></div>
+        <div ng-view></div>
     </div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -178,7 +178,6 @@
 
     <!-- endbuild -->
     <script>
-        debugger;
         if (location.protocol != 'https:' && window.location.href.indexOf('localhost') == -1) {
             location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
         }
