@@ -59,14 +59,14 @@
                 <div id="navbar" class="collapse navbar-collapse" ng-controller="MenuCtrl as vm" ng-cloak>
 
                     <ul class="nav navbar-nav">
-                        <li data-match-route="/home"><a href="#/home">Home</a>
+                        <li data-match-route="/home"><a href="#/home" data-toggle="collapse" data-target=".navbar-collapse.in">Home</a>
                         </li>
-                        <li data-match-route="/facts"><a href="#/facts">Facts</a>
+                        <li data-match-route="/facts"><a href="#/facts" data-toggle="collapse" data-target=".navbar-collapse.in">Facts</a>
                         </li>
-                        <li data-match-route="/contribute"><a href="#/contribute">Contribute</a>
+                        <li data-match-route="/contribute"><a href="#/contribute" data-toggle="collapse" data-target=".navbar-collapse.in">Contribute</a>
                         </li>
-                        <li ng-show="vm.isOnline" data-match-route="/map"><a href="#/map">Map</a>
-                            <li ng-hide="vm.isOnline" data-match-route="/images"><a href="#/images">Bilder</a>
+                        <li ng-show="vm.isOnline" data-match-route="/map"><a href="#/map" data-toggle="collapse" data-target=".navbar-collapse.in">Map</a>
+                            <li ng-hide="vm.isOnline" data-match-route="/images"><a href="#/images" data-toggle="collapse" data-target=".navbar-collapse.in">Bilder</a>
                             </li>
                         </li>
                     </ul>
