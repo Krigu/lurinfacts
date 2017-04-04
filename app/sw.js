@@ -3,6 +3,7 @@ var CACHE_NAME = 'site-cache';
 var urlsToCache = [
   '/',
   '/index.html',
+  '/favicon.ico',
   '/views/home/home.html',
   '/views/facts/facts.html',
   '/views/images/images.html',

@@ -9,63 +9,57 @@
  * Main module of the application.
  */
 angular
-    .module('lurinfacts', ['ngMessages', 'ui.router', 'uiGmapgoogle-maps', 'angular-flexslider', 'mgcrea.ngStrap', 'ngNotify', 'firebase'])
-    .config(function ($stateProvider, $locationProvider, uiGmapGoogleMapApiProvider) {
+    .module('lurinfacts', ['ngMessages', 'ngRoute', 'uiGmapgoogle-maps', 'angular-flexslider', 'mgcrea.ngStrap', 'ngNotify', 'firebase'])
+    .config(function ($routeProvider, $locationProvider, uiGmapGoogleMapApiProvider) {
         $locationProvider.hashPrefix('');
         uiGmapGoogleMapApiProvider.configure({
             key: 'AIzaSyCkg9lEDwpI3a_YteembM0t_iOmR3jdOD8',
             libraries: 'weather,geometry,visualization'
         });
 
-        $stateProvider
-            .state('facts', {
-                url: '/facts',
+        $routeProvider
+            .when('/facts', {
                 templateUrl: 'views/facts/facts.html',
                 controller: 'FactsCtrl'
             })
-            .state('home', {
-                url: '/home',
+            .when('/home', {
                 templateUrl: 'views/home/home.html',
                 controller: 'HomeCtrl'
             })
-            .state('admin_addImage', {
-                url: '/admin/addImage',
+            .when('/admin/addImage', {
                 templateUrl: 'views/admin/image/addImage.html',
                 controller: 'AddImageCtrl'
             })
-            .state('admin_manageImage', {
-                url: '/admin/manageImage',
+            .when('/admin/manageImage', {
                 templateUrl: 'views/admin/image/manageImage.html',
                 controller: 'ManageImageCtrl'
             })
-            .state('admin_passwordChange', {
-                url: '/admin/passwordChange',
+            .when('/admin/passwordChange', {
                 templateUrl: 'views/admin/user/PasswordChange.html',
                 controller: 'PasswordChangeCtrl'
             })
-            .state('admin_manageFacts', {
-                url: '/admin/manageFacts',
+            .when('/admin/manageFacts', {
                 templateUrl: 'views/admin/facts/manageFacts.html',
                 controller: 'ManageFactsCtrl'
             })
-            .state('admin_manageProposals', {
-                url: '/admin/manageProposals',
+            .when('/admin/manageProposals', {
                 templateUrl: 'views/admin/facts/manageProposals.html',
                 controller: 'ManageProposalCtrl'
             })
-            .state('map', {
-                url: '/map',
+            .when('/map', {
                 templateUrl: 'views/map/map.html',
-                controller: 'MapCtrl',
+                controller: 'MapCtrl'
             })
-            .state('images', {
-                url: '/images',
+            .when('/images', {
                 templateUrl: 'views/images/images.html',
-                controller: 'ImagesCtrl',
+                controller: 'ImagesCtrl'
             })
-            .state('contribute', {
-                url: '/contribute',
+            .when('/contribute', {
                 templateUrl: 'views/facts/contribute.html',
                 controller: 'FactsCtrl'
+            })
+            .otherwise({
+                redirectTo: '/home'
             });
+
     });

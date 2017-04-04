@@ -66,8 +66,8 @@
                         <li data-match-route="/contribute"><a href="#/contribute">Contribute</a>
                         </li>
                         <li ng-show="vm.isOnline" data-match-route="/map"><a href="#/map">Map</a>
-                        <li ng-hide="vm.isOnline" data-match-route="/images"><a href="#/images">Bilder</a>
-                        </li>
+                            <li ng-hide="vm.isOnline" data-match-route="/images"><a href="#/images">Bilder</a>
+                            </li>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
@@ -122,7 +122,7 @@
 <script src="../bower_components/json3/lib/json3.js"></script>
 <![endif]-->
     <!-- endbuild -->
-    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCkg9lEDwpI3a_YteembM0t_iOmR3jdOD8"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkg9lEDwpI3a_YteembM0t_iOmR3jdOD8"></script>
     <script src="https://cdn.firebase.com/js/simple-login/1.6.4/firebase-simple-login.js"></script>
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
@@ -147,6 +147,7 @@
     <script src="../bower_components/js-rich-marker/src/richmarker.js"></script>
     <script src="../bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
     <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="../bower_components/angular-route/angular-route.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -178,6 +179,10 @@
 
     <!-- endbuild -->
     <script>
+        debugger;
+        if (location.protocol != 'https:' && window.location.href.indexOf('localhost') == -1) {
+            location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+        }
         // Initialize Firebase
         var config = {
             apiKey: "AIzaSyCkg9lEDwpI3a_YteembM0t_iOmR3jdOD8",

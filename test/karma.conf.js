@@ -36,6 +36,7 @@ module.exports = function(config) {
       '../bower_components/js-rich-marker/src/richmarker.js',
       '../bower_components/angular-google-maps/dist/angular-google-maps.js',
       '../bower_components/angular-ui-router/release/angular-ui-router.js',
+      '../bower_components/angular-route/angular-route.js',
       // endbower
       '../app/scripts/**/*.js',
       //'../test/mock/**/*.js',
