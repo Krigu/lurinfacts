@@ -1,5 +1,5 @@
 
-var CACHE_NAME = 'site-cache';
+var CACHE_NAME = 'lf-alpha-ape';
 var urlsToCache = [
   '/',
   '/index.html',
