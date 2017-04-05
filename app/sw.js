@@ -7,6 +7,7 @@ var urlsToCache = [
   '/views/home/home.html',
   '/views/facts/facts.html',
   '/views/images/images.html',
+  '/views/admin/loginDirective.html',
   '/styles/main.css',
   '/images/header.png',
   '/scripts/init/idb.js'
