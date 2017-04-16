@@ -7,6 +7,12 @@
             vm.isLoggedIn = false;
             vm.isOnline = navigator.onLine;
 
+            $scope.$watch(function () { return navigator.onLine; },
+                function (newValue, oldValue) {
+                    vm.isOnline = newValue;
+                    console.log('is onLine '+newValue);
+                });
+
             $scope.$watch(LoginService.isUserLoggedIn, function (newVal) {
                 console.log('menu: login status changed : user logged in: ' + newVal);
                 vm.isLoggedIn = newVal;

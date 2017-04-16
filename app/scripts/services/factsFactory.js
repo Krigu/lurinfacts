@@ -63,6 +63,11 @@
             return firebaseArrayFacts;
         };
 
+        var factsAsFirebaseRef = function () {
+            // Get a reference to our posts
+            return firebaseFacts;
+        };
+
         var latestFacts = function (amount) {
             return firebaseFacts.orderByChild('insertTime').limitToLast(amount);
         };
@@ -114,13 +119,14 @@
 
         return {
             saveProposal: saveProposal,
-            latestFacts: latestFacts, 
+            latestFacts: latestFacts,
             approveProposal: approveProposal,
             getFacts: getFacts,
             saveFact: saveFact,
             deleteFact: deleteFact,
             deleteProposal: deleteProposal,
             factsAsFirebaseArray: factsAsFirebaseArray,
+            factsAsFirebaseRef : factsAsFirebaseRef,
             proposalsAsFirebaseArray: proposalsAsFirebaseArray
         };
 

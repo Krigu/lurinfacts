@@ -177,7 +177,8 @@
 
     <!-- endbuild -->
     <script>
-        if (location.protocol != 'https:' && window.location.href.indexOf('localhost') == -1) {
+        var isHttpAndNotLocalhost = location.protocol != 'https:' && window.location.href.indexOf('localhost') == -1;
+        if (isHttpAndNotLocalhost) {
             location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
         }
         // Initialize Firebase
@@ -189,9 +190,6 @@
         };
         firebase.initializeApp(config);
 
-        var dbPromise = idb.open('lurinfacts', 1, function (upgradeDB) {
-            upgradeDB.createObjectStore('latestimages');
-        });
     </script>
 </body>
 

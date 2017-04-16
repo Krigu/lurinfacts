@@ -31,6 +31,41 @@
 
         vm.markers = ImageLocationService.locationsAsFirebaseArray();
 
+        var init = function () {
+            return FetchFromCache().then(function (allObjs) {
+                allObjs.map(function (x) { vm.markers.unshift(x) });
+            }).then(checkIfNewImage);
+        };
+
+        var FetchFromCache = function () {
+            return dbPromise.then(function (db) {
+                return db.transaction('images')
+                    .objectStore('images').getAll();
+            });
+        };
+
+
+        var checkIfNewImage = function () {
+            ImageLocationService.locationsAsArray().on("child_added", function (snapshot) {
+                var isNewMarker = !vm.markers.filter(function (x) { return x.imageKey == snapshot.val().imageKey }).length;
+                if (isNewMarker) {
+                    vm.markers.unshift(snapshot.val());
+                    AddImageToCache(snapshot.val());
+                }
+            });
+        };
+
+        var AddImageToCache = function (img) {
+            img.inserted = new Date();
+            //console.log('add entry to indexedDB ' + img.imageTitle, img.inserted);
+            dbPromise.then(function (db) {
+                const tx = db.transaction('images', 'readwrite');
+                tx.objectStore('images').put(img, img.imageKey);
+                return tx.complete;
+            });
+        };
+
+
         uiGmapGoogleMapApi.then(function () {
             console.log('uiGmapGoogleMapApi ready.');
         });
@@ -64,14 +99,12 @@
         };
 
         $scope.markersEvents = {
-
             mouseover: function (gMarker, eventName, model) {
-                
                 $scope.selectedMarker = model;
                 $scope.showWindow(true);
-                //model.show = true;
-                //$scope.$apply();
             }
         };
+
+        init();
     }
 })();
