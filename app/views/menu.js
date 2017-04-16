@@ -1,14 +1,11 @@
 (function () {
     'use strict';
     angular.module('lurinfacts')
-        .controller('MenuCtrl', ['$scope', 'LoginService','OnlineSerivce', function ($scope, LoginService, OnlineSerivce) {
+        .controller('MenuCtrl', ['$scope', 'LoginService', function ($scope, LoginService) {
             var vm = this;
             vm.name = 'MenuCtrl';
             vm.isLoggedIn = false;
-
-            OnlineSerivce.isOnline().then(function (isOnline) {
-                vm.isOnline = isOnline;
-            });
+            vm.isOnline = navigator.onLine;
 
             $scope.$watch(LoginService.isUserLoggedIn, function (newVal) {
                 console.log('menu: login status changed : user logged in: ' + newVal);
