@@ -78,17 +78,8 @@
         };
 
         var saveProposal = function (fact) {
-            var d = $q.defer();
             var proposalRef = firebaseProposal.push();
-            proposalRef.set(fact, function (error) {
-                if (error) {
-                    d.reject(error);
-                } else {
-                    console.log('fact proposal uploaded under key:' + proposalRef.key);
-                    d.resolve(fact.key);
-                }
-            });
-            return d.promise;
+            return proposalRef.set(fact);
         };
 
         var deleteProposal = function (key) {

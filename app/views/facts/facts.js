@@ -16,6 +16,10 @@
             $scope.facts = [];
 
             $scope.update = function (fact) {
+                if (!navigator.onLine) {
+                    NotificationService.error('Your internet connection is lost and lurin couldn\'t fix it. try later.');
+                    return;
+                }
                 fact.insertTime = new Date().getTime();
                 $factsFactory.saveProposal(fact).then(function () {
                     $scope.fact = {};
@@ -50,11 +54,11 @@
                     var isNewFact = !$scope.facts.filter(function (x) { return x.key == snapshot.key }).length;
                     if (isNewFact) {
                         $scope.facts.unshift(snapshot.val());
-                        AddFactToCache(snapshot.val(),snapshot.key);
+                        AddFactToCache(snapshot.val(), snapshot.key);
                     }
                 });
             };
-            var AddFactToCache = function (img,key) {
+            var AddFactToCache = function (img, key) {
                 img.key = key;
                 img.inserted = new Date();
                 //console.log('add entry to indexedDB ' + img.imageTitle, img.inserted);
