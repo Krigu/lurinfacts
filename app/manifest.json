@@ -4,17 +4,17 @@
   "description": "Lurinfacts, the site about the world greatest coder",
   "icons": [
     {
-      "src": "images/logo48.png",
+      "src": "images/logo48m.png",
       "type": "image/png",
       "sizes": "48x48"
     },
     {
-      "src": "images/logo96.png",
+      "src": "images/logo96m.png",
       "type": "image/png",
       "sizes": "96x96"
     },
     {
-      "src": "images/logo192.png",
+      "src": "images/logo192m.png",
       "type": "image/png",
       "sizes": "192x192"
     }
