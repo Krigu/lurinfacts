@@ -1,10 +1,11 @@
 
-var CACHE_NAME = 'lf-alpha-ape';
+var CACHE_NAME = 'lf-beta-boost';
 var urlsToCache = [
   '/',
   '/index.html',
   '/favicon.ico',
   '/views/home/home.html',
+  '/views/home/contribute.html',
   '/views/facts/facts.html',
   '/views/images/images.html',
   '/views/admin/loginDirective.html',
