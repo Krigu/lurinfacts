@@ -38,6 +38,7 @@
             var init = function () {
                 return FetchFromCache().then(function (allObjs) {
                     allObjs.map(function (x) { $scope.facts.unshift(x) });
+                    $scope.$evalAsync();
                 }).then(checkIfNewImage);
             };
 
