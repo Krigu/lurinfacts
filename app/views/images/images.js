@@ -17,8 +17,8 @@
 
                 var FetchAll = function () {
                         return dbPromise.then(function (db) {
-                                return db.transaction('latestimages')
-                                        .objectStore('latestimages').getAll();
+                                return db.transaction('images')
+                                        .objectStore('images').getAll();
                         });
                 };
 
