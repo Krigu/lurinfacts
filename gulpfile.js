@@ -5,6 +5,7 @@ var gulp = require('gulp');
 var karma = require('karma').server;
 var argv = require('yargs').argv;
 var bower = require('gulp-bower');
+var replace = require('gulp-replace');
 var $ = require('gulp-load-plugins')();
 
 gulp.task('styles', function () {
@@ -71,7 +72,9 @@ gulp.task('extras', function () {
     'node_modules/apache-server-configs/dist/.htaccess'
   ], {
       dot: true
-    }).pipe(gulp.dest('dist'));
+    })
+    .pipe(replace('#CACHE_VERSION_PLACEHOLDER#', '_' + +new Date()))
+    .pipe(gulp.dest('dist'));
 });
 
 gulp.task('extrasJs', function () {
@@ -90,11 +93,11 @@ gulp.task('connect', ['styles'], function () {
   var app = require('connect')()
     .use(require('connect-livereload')({ port: 35729 }))
     .use(serveStatic('.tmp'))
-    .use(serveStatic('app'))
+    .use(serveStatic('dist'))
     // paths to bower_components should be relative to the current file
     // e.g. in app/index.html you should use ../bower_components
     .use('/bower_components', serveStatic('bower_components'))
-    .use(serveIndex('app'));
+    .use(serveIndex('dist'));
 
   require('http').createServer(app)
     .listen(9000)
@@ -119,11 +122,7 @@ gulp.task('test', function (done) {
 // inject bower components
 gulp.task('wiredep', function () {
   var wiredep = require('wiredep').stream;
-  var exclude = [
-    'es5-shim',
-    'json3',
-    'angular-scenario'
-  ];
+  var exclude = [];
 
   gulp.src('app/styles/*.less')
     .pipe(wiredep())

@@ -1,5 +1,5 @@
 
-var CACHE_NAME = 'lf-beta-boost';
+var CACHE_NAME = 'lurinfacts_v#CACHE_VERSION_PLACEHOLDER#';
 var urlsToCache = [
   '/',
   '/index.html',
@@ -13,9 +13,13 @@ var urlsToCache = [
   '/images/header.png',
   '/scripts/init/idb.js',
   '/scripts/init/init.js',
-  '/scripts/oldieshim.js',
   '/scripts/scripts.js',
   '/scripts/vendor.js'
+  /*
+  'https://cdn.firebase.com/js/simple-login/1.6.4/firebase-simple-login.js',
+  'https://maps.googleapis.com/maps/api/js?key=AIzaSyCkg9lEDwpI3a_YteembM0t_iOmR3jdOD8',
+  'https://cdn.polyfill.io/v2/polyfill.min.js'
+  */
 ];
 
 self.addEventListener('install', function (event) {

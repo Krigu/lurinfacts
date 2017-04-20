@@ -10,7 +10,6 @@
     <meta name="description" content="Did you google this website? Lurin knows it by mind!">
     <meta name="page-topic" content="science">
     <meta name="page-type" content="image picture facts">
-    <meta name="audience" content="Anfänger, Azubis, Erwachsene, Experten, Fans, Fortgeschrittene, Frauen, Jugendliche, Kinder, Männer, Profis, Schüler, Studenten">
     <meta http-equiv="content-language" content="en">
     <meta name="robots" content="index, follow">
     <meta name="viewport" content="width=device-width">
@@ -98,34 +97,10 @@
         <div ng-view></div>
     </div>
 
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-    <script>
-        window.setTimeout(function () {
-            (function (i, s, o, g, r, a, m) {
-                i['GoogleAnalyticsObject'] = r;
-                i[r] = i[r] || function () {
-                    (i[r].q = i[r].q || []).push(arguments)
-                }, i[r].l = 1 * new Date();
-                a = s.createElement(o),
-                    m = s.getElementsByTagName(o)[0];
-                a.async = 1;
-                a.src = g;
-                m.parentNode.insertBefore(a, m)
-            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-
-            ga('create', 'UA-XXXXX-X');
-            ga('send', 'pageview');
-        }, 2000);
-    </script>
-
-    <!-- build:js scripts/oldieshim.js -->
-    <!--[if lt IE 9]>
-<script src="../bower_components/es5-shim/es5-shim.js"></script>
-<script src="../bower_components/json3/lib/json3.js"></script>
-<![endif]-->
     <!-- endbuild -->
-    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkg9lEDwpI3a_YteembM0t_iOmR3jdOD8"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkg9lEDwpI3a_YteembM0t_iOmR3jdOD8"></script>
     <script src="https://cdn.firebase.com/js/simple-login/1.6.4/firebase-simple-login.js"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
     <script src="../bower_components/jquery/dist/jquery.js"></script>
