@@ -3,7 +3,7 @@
 angular.module('lurinfacts').factory('ImageLocationService', function ($q, $firebaseArray) {
     var ref = firebase.database().ref();
     var firebaseMetaData = ref.child('imageMetaData');
-    var firebaseImage = ref.child('image');
+   // var firebaseImage = ref.child('image');
     var locationRef = $firebaseArray(firebaseMetaData);
     var storageRef = firebase.storage().ref();
 
@@ -11,9 +11,9 @@ angular.module('lurinfacts').factory('ImageLocationService', function ($q, $fire
         return firebaseMetaData.limitToLast(amount);
     };
 
-    var OriginalImages = function (amount) {
-        return firebaseImage;
-    };
+    // var OriginalImages = function () {
+    //     return firebaseImage;
+    // };
 
     var saveMetadata = function (metaData) {
         var d = $q.defer();
@@ -47,12 +47,12 @@ angular.module('lurinfacts').factory('ImageLocationService', function ($q, $fire
 
     var toImageUrl = function(imageKey){
         return 'locations/' + imageKey + '.jpg';
-    }
+    };
 
     var saveImage = function (image) {
         var imageKey = +new Date();
         var ref = storageRef.child(toImageUrl(imageKey));
-        return ref.putString(image, 'data_url').then(function (snapshot) {
+        return ref.putString(image, 'data_url').then(function () {
             return imageKey;
         });
     };
@@ -91,7 +91,7 @@ angular.module('lurinfacts').factory('ImageLocationService', function ($q, $fire
         deleteLocation: deleteLocation,
         locationsAsFirebaseArray: locationsAsFirebaseArray,
         locationsAsArray: locationsAsArray,
-        latestLocation: latestLocation,
-        OriginalImages: OriginalImages
+        latestLocation: latestLocation
+        //OriginalImages: OriginalImages
     };
 });
