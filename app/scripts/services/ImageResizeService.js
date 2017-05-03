@@ -30,6 +30,32 @@ angular.module('lurinfacts').factory('ImageResizeService', function ($q) {
       }
       return mainCanvas.toDataURL('image/jpeg');
     };
+
+    var reresizeImage = function (src) {
+      // perform some asynchronous operation, resolve or reject the promise when appropriate.
+      return $q(function (resolve, reject) {
+        var img = new Image();
+        img.onload = function () {
+          var resized = reresizeLoadedImage(img);
+          resolve(resized);
+        };
+        img.onerror = function (e) {
+          reject(e);
+        };
+        img.src = src;
+      });
+    };
+
+    var reresizeLoadedImage = function (image) {
+      var mainCanvas = document.createElement('canvas');
+      //portrait or landscape image?
+      mainCanvas.width = image.height;
+      mainCanvas.height = image.width;
+      var ctx = mainCanvas.getContext('2d');
+      ctx.drawImage(image, 0, 0, mainCanvas.width, mainCanvas.height);
+      //size = parseInt($('#size').get(0).value, 10);
+      return mainCanvas.toDataURL('image/jpeg');
+    };
     /*
      * Draw initial canvas on new canvas and half it's size
      */
@@ -43,7 +69,8 @@ angular.module('lurinfacts').factory('ImageResizeService', function ($q) {
     };
 
     return {
-      resize: resizeImage
+      resize: resizeImage,
+      reresizeImage : reresizeImage
     };
 
   }

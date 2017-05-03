@@ -5,9 +5,14 @@ angular.module('lurinfacts').factory('ImageLocationService', function ($q, $fire
     var firebaseMetaData = ref.child('imageMetaData');
     var firebaseImage = ref.child('image');
     var locationRef = $firebaseArray(firebaseMetaData);
+    var storageRef = firebase.storage().ref();
 
-    var latestLocation = function(amount){
-            return firebaseMetaData.limitToLast(amount);
+    var latestLocation = function (amount) {
+        return firebaseMetaData.limitToLast(amount);
+    };
+
+    var OriginalImages = function (amount) {
+        return firebaseImage;
     };
 
     var saveMetadata = function (metaData) {
@@ -34,32 +39,22 @@ angular.module('lurinfacts').factory('ImageLocationService', function ($q, $fire
         return d;
     };
 
-    var deleteImage = function (key) {
-        var d = $q.defer();
-        var firebasePicture = firebaseImage.child(key);
-        firebasePicture.remove(function (error) {
-            if (error) {
-                d.reject(error);
-            } else {
-                console.log('image delete with key:' + key);
-                d.resolve(key);
-            }
-        });
-        return d.promise;
+    var deleteImage = function (imageKey) {
+        var deleteRef = storageRef.child(toImageUrl(imageKey));
+        // Delete the file
+        return deleteRef.delete();
     };
 
+    var toImageUrl = function(imageKey){
+        return 'locations/' + imageKey + '.jpg';
+    }
+
     var saveImage = function (image) {
-        var d = $q.defer();
-        var firebasePicture = firebaseImage.push();
-        firebasePicture.set(image, function (error) {
-            if (error) {
-                d.reject(error);
-            } else {
-                console.log('image uploaded under key:' + firebasePicture.key);
-                d.resolve(firebasePicture.key);
-            }
+        var imageKey = +new Date();
+        var ref = storageRef.child(toImageUrl(imageKey));
+        return ref.putString(image, 'data_url').then(function (snapshot) {
+            return imageKey;
         });
-        return d.promise;
     };
 
     var locationsAsFirebaseArray = function () {
@@ -96,6 +91,7 @@ angular.module('lurinfacts').factory('ImageLocationService', function ($q, $fire
         deleteLocation: deleteLocation,
         locationsAsFirebaseArray: locationsAsFirebaseArray,
         locationsAsArray: locationsAsArray,
-        latestLocation : latestLocation
+        latestLocation: latestLocation,
+        OriginalImages: OriginalImages
     };
 });
