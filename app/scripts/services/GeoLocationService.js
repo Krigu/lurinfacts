@@ -4,13 +4,13 @@ angular.module('lurinfacts').factory('GeoLocationService', function ($http, $q) 
 
     var getPositionByCoords = function (lat, lng) {
 
-        var geoUrl = 'http://maps.google.com/maps/api/geocode/json?latlng=' + lat + ',' + lng;
+        var geoUrl = 'https://maps.google.com/maps/api/geocode/json?latlng=' + lat + ',' + lng;
         return geoCodeService(geoUrl);
     };
 
     var getPositionByAddress = function (address) {
 
-        var geoUrl = 'http://maps.google.com/maps/api/geocode/json?address=' + address;
+        var geoUrl = 'https://maps.google.com/maps/api/geocode/json?address=' + address;
         return geoCodeService(geoUrl);
     };
     var geoCodeService = function (geoUrl) {
