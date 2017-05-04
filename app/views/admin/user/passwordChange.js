@@ -14,7 +14,7 @@
             $scope.requestCode = function () {
                 LoginService.resetPasswordRequest($scope.email).then(function(){
                     NotificationService.success('the email is on it\'s way, don\'t let lurin steal it');
-                })
+                });
             };
         });
 } ());

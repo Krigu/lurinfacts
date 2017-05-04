@@ -32,12 +32,12 @@
         vm.markers = ImageLocationService.locationsAsFirebaseArray();
 
         var init = function () {
-            return FetchFromCache().then(function (allObjs) {
-                allObjs.map(function (x) { vm.markers.unshift(x) });
+            return fetchFromCache().then(function (allObjs) {
+                allObjs.map(function (x) { vm.markers.unshift(x); });
             }).then(checkIfNewImage);
         };
 
-        var FetchFromCache = function () {
+        var fetchFromCache = function () {
             return dbPromise.then(function (db) {
                 return db.transaction('images')
                     .objectStore('images').getAll();
@@ -46,16 +46,16 @@
 
 
         var checkIfNewImage = function () {
-            ImageLocationService.locationsAsArray().on("child_added", function (snapshot) {
-                var isNewMarker = !vm.markers.filter(function (x) { return x.imageKey == snapshot.val().imageKey }).length;
+            ImageLocationService.locationsAsArray().on('child_added', function (snapshot) {
+                var isNewMarker = !vm.markers.filter(function (x) { return x.imageKey === snapshot.val().imageKey; }).length;
                 if (isNewMarker) {
                     vm.markers.unshift(snapshot.val());
-                    AddImageToCache(snapshot.val());
+                    addImageToCache(snapshot.val());
                 }
             });
         };
 
-        var AddImageToCache = function (img) {
+        var addImageToCache = function (img) {
             img.inserted = new Date();
             //console.log('add entry to indexedDB ' + img.imageTitle, img.inserted);
             dbPromise.then(function (db) {

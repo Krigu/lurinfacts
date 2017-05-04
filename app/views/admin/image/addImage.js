@@ -53,7 +53,7 @@
                 };
             };
             vm.SetMap = function (coords) {
-                uiGmapGoogleMapApi.then(function (map) {
+                uiGmapGoogleMapApi.then(function () {
                     vm.map.center = {
                         latitude: coords.latitude,
                         longitude: coords.longitude

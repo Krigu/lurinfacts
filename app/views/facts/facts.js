@@ -36,13 +36,13 @@
 
 
             var init = function () {
-                return FetchFromCache().then(function (allObjs) {
-                    allObjs.map(function (x) { $scope.facts.unshift(x) });
+                return fetchFromCache().then(function (allObjs) {
+                    allObjs.map(function (x) { $scope.facts.unshift(x); });
                     $scope.$evalAsync();
                 }).then(checkIfNewImage);
             };
 
-            var FetchFromCache = function () {
+            var fetchFromCache = function () {
                 return dbPromise.then(function (db) {
                     return db.transaction('facts')
                         .objectStore('facts').getAll();
@@ -51,15 +51,15 @@
 
 
             var checkIfNewImage = function () {
-                $factsFactory.factsAsFirebaseRef().on("child_added", function (snapshot) {
-                    var isNewFact = !$scope.facts.filter(function (x) { return x.key == snapshot.key }).length;
+                $factsFactory.factsAsFirebaseRef().on('child_added', function (snapshot) {
+                    var isNewFact = !$scope.facts.filter(function (x) { return x.key === snapshot.key; }).length;
                     if (isNewFact) {
                         $scope.facts.unshift(snapshot.val());
-                        AddFactToCache(snapshot.val(), snapshot.key);
+                        addFactToCache(snapshot.val(), snapshot.key);
                     }
                 });
             };
-            var AddFactToCache = function (img, key) {
+            var addFactToCache = function (img, key) {
                 img.key = key;
                 img.inserted = new Date();
                 //console.log('add entry to indexedDB ' + img.imageTitle, img.inserted);

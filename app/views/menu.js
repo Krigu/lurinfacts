@@ -8,7 +8,7 @@
             vm.isOnline = navigator.onLine;
 
             $scope.$watch(function () { return navigator.onLine; },
-                function (newValue, oldValue) {
+                function (newValue) {
                     vm.isOnline = newValue;
                     console.log('is onLine '+newValue);
                 });
