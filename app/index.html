@@ -15,7 +15,8 @@
     <meta name="viewport" content="width=device-width">
     <meta name="theme-color" content="#f2ea00">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <!-- build:css(.tmp) styles/main.css -->
+    <!-- vendor css not placed in styles folder because fonts are wrong linked. -->
+    <!-- build:css(.tmp) vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="../bower_components/flexslider/flexslider.css" />
     <link rel="stylesheet" href="../bower_components/ng-notify/src/styles/ng-notify.css" />
@@ -103,6 +104,7 @@
     <script src="https://cdn.firebase.com/js/simple-login/1.6.4/firebase-simple-login.js"></script>
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
     
+    <!-- build:js({.tmp,app}) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="../bower_components/jquery/dist/jquery.js"></script>
     <script src="../bower_components/angular/angular.js"></script>
@@ -127,6 +129,7 @@
     <script src="../bower_components/angular-route/angular-route.js"></script>
     <script src="../bower_components/sw-toolbox/sw-toolbox.js"></script>
     <!-- endbower -->
+    <!-- endbuild -->
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/init/idb.js"></script>
