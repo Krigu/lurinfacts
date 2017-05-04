@@ -8,6 +8,8 @@ var bower = require('gulp-bower');
 var replace = require('gulp-replace');
 var $ = require('gulp-load-plugins')();
 
+var myScripts = ['app/scripts/services/*.js','app/views/**/*.js'];
+
 gulp.task('styles', function () {
   return gulp.src('app/styles/main.less')
     .pipe($.plumber())
@@ -17,16 +19,10 @@ gulp.task('styles', function () {
 });
 
 gulp.task('jshint', function () {
-  return gulp.src(
-    ['app/scripts/services/*.js'])
+  return gulp.src(myScripts)
     .pipe($.jshint())
     .pipe($.jshint.reporter('jshint-stylish'))
     .pipe($.jshint.reporter('fail'));
-});
-
-gulp.task('jscs', function () {
-  return gulp.src('app/scripts/services/*.js')
-    .pipe($.jscs());
 });
 
 gulp.task('html', ['styles'], function () {
@@ -45,6 +41,11 @@ gulp.task('html', ['styles'], function () {
     .pipe(assets.restore())
     .pipe($.useref())
     .pipe($.if('*.html', $.minifyHtml({ conditionals: true, loose: true })))
+    .pipe(replace('src=scripts/companion.js', 'src=scripts/companion.js data-service-worker=/sw.js?q=#CACHE_VERSION_PLACEHOLDER#'))
+    .pipe(replace('scripts/scripts.js', 'scripts/scripts.js?q=#CACHE_VERSION_PLACEHOLDER#'))
+    .pipe(replace('scripts/vendor.js', 'scripts/vendor.js?q=#CACHE_VERSION_PLACEHOLDER#'))
+    .pipe(replace('main.css', 'main.css?q=#CACHE_VERSION_PLACEHOLDER#'))
+    .pipe(replace('#CACHE_VERSION_PLACEHOLDER#', '_' + +new Date()))
     .pipe(gulp.dest('dist'));
 });
 
@@ -73,17 +74,18 @@ gulp.task('extras', function () {
   ], {
       dot: true
     })
+    .pipe(replace('src=scripts/companion.js', 'src=scripts/companion.js data-service-worker=/sw.js?q=' + +new Date()))
     .pipe(replace('#CACHE_VERSION_PLACEHOLDER#', '_' + +new Date()))
     .pipe(gulp.dest('dist'));
 });
 
-gulp.task('extrasJs', function () {
-  return gulp.src([
-    'app/scripts/init/*.*'
-  ], {
-      dot: true
-    }).pipe(gulp.dest('dist/scripts/init'));
-});
+// gulp.task('extrasJs', function () {
+//   return gulp.src([
+//     'app/scripts/init/*.*'
+//   ], {
+//       dot: true
+//     }).pipe(gulp.dest('dist/scripts/init'));
+// });
 
 gulp.task('clean', require('del').bind(null, ['.tmp', 'dist']));
 
@@ -156,7 +158,7 @@ gulp.task('watch', ['connect'], function () {
   gulp.watch('bower.json', ['wiredep']);
 });
 
-gulp.task('builddist', ['jshint', 'html', 'images', 'fonts', 'extras', 'extrasJs'],
+gulp.task('builddist', ['jshint', 'html', 'images', 'fonts', 'extras'],
   function () {
     return gulp.src('dist/**/*').pipe($.size({ title: 'build', gzip: true }));
   });

@@ -24,7 +24,8 @@
     "inject": false,
     "google": false,
     "firebase": false,
-    "Firebase": false
+    "Firebase": false,
+    "dbPromise": false
   },
   "camelcase": false
 }
