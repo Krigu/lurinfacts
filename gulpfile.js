@@ -74,7 +74,9 @@ gulp.task('extras', function () {
   ], {
       dot: true
     })
-    .pipe(replace('src=scripts/companion.js', 'src=scripts/companion.js data-service-worker=/sw.js?q=' + +new Date()))
+
+
+    .pipe(replace('../bower_components/sw-toolbox/sw-toolbox.js', 'scripts/sw-toolbox.js?q=#CACHE_VERSION_PLACEHOLDER#'))
     .pipe(replace('#CACHE_VERSION_PLACEHOLDER#', '_' + +new Date()))
     .pipe(gulp.dest('dist'));
 });
@@ -95,11 +97,11 @@ gulp.task('connect', ['styles'], function () {
   var app = require('connect')()
     .use(require('connect-livereload')({ port: 35729 }))
     .use(serveStatic('.tmp'))
-    .use(serveStatic('app'))
+    .use(serveStatic('dist'))
     // paths to bower_components should be relative to the current file
     // e.g. in app/index.html you should use ../bower_components
     .use('/bower_components', serveStatic('bower_components'))
-    .use(serveIndex('app'));
+    .use(serveIndex('dist'));
 
   require('http').createServer(app)
     .listen(9000)
