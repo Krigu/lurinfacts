@@ -103,7 +103,7 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkg9lEDwpI3a_YteembM0t_iOmR3jdOD8"></script>
     <script src="https://cdn.firebase.com/js/simple-login/1.6.4/firebase-simple-login.js"></script>
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
-    
+
     <!-- build:js({.tmp,app}) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="../bower_components/jquery/dist/jquery.js"></script>
@@ -129,6 +129,10 @@
     <script src="../bower_components/angular-route/angular-route.js"></script>
     <script src="../bower_components/sw-toolbox/sw-toolbox.js"></script>
     <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:js({.tmp,app}) scripts/companion.js -->
+    <script src="../bower_components/sw-toolbox/companion.js" data-service-worker="/sw.js"></script>
     <!-- endbuild -->
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
