@@ -57,10 +57,10 @@
 
         var addImageToCache = function (img) {
             img.inserted = new Date();
-            //console.log('add entry to indexedDB ' + img.imageTitle, img.inserted);
             dbPromise.then(function (db) {
                 const tx = db.transaction('images', 'readwrite');
                 tx.objectStore('images').put(img, img.imageKey);
+                console.log('add entry to indexedDB ' + img.imageTitle, img.inserted);
                 return tx.complete;
             });
         };
