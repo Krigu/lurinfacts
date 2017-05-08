@@ -220,3 +220,25 @@ ul {
 .flexslider .slides > li {
   max-width: 150px;
 }
+
+.image-parent {
+  display: flex;
+  min-height: 200px; /* Or whatever */
+  justify-content: space-around;
+  -webkit-flex-flow: row wrap;
+  flex-flow: row wrap;
+  padding: 10px;
+  align-items: center;
+}
+
+.image-child {
+  margin: 0px; /* Magic! */
+}
+
+@media all and (max-width: 500px) {
+  .image-child {
+    /* On small screens, we are no longer using row direction but column */
+  -webkit-flex-flow: column wrap;
+    flex-flow: column wrap;
+  }
+}
