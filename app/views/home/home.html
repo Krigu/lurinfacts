@@ -20,15 +20,13 @@
                 <h2>Latest trips</h2>
                 <ul>
                     <li ng-repeat="location in locations" class="shadow" style="height:100%">
-                        <div>
-                            <div class="row">
-                                <div class="col-xs-4">
-                                    <img ng-src="{{location.thumbnail}}" style="padding:20px;max-width:148px">
-                                </div>
-                                <div class="col-xs-8">
-                                    <h3>{{location.imageTitle}}</h3>
-                                    {{location.funFact}}
-                                </div>
+                        <div class="image-parent">
+                            <div class="image-child">
+                                <img ng-src="{{location.thumbnail}}" style="padding:10px;max-width:148px">
+                            </div>
+                            <div class="image-child">
+                                <h3>{{location.imageTitle}}</h3>
+                                {{location.funFact}}
                             </div>
                         </div>
                     </li>
