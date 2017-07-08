@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('lurinfacts').factory('ImageLocationService', function ($q, $firebaseArray) {
+    var tempDownloadUrl = [];
     var ref = firebase.database().ref();
     var firebaseMetaData = ref.child('imageMetaData');
-   // var firebaseImage = ref.child('image');
+    // var firebaseImage = ref.child('image');
     var locationRef = $firebaseArray(firebaseMetaData);
     var storageRef = firebase.storage().ref();
 
@@ -45,7 +46,7 @@ angular.module('lurinfacts').factory('ImageLocationService', function ($q, $fire
         return deleteRef.delete();
     };
 
-    var toImageUrl = function(imageKey){
+    var toImageUrl = function (imageKey) {
         return 'locations/' + imageKey + '.jpg';
     };
 
@@ -85,13 +86,25 @@ angular.module('lurinfacts').factory('ImageLocationService', function ($q, $fire
             });
         return d.promise;
     };
+    var getDownloadUrl = function (imageKey) {
+        if(tempDownloadUrl[imageKey]){
+            return $q.resolve(tempDownloadUrl[imageKey]);
+        }
 
+        console.log('Before requesting download URL');
+        var tangRef = storageRef.child('locations/'+imageKey+'.jpg');
+        return tangRef.getDownloadURL().then(function(url){
+            tempDownloadUrl[imageKey] = url;
+            return url;
+        });
+    };
     return {
         saveLocation: saveLocation,
         deleteLocation: deleteLocation,
         locationsAsFirebaseArray: locationsAsFirebaseArray,
         locationsAsArray: locationsAsArray,
-        latestLocation: latestLocation
+        latestLocation: latestLocation,
+        getDownloadUrl : getDownloadUrl
         //OriginalImages: OriginalImages
     };
 });

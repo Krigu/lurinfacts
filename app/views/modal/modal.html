@@ -1,0 +1,18 @@
+<div class="modal lurinYellowBg" ng-style="{ 'display' : (location.thumbnail == null) ? 'none' : 'inline' ,'background': location.bgUrl, 'background-repeat': 'no-repeat', 'height' : '100%','background-position' : 'center','background-size': 'cover'}">
+
+    <div class="lurinYellowBg imageDescription">
+        <div class="image-child">
+            <h4>{{location.imageTitle}}</h4>
+            {{location.funFact}}
+        </div>
+        <div class="container" style="padding: 10px">
+            <div class="row">
+                <span class="col-md-4 btn-primary" data-ng-click="previousImage()">previous</span>
+                <span class="col-md-4 btn-primary" data-ng-click="closeModal()">close</span>
+                <span class="col-md-4 btn-primary" data-ng-click="nextImage()">next</span>
+            </div>
+        </div>
+        <!-- preload next images for smoother transition -->
+        <img ng-src="{{previousLocationUrl}}" style="display:none" />
+        <img ng-src="{{nextLocationUrl}}" style="display:none" />
+    </div>
