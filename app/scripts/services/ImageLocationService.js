@@ -91,7 +91,6 @@ angular.module('lurinfacts').factory('ImageLocationService', function ($q, $fire
             return $q.resolve(tempDownloadUrl[imageKey]);
         }
 
-        console.log('Before requesting download URL');
         var tangRef = storageRef.child('locations/'+imageKey+'.jpg');
         return tangRef.getDownloadURL().then(function(url){
             tempDownloadUrl[imageKey] = url;

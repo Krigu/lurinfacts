@@ -9,10 +9,10 @@
  */
 (function () {
         angular.module('lurinfacts')
-                .controller('ImagesCtrl', ['$scope', ImagesCtrl]);
+                .controller('ImagesCtrl', ['$scope', '$routeParams','$location', ImagesCtrl]);
 
 
-        function ImagesCtrl($scope) {
+        function ImagesCtrl($scope, $routeParams,$location) {
                 $scope.locations = [];
                 $scope.selectedLocation = {};
 
@@ -24,11 +24,13 @@
                 };
 
                 fetchAll().then(function (allObjs) {
-                        console.log(allObjs);
                         allObjs.map(function (x) {
                                 $scope.locations.unshift(x);
-                                $scope.$evalAsync();
+                                if ($routeParams.imageKey == x.imageKey) {
+                                        $scope.selectImage(x);
+                                }
                         });
+                        $scope.$evalAsync();
                 });
 
                 $scope.selectImage = function (location) {
@@ -47,6 +49,7 @@
 
                 var prepareLocation = function (idx) {
                         var l = $scope.locations[idx];
+                        $location.search('imageKey='+l.imageKey);
                         l.previousLocation = $scope.locations[saveIndex(idx - 1)];
                         l.nextLocation = $scope.locations[saveIndex(idx + 1)];
                         return l;
@@ -54,7 +57,8 @@
 
                 var saveIndex = function (idx) {
                         //handles index overflows and underflows
-                        return (idx < 0 ? $scope.locations.length - 1 : idx) >= $scope.locations.length ? 0 : idx;
+                        var idx = idx < 0 ? $scope.locations.length - 1 : idx;
+                        return idx >= $scope.locations.length ? 0 : idx;
                 }
 
                 $scope.handler = {

@@ -56,7 +56,13 @@ angular
             })
             .when('/images', {
                 templateUrl: 'views/images/images.html',
-                controller: 'ImagesCtrl'
+                controller: 'ImagesCtrl',
+                reloadOnSearch : false
+            })
+            .when('/images/?:imageKey', {
+                templateUrl: 'views/images/images.html',
+                controller: 'ImagesCtrl',
+                reloadOnSearch : false
             })
             .when('/contribute', {
                 templateUrl: 'views/facts/contribute.html',
