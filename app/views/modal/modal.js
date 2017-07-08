@@ -11,20 +11,20 @@
                 handler: '=handler'
             },
             templateUrl: './../../views/modal/modal.html',
-            link: function ($scope, element, attrs) {
+            link: function ($scope) {
 
                 $scope.closeModal = function () {
                     $scope.location = null;
                 };
                 $scope.nextImage = function () {
                     $scope.location = $scope.handler.nextImage($scope.location);
-                }
+                };
                 $scope.previousImage = function () {
                     $scope.location = $scope.handler.previousImage($scope.location);
-                }
+                };
             },
             controller: 'ModalController'
-        }
+        };
     });
 
     angular.module('lurinfacts').controller('ModalController', ModalController);
@@ -39,7 +39,7 @@
             }).catch(function (er) {
                 console.log('error get getDownloadUrl', er);
             });
-        }
+        };
 
         $scope.$watch('location', function (newValue) {
             $scope.location = newValue;
