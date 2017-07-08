@@ -9,7 +9,7 @@
  * Main module of the application.
  */
 angular
-    .module('lurinfacts', ['ngMessages', 'ngRoute', 'uiGmapgoogle-maps', 'angular-flexslider', 'mgcrea.ngStrap', 'ngNotify', 'firebase'])
+    .module('lurinfacts', ['ngMessages', 'ngRoute', 'uiGmapgoogle-maps', 'angular-flexslider', 'mgcrea.ngStrap', 'ngNotify', 'firebase','ngSanitize'])
     .config(function ($routeProvider, $locationProvider, uiGmapGoogleMapApiProvider) {
         $locationProvider.hashPrefix('');
         try {

@@ -37,6 +37,7 @@ module.exports = function(config) {
       '../bower_components/angular-google-maps/dist/angular-google-maps.js',
       '../bower_components/angular-route/angular-route.js',
       '../bower_components/sw-toolbox/sw-toolbox.js',
+      '../bower_components/angular-sanitize/angular-sanitize.js',
       // endbower
       '../app/scripts/**/*.js',
       //'../test/mock/**/*.js',

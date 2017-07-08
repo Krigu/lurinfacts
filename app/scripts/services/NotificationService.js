@@ -18,8 +18,10 @@
             ngNotify.set(success, 'success');
         };
 
-        var warn = function (warn) {
-            ngNotify.set(warn, 'warn');
+        var warn = function (warn,options) {
+            options = options || {};
+            options.type = 'warn';
+            ngNotify.set(warn, options);
         };
 
         return {

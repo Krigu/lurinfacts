@@ -10,9 +10,9 @@
 (function () {
     angular.module('lurinfacts')
         .controller('MapCtrl', MapCtrl);
-    MapCtrl.$inject = ['$scope', 'markerFactory', 'ImageLocationService', 'uiGmapGoogleMapApi'];
+    MapCtrl.$inject = ['$scope', 'markerFactory', 'ImageLocationService', 'uiGmapGoogleMapApi','NotificationService'];
 
-    function MapCtrl($scope, markerFactory, ImageLocationService, uiGmapGoogleMapApi) {
+    function MapCtrl($scope, markerFactory, ImageLocationService, uiGmapGoogleMapApi,NotificationService) {
         var vm = this;
         $scope.map = {
             center: {
@@ -22,6 +22,17 @@
             zoom: 3,
             control: {}
         };
+
+        $scope.$watch(function () { return navigator.onLine; },
+            function (isOnline) {
+                vm.isOnline = isOnline;
+                console.log('is onLine ' + isOnline);
+                if(!isOnline){
+                    var txt = 'Lurin saw that you are offline. Google Maps do only work properly online.<br/> <a href="#/images"> Do you like to see only the images instead?</a>';
+                    NotificationService.warn(txt, {duration: 12000,html: true});
+                }
+            });
+
 
         $scope.markers = {};
 
