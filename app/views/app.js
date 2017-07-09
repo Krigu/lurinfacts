@@ -9,7 +9,7 @@
  * Main module of the application.
  */
 angular
-    .module('lurinfacts', ['ngMessages', 'ngRoute', 'uiGmapgoogle-maps', 'angular-flexslider', 'mgcrea.ngStrap', 'ngNotify', 'firebase','ngSanitize'])
+    .module('lurinfacts', ['ngMessages', 'ngRoute', 'uiGmapgoogle-maps', 'angular-flexslider', 'mgcrea.ngStrap', 'ngNotify', 'firebase', 'ngSanitize'])
     .config(function ($routeProvider, $locationProvider, uiGmapGoogleMapApiProvider) {
         $locationProvider.hashPrefix('');
         try {
@@ -29,6 +29,11 @@ angular
             .when('/home', {
                 templateUrl: 'views/home/home.html',
                 controller: 'HomeCtrl'
+            })
+            .when('/settings', {
+                templateUrl: 'views/settings/settings.html',
+                controller: 'SettingsCtrl',
+                controllerAs: '$ctrl'
             })
             .when('/admin/addImage', {
                 templateUrl: 'views/admin/image/addImage.html',
@@ -57,12 +62,12 @@ angular
             .when('/images', {
                 templateUrl: 'views/images/images.html',
                 controller: 'ImagesCtrl',
-                reloadOnSearch : false
+                reloadOnSearch: false
             })
             .when('/images/?:imageKey', {
                 templateUrl: 'views/images/images.html',
                 controller: 'ImagesCtrl',
-                reloadOnSearch : false
+                reloadOnSearch: false
             })
             .when('/contribute', {
                 templateUrl: 'views/facts/contribute.html',

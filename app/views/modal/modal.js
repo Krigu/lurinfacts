@@ -44,10 +44,10 @@
         $scope.$watch('location', function (newValue) {
             $scope.location = newValue;
             if (newValue && newValue.imageKey) {
-                $scope.location.bgUrl = 'url(' + $scope.location.thumbnail + ')';
+                $scope.location.bgUrl = 'url(' + $scope.location.thumbnail + ') white';
 
                 getDownloadUrl($scope.location.imageKey, function (url) {
-                    $scope.location.bgUrl = 'url(' + url + ')';
+                    $scope.location.bgUrl = 'url(' + url + ') white';
                 });
 
                 getDownloadUrl($scope.location.previousLocation.imageKey, function (url) {

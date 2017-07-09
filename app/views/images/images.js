@@ -1,37 +1,26 @@
 'use strict';
 
-/**
- * @ngdoc function
- * @name lurinfacts.controller:FactsCtrl
- * @description
- * # FactsCtrl
- * Controller of lurinfacts
- */
 (function () {
         angular.module('lurinfacts')
-                .controller('ImagesCtrl', ['$scope', '$routeParams','$location', ImagesCtrl]);
+                .controller('ImagesCtrl', ['$scope', '$routeParams', '$location','ImageCacheService', ImagesCtrl]);
 
 
-        function ImagesCtrl($scope, $routeParams,$location) {
+        function ImagesCtrl($scope, $routeParams, $location,ImageCacheService) {
                 $scope.locations = [];
                 $scope.selectedLocation = {};
 
-                var fetchAll = function () {
-                        return dbPromise.then(function (db) {
-                                return db.transaction('images')
-                                        .objectStore('images').getAll();
+                var init = function () {
+                        return ImageCacheService.fetchCachedImages(imageLoaded).then(function () {
+                                console.log('images loaded');
                         });
                 };
 
-                fetchAll().then(function (allObjs) {
-                        allObjs.map(function (x) {
-                                $scope.locations.unshift(x);
-                                if ($routeParams.imageKey === x.imageKey) {
-                                        $scope.selectImage(x);
-                                }
-                        });
-                        $scope.$evalAsync();
-                });
+                var imageLoaded = function (x) {
+                        $scope.locations.unshift(x);
+                        if ($routeParams.imageKey === x.imageKey) {
+                                $scope.selectImage(x);
+                        }
+                };
 
                 $scope.selectImage = function (location) {
                         var idx = getLocationIndex(location.imageKey);
@@ -49,7 +38,7 @@
 
                 var prepareLocation = function (idx) {
                         var l = $scope.locations[idx];
-                        $location.search('imageKey='+l.imageKey);
+                        $location.search('imageKey=' + l.imageKey);
                         l.previousLocation = $scope.locations[saveIndex(idx - 1)];
                         l.nextLocation = $scope.locations[saveIndex(idx + 1)];
                         return l;
@@ -74,6 +63,8 @@
                         }
 
                 };
+
+                init();
 
         }
 })();

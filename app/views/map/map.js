@@ -10,9 +10,9 @@
 (function () {
     angular.module('lurinfacts')
         .controller('MapCtrl', MapCtrl);
-    MapCtrl.$inject = ['$scope', 'markerFactory', 'ImageLocationService', 'uiGmapGoogleMapApi','NotificationService'];
+    MapCtrl.$inject = ['$scope', 'ImageCacheService', 'uiGmapGoogleMapApi','NotificationService'];
 
-    function MapCtrl($scope, markerFactory, ImageLocationService, uiGmapGoogleMapApi,NotificationService) {
+    function MapCtrl($scope, ImageCacheService, uiGmapGoogleMapApi,NotificationService) {
         var vm = this;
         $scope.map = {
             center: {
@@ -33,49 +33,17 @@
                 }
             });
 
-
-        $scope.markers = {};
-
         $scope.selectedMarker = {};
 
         $scope.control = {};
 
-        vm.markers = ImageLocationService.locationsAsFirebaseArray();
+        vm.markers = [];
 
         var init = function () {
-            return fetchFromCache().then(function (allObjs) {
-                allObjs.map(function (x) { vm.markers.unshift(x); });
-            }).then(checkIfNewImage);
-        };
-
-        var fetchFromCache = function () {
-            return dbPromise.then(function (db) {
-                return db.transaction('images')
-                    .objectStore('images').getAll();
+            return ImageCacheService.fetchCachedImages(function (x) { vm.markers.unshift(x); }).then(function () {
+                console.log('images loaded');
             });
         };
-
-
-        var checkIfNewImage = function () {
-            ImageLocationService.locationsAsArray().on('child_added', function (snapshot) {
-                var isNewMarker = !vm.markers.filter(function (x) { return x.imageKey === snapshot.val().imageKey; }).length;
-                if (isNewMarker) {
-                    vm.markers.unshift(snapshot.val());
-                    addImageToCache(snapshot.val());
-                }
-            });
-        };
-
-        var addImageToCache = function (img) {
-            img.inserted = new Date();
-            dbPromise.then(function (db) {
-                const tx = db.transaction('images', 'readwrite');
-                tx.objectStore('images').put(img, img.imageKey);
-                console.log('add entry to indexedDB ' + img.imageTitle, img.inserted);
-                return tx.complete;
-            });
-        };
-
 
         uiGmapGoogleMapApi.then(function () {
             console.log('uiGmapGoogleMapApi ready.');
