@@ -64,7 +64,7 @@
                 img.inserted = new Date();
                 //console.log('add entry to indexedDB ' + img.imageTitle, img.inserted);
                 dbPromise.then(function (db) {
-                    const tx = db.transaction('facts', 'readwrite');
+                    var tx = db.transaction('facts', 'readwrite');
                     tx.objectStore('facts').put(img, img.key);
                     return tx.complete;
                 });

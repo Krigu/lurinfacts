@@ -43,4 +43,16 @@ var urlsToCache = [
   // Ensure that our service worker takes control of the page as soon as possible.
   global.addEventListener('install', event => event.waitUntil(global.skipWaiting()));
   global.addEventListener('activate', event => event.waitUntil(global.clients.claim()));
+
+
+  self.addEventListener('push', function (event) {
+    if (event.data) {
+      console.log('This push event has data: ', event.data.text());
+    } else {
+      console.log('This push event has no data.');
+    }
+    var promiseChain = self.registration.showNotification('Hello, World.');
+    event.waitUntil(promiseChain);
+  });
+
 })(self);

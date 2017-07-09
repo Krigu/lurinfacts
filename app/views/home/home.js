@@ -49,7 +49,7 @@
                         img.inserted = new Date();
                         //console.log('add entry to indexedDB ' + img.imageTitle, img.inserted);
                         dbPromise.then(function (db) {
-                                const tx = db.transaction('latestimages', 'readwrite');
+                                var tx = db.transaction('latestimages', 'readwrite');
                                 tx.objectStore('latestimages').put(img, img.imageKey);
                                 return tx.complete;
                         }).then(deleteOldEntries);
