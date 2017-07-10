@@ -8,6 +8,7 @@ var urlsToCache = [
   '/views/facts/contribute.html',
   '/views/facts/facts.html',
   '/views/modal/modal.html',
+  '/views/settings/settings.html',
   '/views/images/images.html',
   '/views/admin/loginDirective.html',
   '/styles/main.css',
@@ -51,7 +52,54 @@ var urlsToCache = [
     } else {
       console.log('This push event has no data.');
     }
-    var promiseChain = self.registration.showNotification('Hello, World.');
+
+    var pushMsg = convertMessage(event.data);
+    if (pushMsg.pushType) {
+      event.waitUntil(handlePushMessage(pushMsg));
+    } else {
+      console.log('This push event has no pushType.');
+    }
+  });
+
+  function convertMessage(data) {
+    try {
+      return data.json();
+    } catch (err) {
+      console.log('could not jsonize ' + data.text(), err)
+    }
+    //return test message!
+    return {
+      pushType: "newfact",
+      title: "new fact!",
+      msg: "Lurin already got this push message",
+      url: '#/images?imageKey=-Kb6rYfGtAZlbiVHGRuv',
+      timestamp: new Date()
+    };
+  }
+
+  function handlePushMessage(pushMsg) {
+    console.log('handle push msg:' + pushMsg.pushType);
+
+    const options = {
+      badge: '/images/logo192m.png',
+      icon: '/images/logo192m.png',
+      body: pushMsg.msg,
+      data: { url: pushMsg.url },
+      vibrate: [500, 110, 500],
+      timestamp: pushMsg.timestamp
+    };
+
+    return self.registration.showNotification(pushMsg.title, options);
+  }
+
+  self.addEventListener('notificationclick', function (event) {
+    console.log('notificationclick: ', event);
+    const clickedNotification = event.notification;
+    clickedNotification.close();
+
+    const lurinfactsLink = self.location.origin + '/'+ (clickedNotification.data && clickedNotification.data.url)  || '/';
+    
+    const promiseChain = clients.openWindow(lurinfactsLink);
     event.waitUntil(promiseChain);
   });
 

@@ -14,17 +14,17 @@
         $ctrl.disablePush = function () {
             console.log('disable push clicked');
             getCurrentSubscription().then(function (sub) {
-                if (sub != null) {
+                if (sub !== null) {
                     return deleteSubscriptionAtBackEnd(sub).then(function () {
                         NotificationService.success('Push notifications disabled!');
-                    })
+                    });
                 } else {
                     NotificationService.success('Push notifications disabled!');
                 }
                 return Promise.resolve();
             }).error(function(err){
                 console.log('Error on Push notifications disable',err);
-            })
+            });
         };
 
         $ctrl.enablePush = function () {
