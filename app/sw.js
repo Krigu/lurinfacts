@@ -54,7 +54,7 @@ var urlsToCache = [
     }
 
     var pushMsg = convertMessage(event.data);
-    if (pushMsg.pushType) {
+    if (pushMsg.type) {
       event.waitUntil(handlePushMessage(pushMsg));
     } else {
       console.log('This push event has no pushType.');
@@ -69,7 +69,7 @@ var urlsToCache = [
     }
     //return test message!
     return {
-      pushType: "newfact",
+      type: "newfact",
       title: "new fact!",
       msg: "Lurin already got this push message",
       url: '#/images?imageKey=-Kb6rYfGtAZlbiVHGRuv',

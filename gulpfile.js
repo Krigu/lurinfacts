@@ -2,13 +2,12 @@
 'use strict';
 
 var gulp = require('gulp');
-var karma = require('karma').server;
 var argv = require('yargs').argv;
 var bower = require('gulp-bower');
 var replace = require('gulp-replace');
 var $ = require('gulp-load-plugins')();
 
-var myScripts = ['app/scripts/services/*.js','app/views/**/*.js'];
+var myScripts = ['app/scripts/services/*.js', 'app/views/**/*.js'];
 
 gulp.task('styles', function () {
   return gulp.src('app/styles/main.less')
@@ -31,16 +30,15 @@ gulp.task('html', ['styles'], function () {
     .pipe($.csso)
     .pipe($.replace, 'bower_components/bootstrap/fonts', 'fonts');
 
-  var assets = $.useref.assets({ searchPath: '{.tmp,app}' });
+  var assets = $.useref({ searchPath: '{.tmp,app}' });
 
   return gulp.src('app/**/*.html')
     .pipe(assets)
     .pipe($.if('*.js', $.ngAnnotate()))
-    .pipe($.if('*.js', $.uglify().on('error', function(e){
-            console.log(e);
-         })))
+    .pipe($.if('*.js', $.uglify().on('error', function (e) {
+      console.log(e);
+    })))
     .pipe($.if('*.css', cssChannel()))
-    .pipe(assets.restore())
     .pipe($.useref())
     .pipe($.if('*.html', $.minifyHtml({ conditionals: true, loose: true })))
     .pipe(replace('src=scripts/companion.js', 'src=scripts/companion.js data-service-worker=/sw.js?q=#CACHE_VERSION_PLACEHOLDER#'))
@@ -112,19 +110,13 @@ gulp.task('connect', ['styles'], function () {
     .on('listening', function () {
       console.log('Started connect web server on http://localhost:9000');
     });
+
 });
 
 gulp.task('serve', ['wiredep', 'connect', 'watch'], function () {
   if (argv.open) {
-    require('opn')('http://localhost:9000');
+    require('opn')('http://localhost:5000');
   }
-});
-
-gulp.task('test', function (done) {
-  karma.start({
-    configFile: __dirname + '/test/karma.conf.js',
-    singleRun: true
-  }, done);
 });
 
 // inject bower components
@@ -151,17 +143,17 @@ gulp.task('wiredep', function () {
 
 gulp.task('watch', ['connect'], function () {
   $.livereload.listen();
-
-  // watch for changes
-  gulp.watch([
-    'app/**/*.html',
-    '.tmp/styles/**/*.css',
-    'app/scripts/**/*.js',
-    'app/images/**/*'
-  ]).on('change', $.livereload.changed);
-
-  gulp.watch('app/styles/**/*.less', ['styles']);
-  gulp.watch('bower.json', ['wiredep']);
+  
+    // watch for changes
+    gulp.watch([
+      'app/**/*.html',
+      '.tmp/styles/**/*.css',
+      'app/scripts/**/*.js',
+      'app/images/**/*'
+    ]).on('change', $.livereload.changed);
+  
+    gulp.watch('app/styles/**/*.less', ['styles']);
+    gulp.watch('bower.json', ['wiredep']);
 });
 
 gulp.task('builddist', ['jshint', 'html', 'images', 'fonts', 'extras'],
