@@ -20,15 +20,19 @@
         };
 
         var doUserLogin = function (email, password) {
-            auth.signInWithEmailAndPassword(email, password)
+            return auth.signInWithEmailAndPassword(email, password)
+                .then(function () {
+                    return true;
+                })
                 .catch(function (error) {
                     console.log('Login Failed!', error);
                     UserIsLoggedIn = false;
+                    return false;
                 });
         };
 
         var resetPasswordRequest = function (email) {
-           return auth.sendPasswordResetEmail(email)
+            return auth.sendPasswordResetEmail(email)
                 .catch(function (error) {
                     console.log('sendPasswordResetEmail Failed!', error);
                     UserIsLoggedIn = false;
@@ -44,7 +48,7 @@
             doUserLogin: doUserLogin,
             logout: logout,
             isUserLoggedIn: isUserLoggedIn,
-            resetPasswordRequest : resetPasswordRequest
+            resetPasswordRequest: resetPasswordRequest
         };
     });
-} ());
+}());

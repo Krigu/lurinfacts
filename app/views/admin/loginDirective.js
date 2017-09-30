@@ -15,7 +15,10 @@ angular.module('lurinfacts').directive('fireBaseLogin', function ($sce, LoginSer
 
             scope.login = function () {
                 console.log('login for: ' + scope.user);
-                LoginService.doUserLogin(scope.user, scope.password);
+                LoginService.doUserLogin(scope.user, scope.password).then(function(isLoggedIn){
+                    scope.isLoggedIn = isLoggedIn;
+                    scope.$evalAsync();
+                });
             };
 
             scope.logout = function () {

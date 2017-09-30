@@ -2,15 +2,15 @@
 
 angular.module('lurinfacts').factory('GeoLocationService', function ($http, $q) {
 
-    var getPositionByCoords = function (lat, lng) {
+    var baseUrl = "https://maps.google.com/maps/api/geocode/json?&key=AIzaSyDYam7-pomcX9Y9FwNMbMwjDdw-k_7e-vc"
 
-        var geoUrl = 'https://maps.google.com/maps/api/geocode/json?latlng=' + lat + ',' + lng;
+    var getPositionByCoords = function (lat, lng) {
+        var geoUrl = baseUrl + '&latlng=' + lat + ',' + lng;
         return geoCodeService(geoUrl);
     };
 
     var getPositionByAddress = function (address) {
-
-        var geoUrl = 'https://maps.google.com/maps/api/geocode/json?address=' + address;
+        var geoUrl = baseUrl + '&address=' + address;
         return geoCodeService(geoUrl);
     };
     var geoCodeService = function (geoUrl) {
@@ -33,6 +33,7 @@ angular.module('lurinfacts').factory('GeoLocationService', function ($http, $q) 
                     location.country = res0.address_components[res0.address_components.length - 2].long_name;
                     resolve(location);
                 }
+                reject(data);
                 // this callback will be called asynchronously
                 // when the response is available
             },function (data) {

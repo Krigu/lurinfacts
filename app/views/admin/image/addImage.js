@@ -72,6 +72,7 @@
                 GeoLocationService.getPositionByCoords(coords.latitude, coords.longitude).then(function (location) {
                     vm.newPoint.location = location;
                 }, function (error) {
+                    NotificationService.error('lurin hacked the application, something went druing address lookup.');
                     console.log('error on getPositionByCoords: ' + error);
                 });
             };
@@ -87,6 +88,7 @@
                     vm.SetMarker(coords);
 
                 }, function (error) {
+                    NotificationService.error('lurin hacked the application, something went druing address lookup.');
                     console.log('error on getPositionByAddress: ' + error);
                 });
             };
