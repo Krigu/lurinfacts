@@ -4,7 +4,7 @@
         <div class="modal-body row">
             <h2>Latest trips</h2>
             <ul>
-                <li ng-repeat="location in locations" class="shadow" style="height:100%">
+                <li ng-repeat="location in locations | orderBy:'insertTime':true" class="shadow" style="height:100%">
                     <div class="image-parent">
                         <div class="image-child">
                             <img ng-src="{{location.thumbnail}}" data-ng-click="selectImage(location)" style="cursor:pointer;padding:10px;max-width:148px">

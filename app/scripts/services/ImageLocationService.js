@@ -29,6 +29,9 @@ angular.module('lurinfacts').factory('ImageLocationService', function ($q, $fire
         });
         return d.promise;
     };
+    var updateMetadata = function (key,metaData) {
+       return firebase.database().ref('imageMetaData/' + key).set(metaData);
+    };
 
     var deleteMetadata = function (metaData) {
         var d = $q.defer();
@@ -103,7 +106,8 @@ angular.module('lurinfacts').factory('ImageLocationService', function ($q, $fire
         locationsAsFirebaseArray: locationsAsFirebaseArray,
         locationsAsArray: locationsAsArray,
         latestLocation: latestLocation,
-        getDownloadUrl : getDownloadUrl
+        getDownloadUrl : getDownloadUrl,
+        updateMetadata : updateMetadata
         //OriginalImages: OriginalImages
     };
 });

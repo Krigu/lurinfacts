@@ -10,7 +10,8 @@
         var fetchCachedImages = function (onImageLoaded) {
             return fetchFromCache().then(function (allObjs) {
                 allObjs.map(function (x) { onImageLoaded(x); });
-                checkIfNewImage(onImageLoaded);
+                //only do it in the next tick
+                setTimeout(function(){checkIfNewImage(onImageLoaded)},0);
             });
         };
 
