@@ -42,8 +42,11 @@
                 vm.newPoint = {
                     funFact: '',
                     imageTitle: '',
-                    location: {}
+                    location: {},
+                    insertTime : new Date().getTime()
                 };
+                vm.imageThumb = null;
+                vm.imageSource = null;
             };
 
             vm.SetMarker = function (coords) {
@@ -129,9 +132,6 @@
                 console.log('start saving everything');
                 ImageLocationService.saveLocation(vm.newPoint, vm.imageSource, vm.imageThumb).then(function (data) {
                     console.log('everything saved under: ' + data[0]);
-                    vm.imageThumb = null;
-                    vm.imageSource = null;
-                    vm.newPoint = null;
                     NotificationService.success('image successfully saved!');
                     vm.reset();
                 }, function (error) {

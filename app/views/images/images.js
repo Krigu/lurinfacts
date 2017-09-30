@@ -20,6 +20,7 @@
                         if ($routeParams.imageKey === x.imageKey) {
                                 $scope.selectImage(x);
                         }
+                        $scope.$evalAsync();
                 };
 
                 $scope.selectImage = function (location) {
