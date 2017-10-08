@@ -24,7 +24,13 @@ angular
         $routeProvider
             .when('/facts', {
                 templateUrl: 'views/facts/facts.html',
-                controller: 'FactsCtrl'
+                controller: 'FactsCtrl',
+                reloadOnSearch: false
+            })
+            .when('/facts/?:factKey', {
+                templateUrl: 'views/facts/facts.html',
+                controller: 'FactsCtrl',
+                reloadOnSearch: false
             })
             .when('/home', {
                 templateUrl: 'views/home/home.html',

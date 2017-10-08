@@ -9,7 +9,7 @@
  */
 (function () {
     angular.module('lurinfacts')
-        .controller('FactsCtrl', ['$scope', 'factsFactory', 'NotificationService', function ($scope, $factsFactory, NotificationService) {
+        .controller('FactsCtrl', ['$scope', '$routeParams', 'factsFactory', '$location', 'NotificationService', function ($scope, $routeParams, $factsFactory, $location, NotificationService) {
 
             $scope.name = 'FactsCtrl';
 
@@ -30,6 +30,11 @@
                 });
             };
 
+            $scope.selectFact = function (fact) {
+                $scope.selectedFact = fact;
+                $location.search('factKey=' + fact.key);
+            };
+
             $scope.isInvalid = function () {
                 return $scope.factsForm.$dirty && $scope.factsForm.$invalid;
             };
@@ -37,9 +42,14 @@
 
             var init = function () {
                 return fetchFromCache().then(function (allObjs) {
-                    allObjs.map(function (x) { $scope.facts.unshift(x); });
+                    allObjs.map(function (x) {
+                        $scope.facts.unshift(x);
+                        if ($routeParams.factKey === x.key) {
+                            $scope.selectFact(x);
+                        }
+                    });
                     $scope.$evalAsync();
-                }).then(checkIfNewImage);
+                }).then(checkIfNewFact);
             };
 
             var fetchFromCache = function () {
@@ -50,25 +60,30 @@
             };
 
 
-            var checkIfNewImage = function () {
+            var checkIfNewFact = function () {
                 $factsFactory.factsAsFirebaseRef().on('child_added', function (snapshot) {
                     var isNewFact = !$scope.facts.filter(function (x) { return x.key === snapshot.key; }).length;
+                    var fact = snapshot.val();
                     if (isNewFact) {
-                        $scope.facts.unshift(snapshot.val());
-                        addFactToCache(snapshot.val(), snapshot.key);
+                        if ($routeParams.factKey === snapshot.key) {
+                            $scope.selectFact(x);
+                        }
+                        $scope.facts.unshift(fact);
+                        addFactToCache(fact, snapshot.key);
                     }
                 });
             };
-            var addFactToCache = function (img, key) {
-                img.key = key;
-                img.inserted = new Date();
-                //console.log('add entry to indexedDB ' + img.imageTitle, img.inserted);
+            var addFactToCache = function (fact, key) {
+                fact.key = key;
+                fact.inserted = new Date();
                 dbPromise.then(function (db) {
                     var tx = db.transaction('facts', 'readwrite');
-                    tx.objectStore('facts').put(img, img.key);
+                    tx.objectStore('facts').put(fact, fact.key);
                     return tx.complete;
                 });
             };
             init();
         }]);
+
+
 })();

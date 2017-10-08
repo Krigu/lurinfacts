@@ -2,7 +2,7 @@
 'use strict';
 (function () {
 
-    angular.module('lurinfacts').directive('modalPopup', function () {
+    angular.module('lurinfacts').directive('modalPopupImage', function () {
         return {
             restrict: 'EA',
             replace: true,
@@ -10,7 +10,7 @@
                 location: '=location',
                 handler: '=handler'
             },
-            templateUrl: './../../views/modal/modal.html',
+            templateUrl: './../../views/modal/modal-image.html',
             link: function ($scope) {
 
                 $scope.closeModal = function () {
@@ -23,14 +23,14 @@
                     $scope.location = $scope.handler.previousImage($scope.location);
                 };
             },
-            controller: 'ModalController'
+            controller: 'ModalImageController'
         };
     });
 
-    angular.module('lurinfacts').controller('ModalController', ModalController);
+    angular.module('lurinfacts').controller('ModalImageController', ModalImageController);
 
-    ModalController.$inject = ['$scope', 'ImageLocationService'];
-    function ModalController($scope, ImageLocationService) {
+    ModalImageController.$inject = ['$scope', 'ImageLocationService'];
+    function ModalImageController($scope, ImageLocationService) {
 
         var getDownloadUrl = function (key, fn) {
             ImageLocationService.getDownloadUrl(key).then(function (url) {
