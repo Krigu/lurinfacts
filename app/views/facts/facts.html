@@ -5,7 +5,7 @@
     <div class="contentItems">
         Search: <input type="text" id="searchText" ng-model="factsCtrl.searchText" />
         <ul>
-            <li ng-repeat="fact in facts | filter:factsCtrl.searchText | orderBy:'insertTime':true" class="shadow"  data-ng-click="selectFact(fact)">
+            <li style="cursor:pointer" ng-repeat="fact in facts | filter:factsCtrl.searchText | orderBy:'insertTime':true" class="shadow"  data-ng-click="selectFact(fact)">
                 <span>                        
                 <b>{{ fact.fact }}</b>
                         <br/> @ {{ fact.insertTime | date:'medium' }} | by {{ fact.contributor }}

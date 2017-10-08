@@ -66,7 +66,7 @@
                     var fact = snapshot.val();
                     if (isNewFact) {
                         if ($routeParams.factKey === snapshot.key) {
-                            $scope.selectFact(x);
+                            $scope.selectFact(fact);
                         }
                         $scope.facts.unshift(fact);
                         addFactToCache(fact, snapshot.key);

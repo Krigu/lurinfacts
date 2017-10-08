@@ -11,7 +11,7 @@
             return fetchFromCache().then(function (allObjs) {
                 allObjs.map(function (x) { onImageLoaded(x); });
                 //only do it in the next tick
-                setTimeout(function(){checkIfNewImage(onImageLoaded)},0);
+                setTimeout(function(){checkIfNewImage(onImageLoaded);},0);
             });
         };
 
