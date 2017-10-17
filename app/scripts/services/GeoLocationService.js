@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('lurinfacts').factory('GeoLocationService', function ($http, $q) {
-
-    var baseUrl = 'https://maps.google.com/maps/api/geocode/json?&key=AIzaSyDYam7-pomcX9Y9FwNMbMwjDdw-k_7e-vc';
+    var key = 'AIzaSyC0P3kNpRrvnXLbNXLx4D033Fz0ttPsgkI';
+    var baseUrl = 'https://maps.google.com/maps/api/geocode/json?&key='+key;
 
     var getPositionByCoords = function (lat, lng) {
         var geoUrl = baseUrl + '&latlng=' + lat + ',' + lng;
