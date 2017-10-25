@@ -48,8 +48,11 @@
                             $scope.selectFact(x);
                         }
                     });
-                    $scope.$evalAsync();
-                }).then(checkIfNewFact);
+                }).then(checkIfNewFact,function(e){
+                    //if cache is failing we try fetching them from firebase                    
+                    console.log(e);
+                    checkIfNewFact();
+                }).then($scope.$evalAsync);
             };
 
             var fetchFromCache = function () {

@@ -9,9 +9,13 @@
 
         var fetchCachedImages = function (onImageLoaded) {
             return fetchFromCache().then(function (allObjs) {
-                allObjs.map(function (x) { onImageLoaded(x); });
-                //only do it in the next tick
-                setTimeout(function(){checkIfNewImage(onImageLoaded);},0);
+                allObjs.map(function (x) {
+                    cachedImages.push(x);
+                    onImageLoaded(x); });
+            },function(e){
+                console.log('fetchCachedImages:',e);
+            }).then(function () {
+                checkIfNewImage(onImageLoaded); 
             });
         };
 
