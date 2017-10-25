@@ -10,12 +10,15 @@
         var fetchCachedImages = function (onImageLoaded) {
             return fetchFromCache().then(function (allObjs) {
                 allObjs.map(function (x) {
-                    cachedImages.push(x);
-                    onImageLoaded(x); });
-            },function(e){
-                console.log('fetchCachedImages:',e);
+                    if (!cachedImages.filter(function (x) { return x.imageKey === x.imageKey; }).length) {
+                        cachedImages.push(x);
+                    }
+                    onImageLoaded(x);
+                });
+            }, function (e) {
+                console.log('fetchCachedImages:', e);
             }).then(function () {
-                checkIfNewImage(onImageLoaded); 
+                checkIfNewImage(onImageLoaded);
             });
         };
 
