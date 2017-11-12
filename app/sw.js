@@ -70,22 +70,28 @@ var urlsToCache = [
     }
     //return test message!
     return {
-      type: "newfact",
-      title: "new fact!",
-      msg: "Lurin already got this push message",
-      url: '#/images?imageKey=-Kb6rYfGtAZlbiVHGRuv',
+      type: "message",
+      title: "Lurin just like to say that he is watching you!",
+      message: "",
       timestamp: new Date()
     };
   }
 
   function handlePushMessage(pushMsg) {
-    console.log('handle push msg:' + pushMsg.pushType);
+    console.log('handle push msg:' + pushMsg.type);
+    var data;
+    if(pushMsg.itemKey && pushMsg.type == 'newfact' || pushMsg.type == 'randomfact'){
+      data = { url: "#/facts?factKey="+pushMsg.itemKey };
+    }
+    if(pushMsg.itemKey && pushMsg.type == 'newimage' || pushMsg.type == 'randomimage'){
+      data = { url: "#/images?imageKey="+pushMsg.itemKey };
+    }
 
     const options = {
       badge: '/images/logo192m.png',
       icon: '/images/logo192m.png',
-      body: pushMsg.msg,
-      data: { url: pushMsg.url },
+      body: pushMsg.message,
+      data: data,
       vibrate: [500, 110, 500],
       timestamp: pushMsg.timestamp
     };

@@ -2,13 +2,13 @@
     'use strict';
     angular.module('lurinfacts').controller('SettingsCtrl', SettingsCtrl);
 
-    SettingsCtrl.$inject = ['NotificationService'];
+    SettingsCtrl.$inject = ['NotificationService', '$http'];
 
-    function SettingsCtrl(NotificationService) {
+    function SettingsCtrl(NotificationService, $http) {
 
         var $ctrl = this;
-        $ctrl.registerPushUrl = 'http://localhost:7070/api/registerPush';
-        $ctrl.unregisterPushUrl = 'http://localhost:7070/api/unregisterPush';
+        $ctrl.registerPushUrl = 'https://us-central1-burning-inferno-892.cloudfunctions.net/registerPush';
+        $ctrl.unregisterPushUrl = 'https://us-central1-burning-inferno-892.cloudfunctions.net/unregisterPush';
         $ctrl.isPushFeatured = ('serviceWorker' in navigator) && ('PushManager' in window);
 
         $ctrl.disablePush = function () {
@@ -22,8 +22,8 @@
                     NotificationService.success('Push notifications disabled!');
                 }
                 return Promise.resolve();
-            }).error(function(err){
-                console.log('Error on Push notifications disable',err);
+            }).error(function (err) {
+                console.log('Error on Push notifications disable', err);
             });
         };
 
@@ -41,7 +41,8 @@
                 .then(subscribeUserToPush)
                 .then(function (subscription) {
                     console.log('got subscription', subscription);
-                    return subscription;
+                    //hack?
+                    return JSON.parse(JSON.stringify(subscription));
                 })
                 .then(sendSubscriptionToBackEnd)
                 .then(function () {
@@ -99,18 +100,24 @@
         }
 
         function sendSubscriptionToBackEnd(subscription) {
-            return fetch($ctrl.registerPushUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(subscription)
-            })
+
+
+            // fetch($ctrl.registerPushUrl, {
+            //     mode: 'no-cors',
+            //     method: 'post',
+            //     headers: {
+            //         'content-type': 'application/json'
+            //     },
+            //     body: 
+            // })
+
+            subscription.info = 'lurinfacts.ch';
+            return $http.post($ctrl.registerPushUrl, JSON.stringify(subscription))
                 .then(function (response) {
-                    if (!response.ok) {
+                    if (response.status != 200) {
                         throw new Error('Bad status code from server.');
                     }
-                    return response.json();
+                    return response.data;
                 })
                 .then(function (responseData) {
                     if (!(responseData.data && responseData.data.success)) {
@@ -120,18 +127,20 @@
         }
 
         function deleteSubscriptionAtBackEnd(subscription) {
-            return fetch($ctrl.unregisterPushUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(subscription)
-            })
+            // return fetch($ctrl.unregisterPushUrl, {
+            //     mode: 'no-cors',
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     },
+            //     body: JSON.stringify(subscription)
+            // })
+            return $http.post($ctrl.unregisterPushUrl, JSON.stringify(subscription))
                 .then(function (response) {
-                    if (!response.ok) {
+                    if (response.status != 200) {
                         throw new Error('Bad status code from server.');
                     }
-                    return response.json();
+                    return response.data;
                 })
                 .then(function (responseData) {
                     if (!(responseData.data && responseData.data.success)) {
