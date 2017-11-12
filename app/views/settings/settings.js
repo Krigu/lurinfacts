@@ -100,21 +100,10 @@
         }
 
         function sendSubscriptionToBackEnd(subscription) {
-
-
-            // fetch($ctrl.registerPushUrl, {
-            //     mode: 'no-cors',
-            //     method: 'post',
-            //     headers: {
-            //         'content-type': 'application/json'
-            //     },
-            //     body: 
-            // })
-
             subscription.info = 'lurinfacts.ch';
             return $http.post($ctrl.registerPushUrl, JSON.stringify(subscription))
                 .then(function (response) {
-                    if (response.status != 200) {
+                    if (response.status !== 200) {
                         throw new Error('Bad status code from server.');
                     }
                     return response.data;
@@ -127,17 +116,9 @@
         }
 
         function deleteSubscriptionAtBackEnd(subscription) {
-            // return fetch($ctrl.unregisterPushUrl, {
-            //     mode: 'no-cors',
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //     },
-            //     body: JSON.stringify(subscription)
-            // })
             return $http.post($ctrl.unregisterPushUrl, JSON.stringify(subscription))
                 .then(function (response) {
-                    if (response.status != 200) {
+                    if (response.status !== 200) {
                         throw new Error('Bad status code from server.');
                     }
                     return response.data;
