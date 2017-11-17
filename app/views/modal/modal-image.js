@@ -47,7 +47,12 @@
                 $scope.location.bgUrl = 'url(' + $scope.location.thumbnail + ') white';
 
                 getDownloadUrl($scope.location.imageKey, function (url) {
-                    $scope.location.bgUrl = 'url(' + url + ') white';
+                    var img = new Image();
+                    img.onload = function () {
+                        $scope.location.bgUrl = 'url(' + url + ') white';
+                        $scope.$evalAsync();
+                    };
+                    img.src = url;
                 });
 
                 getDownloadUrl($scope.location.previousLocation.imageKey, function (url) {
