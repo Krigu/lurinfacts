@@ -14,15 +14,19 @@ var urlsToCache = [
   '/views/admin/loginDirective.html',
   '/styles/main.css',
   '/images/header.png',
+  'images/twitter_logo.png',
   '/scripts/scripts.js',
-  '/scripts/vendor.js'
+  '/scripts/vendor.js',
+  '/styles/vendor.css',
+  '/fonts/glyphicons-halflings-regular.eot',
+  '/fonts/glyphicons-halflings-regular.woff2'
 ];
 (global => {
   'use strict';
 
   // Load the sw-toolbox library.
   importScripts('../bower_components/sw-toolbox/sw-toolbox.js');
-
+  toolbox.options.debug = false;
   toolbox.precache(urlsToCache);
 
 
