@@ -22,7 +22,7 @@
                     NotificationService.success('Push notifications disabled!');
                 }
                 return Promise.resolve();
-            }).error(function (err) {
+            }).catch(function (err) {
                 console.log('Error on Push notifications disable', err);
             });
         };
