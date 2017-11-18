@@ -1,9 +1,8 @@
 <div class="jumbotron">
     <div ng-controller="ManageImageCtrl as vm" ng-cloak>
-
-        <h3>{{vm.title}}</h3>
+        <h3>Saved Images</h3>
         <ul class="list-group">
-            <li class="list-group-item" ng-repeat="location in vm.locations" style="min-height:120px">
+            <li class="list-group-item" ng-repeat="location in vm.locations  | orderBy:'insertTime':true" style="min-height:120px">
                 <div class="row">
                     <div class="col-sm-3">
                         <img ng-show="location.imageTitle" src="{{location.thumbnail}}" />
@@ -13,6 +12,7 @@
                         <br/>{{ location.funFact }}
                         <br/> {{ location.imageUrl }}
                         <br/> Lat: {{location.location.latitude}} Lng: {{location.location.longitude}}
+                        <br/> InsertTime: {{ vm.getInsertTime(location.insertTime)}}
                         <br/> {{location.location.address}}</div>
                     <div class="col-sm-2">
                         <input type="button" class="btn" ng-click="vm.deleteImage(location,location.imageKey)" value="delete" />

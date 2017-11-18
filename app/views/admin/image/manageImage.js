@@ -10,13 +10,12 @@
 angular.module('lurinfacts')
     .controller('ManageImageCtrl', function ($scope, ImageLocationService, NotificationService) {
         var vm = this;
-        vm.title = 'Vorhandene Bilder';
-
-        //vm.locations = [{title:"test"},{title:"test2"}];
-
         vm.locations = ImageLocationService.locationsAsFirebaseArray();
 
         vm.deleteImage = function (metaData, imageKey) {
+            if (!confirm('do you really want to delete this beautiful image?')) {
+                return;
+            }
             console.log('delete metadata:' + metaData + ' with imageKey: ' + imageKey);
             ImageLocationService.deleteLocation(metaData, imageKey).then(function () {
                 NotificationService.success('image delete');
@@ -24,6 +23,10 @@ angular.module('lurinfacts')
                 NotificationService.error('lurin hijacked the image, it can\'t be deleted');
             });
 
+        };
+
+        vm.getInsertTime = function (ticks) {
+            return new Date(ticks) + "";
         };
 
     });

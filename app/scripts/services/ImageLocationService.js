@@ -12,10 +12,6 @@ angular.module('lurinfacts').factory('ImageLocationService', function ($q, $fire
         return firebaseMetaData.limitToLast(amount);
     };
 
-    // var OriginalImages = function () {
-    //     return firebaseImage;
-    // };
-
     var saveMetadata = function (metaData) {
         var d = $q.defer();
         var firebaseMetaDataRef = firebaseMetaData.push();
