@@ -11,9 +11,8 @@ angular.module('lurinfacts')
     .controller('ManageImageCtrl', function ($scope, ImageLocationService, NotificationService) {
         var vm = this;
         vm.locations = ImageLocationService.locationsAsFirebaseArray();
-
         vm.deleteImage = function (metaData, imageKey) {
-            if (!confirm('do you really want to delete this beautiful image?')) {
+            if (!window.confirm('do you really want to delete this beautiful image?')) {
                 return;
             }
             console.log('delete metadata:' + metaData + ' with imageKey: ' + imageKey);
@@ -26,7 +25,7 @@ angular.module('lurinfacts')
         };
 
         vm.getInsertTime = function (ticks) {
-            return new Date(ticks) + "";
+            return new Date(ticks) + '';
         };
 
     });
