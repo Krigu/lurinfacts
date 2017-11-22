@@ -12,6 +12,7 @@
         $ctrl.isPushFeatured = ('serviceWorker' in navigator) && ('PushManager' in window);
 
         $ctrl.disablePush = function () {
+            $ctrl.isWorking = true;
             console.log('disable push clicked');
             getCurrentSubscription().then(function (sub) {
                 if (sub !== null) {
@@ -24,10 +25,13 @@
                 return Promise.resolve();
             }).catch(function (err) {
                 console.log('Error on Push notifications disable', err);
-            });
+            }).then(function(){
+                $ctrl.isWorking = false;
+            })
         };
 
         $ctrl.enablePush = function () {
+            $ctrl.isWorking = true;
             console.log('enable push clicked');
             askPermission()
                 .then(function (permissionResult) {
@@ -50,7 +54,9 @@
                 }).catch(function (err) {
                     NotificationService.error('Nope!');
                     console.log('ask lurin about this error:', err);
-                });
+                }).then(function(){
+                    $ctrl.isWorking = false;
+                })
         };
 
         function askPermission() {
