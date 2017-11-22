@@ -4,8 +4,8 @@
         <h3>Push notifications:</h3>
         Get the latest and greatest news about lurins trips and wisdom.
         <div ng-show="$ctrl.isPushFeatured">
-            <span class="btn btn-primary" ng-disabled="$ctrl.isWorking" data-ng-click="$ctrl.enablePush()">Enable</span>
-            <span class="btn btn-primary" ng-disabled="$ctrl.isWorking" data-ng-click="$ctrl.disablePush()">Disable</span>
+            <button class="btn btn-primary" ng-disabled="$ctrl.isWorking" data-ng-click="$ctrl.enablePush()">Enable</button>
+            <button class="btn btn-primary" ng-disabled="$ctrl.isWorking" data-ng-click="$ctrl.disablePush()">Disable</button>
         </div>
         <div ng-hide="$ctrl.isPushFeatured">
             <p>Sorry, your browser doesn't feature push notification. Ask lurin how to download a real browser</p>
