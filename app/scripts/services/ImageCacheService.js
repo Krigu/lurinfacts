@@ -39,7 +39,7 @@
 
         var checkIfNewImage = function (onImageLoaded) {
             ImageLocationService.locationsAsArray().on('child_added', function (snapshot) {
-                var isNewMarker = cachedImages.filter(function (x) { return x.imageKey === snapshot.val().imageKey; }).length == 0;
+                var isNewMarker = cachedImages.filter(function (x) { return x.imageKey === snapshot.val().imageKey; }).length === 0;
                 if (isNewMarker) {
                     console.log('add new image to cache: '+snapshot.val().imageKey);
                     onImageLoaded(snapshot.val());
