@@ -27,7 +27,7 @@
                 console.log('Error on Push notifications disable', err);
             }).then(function(){
                 $ctrl.isWorking = false;
-            })
+            });
         };
 
         $ctrl.enablePush = function () {
@@ -56,7 +56,7 @@
                     console.log('ask lurin about this error:', err);
                 }).then(function(){
                     $ctrl.isWorking = false;
-                })
+                });
         };
 
         function askPermission() {
