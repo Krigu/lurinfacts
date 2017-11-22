@@ -17,7 +17,7 @@
 
                 var imageLoaded = function (x) {
                         $scope.locations.unshift(x);
-                        if ($routeParams.imageKey === ""+x.imageKey) {
+                        if ($routeParams.imageKey === ''+x.imageKey) {
                                 $scope.selectImage(x);
                         }
                         $scope.$evalAsync();
