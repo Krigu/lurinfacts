@@ -80,7 +80,7 @@ gulp.task('extras', function () {
     .pipe(replace('../bower_components/sw-toolbox/sw-toolbox.js', 'scripts/sw-toolbox.js?q=#CACHE_VERSION_PLACEHOLDER#'))
     .pipe(replace('#CACHE_VERSION_PLACEHOLDER#', '_' + +new Date()))
     .pipe(gulp.dest('dist'));
-
+    
     gulp.src(['app/favicon.ico'])
     .pipe(gulp.dest('dist'));
 });
