@@ -69,17 +69,19 @@ gulp.task('fonts', function () {
 });
 
 gulp.task('extras', function () {
-  return gulp.src([
+  gulp.src([
     'app/*.*',
     '!app/*.html',
+    '!app/favicon.ico',
     'node_modules/apache-server-configs/dist/.htaccess'
   ], {
       dot: true
     })
-
-
     .pipe(replace('../bower_components/sw-toolbox/sw-toolbox.js', 'scripts/sw-toolbox.js?q=#CACHE_VERSION_PLACEHOLDER#'))
     .pipe(replace('#CACHE_VERSION_PLACEHOLDER#', '_' + +new Date()))
+    .pipe(gulp.dest('dist'));
+
+    gulp.src(['app/favicon.ico'])
     .pipe(gulp.dest('dist'));
 });
 
