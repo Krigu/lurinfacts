@@ -26,9 +26,9 @@ var urlsToCache = [
 
   // Load the sw-toolbox library.
   importScripts('../bower_components/sw-toolbox/sw-toolbox.js');
-  toolbox.options.debug = false;
   toolbox.precache(urlsToCache);
-
+  toolbox.options.debug = false;
+  toolbox.router.default = global.toolbox.cacheFirst;
 
   // The route for any requests from the googleapis origin
   toolbox.router.get('/(.*)', global.toolbox.cacheFirst, {
@@ -43,8 +43,11 @@ var urlsToCache = [
     origin: /\.cdn\.polyfill\.io$/
   });
 
-  global.toolbox.router.default = global.toolbox.cacheFirst;
-  global.toolbox.options.debug = true;
+  //do not cache all big images
+  toolbox.router.get('/(.*)', global.toolbox.networkOnly, {
+    origin: /firebasestorage\.googleapis\.com$/
+  });
+
 
   // Ensure that our service worker takes control of the page as soon as possible.
   global.addEventListener('install', event => event.waitUntil(global.skipWaiting()));
