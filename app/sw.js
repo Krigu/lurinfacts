@@ -83,7 +83,7 @@ var urlsToCache = [
 
   function handlePushMessage(pushMsg) {
     console.log('handle push msg:' + pushMsg.type);
-    var data;
+    var data = { url: '#/home'};
     if(pushMsg.itemKey && pushMsg.type == 'newfact' || pushMsg.type == 'randomfact'){
       data = { url: "#/facts?factKey="+pushMsg.itemKey };
     }
