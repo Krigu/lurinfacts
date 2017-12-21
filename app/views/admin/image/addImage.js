@@ -47,6 +47,10 @@
                 };
                 vm.imageThumb = null;
                 vm.imageSource = null;
+                vm.SetMarker({
+                        latitude: 47,
+                        longitude: 9
+                    });
             };
 
             vm.SetMarker = function (coords) {
