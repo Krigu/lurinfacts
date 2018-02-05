@@ -2,10 +2,10 @@
 
 (function () {
         angular.module('lurinfacts')
-                .controller('ImagesCtrl', ['$scope', '$routeParams', '$location','ImageCacheService', ImagesCtrl]);
+                .controller('ImagesCtrl', ['$scope', '$routeParams', '$location', 'ImageCacheService', ImagesCtrl]);
 
 
-        function ImagesCtrl($scope, $routeParams, $location,ImageCacheService) {
+        function ImagesCtrl($scope, $routeParams, $location, ImageCacheService) {
                 $scope.locations = [];
                 $scope.selectedLocation = {};
 
@@ -16,8 +16,14 @@
                 };
 
                 var imageLoaded = function (x) {
+                        var alreadyAdded = $scope.locations.filter(function (img) {
+                                return img.imageKey === x.imageKey;
+                        });
+                        if (alreadyAdded && alreadyAdded.length > 0) {
+                                return;
+                        }
                         $scope.locations.unshift(x);
-                        if ($routeParams.imageKey === ''+x.imageKey) {
+                        if ($routeParams.imageKey === '' + x.imageKey) {
                                 $scope.selectImage(x);
                         }
                         $scope.$evalAsync();
