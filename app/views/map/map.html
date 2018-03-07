@@ -24,8 +24,8 @@
     slide="marker in mapCtrl.markers track by $index" 
     control-nav="false" touch="true" 
     pause-on-hover="true" keyboard="true">
-        <li style="min-height:100px;cursor:pointer">
-            <img ng-src="{{marker.thumbnail}}" ng-click="zoom(marker)" style="max-height:97px">
+        <li style="cursor:pointer;height:100px;width:auto !important">
+            <img ng-src="{{marker.thumbnail}}" ng-click="zoom(marker)" style="height:100%;width:auto">
         </li>
     </flex-slider>
 

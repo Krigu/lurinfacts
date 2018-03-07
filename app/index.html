@@ -41,54 +41,69 @@
                     <div class="headerImage">
                         <img src="images/header.png" alt="Lurinfacts header logo" class="img-responsive center-block">
                         <span>
-                        <a href="https://twitter.com/lurin_tha_one">
-                            <img src="images/twitter_logo.png">Follow Lurin on Twitter!
-                        </a>
-                    </span>
+                            <a href="https://twitter.com/lurin_tha_one">
+                                <img src="images/twitter_logo.png">Follow Lurin on Twitter!
+                            </a>
+                        </span>
                     </div>
-
+                    <!-- logo for mobile view -->
+                    <img src="images/header.png" alt="Lurinfacts header logo" class="lurinfactsLogoSmall">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
                         aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
                 </div>
 
 
                 <div id="navbar" class="collapse navbar-collapse" ng-controller="MenuCtrl as vm" ng-cloak>
 
                     <ul class="nav navbar-nav">
-                        <li data-match-route="/home"><a href="#/home" data-toggle="collapse" data-target=".navbar-collapse.in">Home</a>
+                        <li data-match-route="/home">
+                            <a href="#/home" data-toggle="collapse" data-target=".navbar-collapse.in">Home</a>
                         </li>
-                        <li data-match-route="/facts"><a href="#/facts" data-toggle="collapse" data-target=".navbar-collapse.in">Facts</a>
+                        <li data-match-route="/facts">
+                            <a href="#/facts" data-toggle="collapse" data-target=".navbar-collapse.in">Facts</a>
                         </li>
-                        <li data-match-route="/contribute"><a href="#/contribute" data-toggle="collapse" data-target=".navbar-collapse.in">Contribute</a>
+                        <li data-match-route="/contribute">
+                            <a href="#/contribute" data-toggle="collapse" data-target=".navbar-collapse.in">Contribute</a>
                         </li>
-                        <li data-match-route="/map"><a href="#/map" data-toggle="collapse" data-target=".navbar-collapse.in">Map</a>
+                        <li data-match-route="/map">
+                            <a href="#/map" data-toggle="collapse" data-target=".navbar-collapse.in">Map</a>
                         </li>
-                        <li data-match-route="/images"><a href="#/images" data-toggle="collapse" data-target=".navbar-collapse.in">Images</a>
+                        <li data-match-route="/images">
+                            <a href="#/images" data-toggle="collapse" data-target=".navbar-collapse.in">Images</a>
                         </li>
-                        <li data-match-route="/settings"><a href="#/settings" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-cog"></span></a></li>
+                        <li data-match-route="/settings">
+                            <a href="#/settings" data-toggle="collapse" data-target=".navbar-collapse.in">
+                                <span class="glyphicon glyphicon-cog"></span>
+                            </a>
+                        </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right" ng-cloak>
-                        <li data-match-route="/admin/manageFacts" ng-show="vm.isLoggedIn"><a href="#/admin/manageFacts">Manage
-                        Facts</a>
+                        <li data-match-route="/admin/manageFacts" ng-show="vm.isLoggedIn">
+                            <a href="#/admin/manageFacts">Manage Facts
+                            </a>
                         </li>
-                        <li data-match-route="/admin/manageProposals" ng-show="vm.isLoggedIn"><a href="#/admin/manageProposals">Manage
-                        Proposals</a>
+                        <li data-match-route="/admin/manageProposals" ng-show="vm.isLoggedIn">
+                            <a href="#/admin/manageProposals">Manage Proposals
+                            </a>
                         </li>
-                        <li data-match-route="/admin/addImage" ng-show="vm.isLoggedIn"><a href="#/admin/addImage">Add
-                        Image</a>
+                        <li data-match-route="/admin/addImage" ng-show="vm.isLoggedIn">
+                            <a href="#/admin/addImage">Add Image
+                            </a>
                         </li>
-                        <li data-match-route="/admin/manageImage" ng-show="vm.isLoggedIn"><a href="#/admin/manageImage">Manage
-                        Image</a>
+                        <li data-match-route="/admin/manageImage" ng-show="vm.isLoggedIn">
+                            <a href="#/admin/manageImage">Manage Image
+                            </a>
                         </li>
                         <li>
                             <fire-base-login class="login"></fire-base-login>
                         </li>
-                        <li data-match-route="#/about"><a href="#/about">About</a>
+                        <li data-match-route="#/about">
+                            <a href="#/about">About</a>
                         </li>
                     </ul>
                 </div>
@@ -118,6 +133,8 @@
     <script src="../bower_components/angular-strap/dist/angular-strap.js"></script>
     <script src="../bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
     <script src="../bower_components/angular-messages/angular-messages.js"></script>
+    <script src="../bower_components/ngSanitize/index.js"></script>
+    <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="../bower_components/ng-notify/src/scripts/ng-notify.js"></script>
     <script src="../bower_components/lodash/lodash.js"></script>
     <script src="../bower_components/angular-simple-logger/dist/angular-simple-logger.js"></script>
@@ -129,7 +146,6 @@
     <script src="../bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
     <script src="../bower_components/angular-route/angular-route.js"></script>
     <script src="../bower_components/sw-toolbox/sw-toolbox.js"></script>
-    <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 

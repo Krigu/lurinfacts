@@ -56,10 +56,14 @@ body {
 
 .bigMap .angular-google-map-container{
     position:absolute;
-    /*height: 100%; */
         top: 188px;
 }
-
+@media (max-width: 768px) {
+    .bigMap .angular-google-map-container{
+        position:absolute;
+            top: 50px;
+    }
+}
 
 .angular-google-map-container {
 
@@ -96,6 +100,14 @@ ul {
         margin: 5px auto;
     }
 }
+@media (max-width: 768px) {
+    .navbar {
+        border-top: 0px;
+    }
+}
+
+
+
 
 .navbar-default {
     .navbar-nav {
@@ -201,24 +213,42 @@ ul {
     }
 }
 
+.lurinfactsLogoSmall{
+    display: none;
+    height: 40px;
+    width: auto;
+}
+
 @media (max-width: 768px) {
-    .headerImage span {
+    .headerImage {
         display: none;
+    }
+    .headerImage:before {
+        display: none;
+    }
+    .lurinfactsLogoSmall{
+        display: inline
     }
 }
 
+
+
 .btn-primary{
-        background-color: #F2EA00;
+        background-color: @lurinyellow;
         border: solid 1px black;
         color:black;
 }
 .btn-primary:hover{
         background-color: black;
 }
-
+.ngn-message{
+    a {
+        color: white;
+    }
+}
 
 .flexslider .slides > li {
-  max-width: 150px;
+  width: auto !important;
 }
 
 .image-parent {
