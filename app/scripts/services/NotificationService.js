@@ -26,7 +26,7 @@
 
         if (Notification && Notification.permission === 'default'){
             window.setTimeout(function askForPermission() {
-                ngNotify.set('<a href="/#settings">Don\' miss the lastest news of Lurin! Register for web push notifications in the settings menu</a>', {
+                ngNotify.set('<a href="/#settings">Don\'t miss the lastest news of Lurin! Register for web push notifications in the settings menu</a>', {
                     html: true,
                     type: 'info',
                     duration: 10 * 1000
