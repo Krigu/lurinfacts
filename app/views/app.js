@@ -9,7 +9,7 @@
  * Main module of the application.
  */
 angular
-    .module('lurinfacts', ['ngMessages', 'ngRoute', 'uiGmapgoogle-maps', 'angular-flexslider', 'mgcrea.ngStrap', 'ngNotify', 'firebase', 'ngSanitize'])
+    .module('lurinfacts', ['ngMessages', 'ngRoute', 'uiGmapgoogle-maps', 'angular-flexslider', 'mgcrea.ngStrap', 'ngSanitize', 'ngNotify', 'firebase'])
     .config(function ($routeProvider, $locationProvider, uiGmapGoogleMapApiProvider) {
         $locationProvider.hashPrefix('');
         try {
@@ -17,7 +17,7 @@ angular
                 key: 'AIzaSyCkg9lEDwpI3a_YteembM0t_iOmR3jdOD8',
                 libraries: 'weather,geometry,visualization'
             });
-        } catch (err) {
+        } catch (err) { 
             console.log('uiGmapGoogleMapApiProvider configuring failed', err);
         }
 

@@ -36,7 +36,7 @@
             askPermission()
                 .then(function (permissionResult) {
                     if (permissionResult !== 'granted') {
-                        NotificationService.error('Nope!');
+                        NotificationService.error('Nope! Didn\'t work, ask Lurin how to solve this problem');
                         new Error('no permission');
                         return;
                     }

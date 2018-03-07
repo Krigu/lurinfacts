@@ -26,6 +26,8 @@ module.exports = function(config) {
       '../bower_components/angular-strap/dist/angular-strap.js',
       '../bower_components/angular-strap/dist/angular-strap.tpl.js',
       '../bower_components/angular-messages/angular-messages.js',
+      '../bower_components/ngSanitize/index.js',
+      '../bower_components/angular-sanitize/angular-sanitize.js',
       '../bower_components/ng-notify/src/scripts/ng-notify.js',
       '../bower_components/lodash/lodash.js',
       '../bower_components/angular-simple-logger/dist/angular-simple-logger.js',
@@ -37,7 +39,6 @@ module.exports = function(config) {
       '../bower_components/angular-google-maps/dist/angular-google-maps.js',
       '../bower_components/angular-route/angular-route.js',
       '../bower_components/sw-toolbox/sw-toolbox.js',
-      '../bower_components/angular-sanitize/angular-sanitize.js',
       // endbower
       '../app/scripts/**/*.js',
       //'../test/mock/**/*.js',

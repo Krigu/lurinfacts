@@ -18,12 +18,22 @@
             ngNotify.set(success, 'success');
         };
 
-        var warn = function (warn,options) {
+        var warn = function (warn, options) {
             options = options || {};
             options.type = 'warn';
             ngNotify.set(warn, options);
         };
 
+        if (Notification && Notification.permission == "default"){
+            window.setTimeout(function askForPermission() {
+                ngNotify.set('<a href="/#settings">Don\' miss the lastest news of Lurin! Register for web push notifications in the settings menu</a>', {
+                    html: true,
+                    type: 'info',
+                    duration: 10 * 1000
+                });
+            }, 5000);
+
+        }
         return {
             error: error,
             success: success,
