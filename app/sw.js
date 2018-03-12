@@ -34,15 +34,15 @@ var urlsToCache = [
   toolbox.router.get('/(.*)', global.toolbox.cacheFirst, {
     origin: /\.cdn\.firebase\.com$/
   });
-
-  toolbox.router.get('/(.*)', global.toolbox.cacheFirst, {
+  // maps only works online
+  toolbox.router.get('/(.*)', global.toolbox.networkOnly, {
     origin: /\.maps\.googleapis\.com$/
   });
 
   toolbox.router.get('/(.*)', global.toolbox.cacheFirst, {
     origin: /\.cdn\.polyfill\.io$/
   });
-
+ 
   //do not cache all big images
   toolbox.router.get('/(.*)', global.toolbox.networkOnly, {
     origin: /firebasestorage\.googleapis\.com$/
