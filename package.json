@@ -38,5 +38,9 @@
     "serve-static": "^1.13.0",
     "wiredep": "^4.0.0",
     "yargs": "^9.0.1"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "parser": "flow"
   }
 }

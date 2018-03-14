@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  * @ngdoc service
@@ -7,14 +7,13 @@
  * # PictureService
  * Service in the lurinfactsApp.
  */
-angular.module('lurinfacts')
-    .factory('markerFactory', function ($http) {
-        return {
-            getMarkers: function () {
-                return $http({
-                    url: '/pictures.json',
-                    method: 'GET'
-                });
-            }
-        };
-    });
+angular.module("lurinfacts").factory("markerFactory", function($http) {
+  return {
+    getMarkers: function() {
+      return $http({
+        url: "/pictures.json",
+        method: "GET"
+      });
+    }
+  };
+});
