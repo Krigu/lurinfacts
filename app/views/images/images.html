@@ -3,6 +3,10 @@
     <div class="contentItems">
         <div class="modal-body row">
             <h2>Latest trips</h2>
+            <span ng-show="loading">
+                <div class="loader" style="float:left"></div>
+                <i class="imageLoading">Images loading</i>
+            </span>
             <ul>
                 <li ng-repeat="location in locations | orderBy:'insertTime':true" class="shadow" style="height:100%">
                     <div class="image-parent" data-ng-click="selectImage(location)" style="cursor:pointer">

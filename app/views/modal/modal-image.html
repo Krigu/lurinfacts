@@ -6,8 +6,13 @@
         <div class="image-child">
             <h4>{{location.imageTitle}}</h4>
             {{location.funFact}}
+            <br/>
+            <span ng-show="mainImageLoading == 1">
+                <div class="loader" style="float:left"></div>
+                <i class="imageLoading">Image loading</i>
+            </span>
         </div>
-        <div style="padding: 10px 20px">
+        <div ng-show="handler" style="padding: 10px 20px">
             <div class="row" style="float:right">
                 <span class="btn btn-primary" data-ng-click="previousImage()">previous</span>
                 <span class="btn btn-primary" data-ng-click="nextImage()">next</span>

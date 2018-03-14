@@ -45,23 +45,33 @@
         $scope.location = newValue;
         if (newValue && newValue.imageKey) {
           $scope.location.bgUrl = "url(" + $scope.location.thumbnail + ") white";
-
+          $scope.mainImageLoading = 0;
+          //prevent flickering
+          setTimeout(function() {
+            if ($scope.mainImageLoading === 0) {
+              $scope.mainImageLoading = 1;
+            }
+          }, 10);
           getDownloadUrl($scope.location.imageKey, function(url) {
             var img = new Image();
             img.onload = function() {
               $scope.location.bgUrl = "url(" + url + ") white";
-              $scope.$evalAsync();S
+              $scope.mainImageLoading = -1;
+              $scope.$evalAsync();
             };
             img.src = url;
           });
 
-          getDownloadUrl($scope.location.previousLocation.imageKey, function(url) {
-            $scope.previousLocationUrl = url;
-          });
-
-          getDownloadUrl($scope.location.nextLocation.imageKey, function(url) {
-            $scope.nextLocationUrl = url;
-          });
+          if ($scope.location.previousLocation) {
+            getDownloadUrl($scope.location.previousLocation.imageKey, function(url) {
+              $scope.previousLocationUrl = url;
+            });
+          }
+          if ($scope.location.nextLocation) {
+            getDownloadUrl($scope.location.nextLocation.imageKey, function(url) {
+              $scope.nextLocationUrl = url;
+            });
+          }
         }
       }.bind(this)
     );

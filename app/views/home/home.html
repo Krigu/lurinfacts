@@ -1,14 +1,19 @@
 <div class="jumbotron">
+    <modal-popup-image location="selectedLocation" handler="handler"></modal-popup-image>
     <div class="contentItems">
         <div class="modal-body row">
             <div class="col-md-6">
                 <h2>Latest facts</h2>
+                <span ng-show="!facts || facts.length == 0">
+                    <div class="loader" style="float:left"></div>
+                    <i class="imageLoading">Facts loading</i>
+                </span>
                 <ul>
                     <li ng-repeat="fact in facts | orderBy:'insertTime':true" class="shadow">
-                        <span>                        
-                <b>{{ fact.fact }}</b>
-                        <br/> @ {{ fact.insertTime | date:'medium' }} | by {{ fact.contributor }}
-            </span>
+                        <span>
+                            <b>{{ fact.fact }}</b>
+                            <br/> @ {{ fact.insertTime | date:'medium' }} | by {{ fact.contributor }}
+                        </span>
                     </li>
                 </ul>
                 <ul class="nav nav-pills">
@@ -18,9 +23,13 @@
             </div>
             <div class="col-md-6">
                 <h2>Latest trips</h2>
+                <span ng-show="!locations || locations.length == 0">
+                    <div class="loader" style="float:left"></div>
+                    <i class="imageLoading">Image loading</i>
+                </span>
                 <ul>
                     <li ng-repeat="location in locations" class="shadow" style="height:100%">
-                        <div class="image-parent">
+                        <div class="image-parent" data-ng-click="selectImage(location)">
                             <div class="image-child">
                                 <img ng-src="{{location.thumbnail}}" style="padding:10px;max-width:148px">
                             </div>

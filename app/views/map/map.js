@@ -31,7 +31,7 @@
         console.log("is onLine " + isOnline);
         if (!isOnline) {
           var txt =
-            'Lurin saw that you are offline. Google Maps do only work properly online.<br/> <a href="#/images"> Do you like to see only the images instead?</a>';
+            "Lurin saw that you are offline. Google Maps do only work properly online.<br/> <a href=\"#/images\"> Do you like to see only the images instead?</a>";
           NotificationService.warn(txt, { duration: 12000, html: true });
         }
       }

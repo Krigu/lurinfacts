@@ -16,8 +16,10 @@
     $scope.selectedLocation = {};
 
     var init = function() {
+      $scope.loading = true;
       return ImageCacheService.fetchCachedImages(imageLoaded).then(function() {
         console.log("images loaded");
+        $scope.loading = false;
       });
     };
 

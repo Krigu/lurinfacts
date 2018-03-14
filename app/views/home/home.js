@@ -73,6 +73,11 @@
       addImageToCache(snapshot.val());
     });
 
+    $scope.selectImage = function(location) {
+      $scope.selectedLocation = location;
+    };
+
+
     $scope.facts = [];
     factsFactory.latestFacts(3).on("child_added", function(snapshot) {
       //console.log("snapshot", snapshot.val())
