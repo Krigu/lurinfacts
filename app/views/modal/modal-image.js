@@ -54,12 +54,18 @@
           }, 10);
           getDownloadUrl($scope.location.imageKey, function(url) {
             var img = new Image();
-            img.onload = function() {
+            img.src = url;
+            function onImageLoaded() {
               $scope.location.bgUrl = "url(" + url + ") white";
               $scope.mainImageLoading = -1;
               $scope.$evalAsync();
-            };
-            img.src = url;
+            }
+            if ("decode" in newImage) {
+              // Fancy decoding logic
+              newImage.decode().then(onImageLoaded);
+            } else {
+              img.onload = onImageLoaded;
+            }
           });
 
           if ($scope.location.previousLocation) {
