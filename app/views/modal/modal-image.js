@@ -60,9 +60,9 @@
               $scope.mainImageLoading = -1;
               $scope.$evalAsync();
             }
-            if ("decode" in newImage) {
+            if ("decode" in img) {
               // Fancy decoding logic
-              newImage.decode().then(onImageLoaded);
+              img.decode().then(onImageLoaded);
             } else {
               img.onload = onImageLoaded;
             }

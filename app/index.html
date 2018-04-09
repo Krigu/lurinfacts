@@ -145,17 +145,19 @@
     <script src="../bower_components/js-rich-marker/src/richmarker.js"></script>
     <script src="../bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
     <script src="../bower_components/angular-route/angular-route.js"></script>
-    <script src="../bower_components/sw-toolbox/sw-toolbox.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
-    <!-- build:js({.tmp,app}) scripts/companion.js -->
-    <script src="../bower_components/sw-toolbox/companion.js" data-service-worker='/sw.js?q=#CACHE_VERSION_PLACEHOLDER#'></script>
-    <!-- endbuild -->
-
+    <!-- sw-toolbox.js must be separated because sw-precache looks for it -->
     <!-- build:js({.tmp,app}) scripts/sw-toolbox.js -->
     <script src="../bower_components/sw-toolbox/sw-toolbox.js"></script>
     <!-- endbuild -->
+
+    <!-- build:js({.tmp,app}) scripts/companion.js -->
+    <script defer src="../bower_components/sw-toolbox/companion.js" data-service-worker='/sw.js?q=#CACHE_VERSION_PLACEHOLDER#'></script>
+    <!-- endbuild -->
+
+
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/init/idb.js"></script>

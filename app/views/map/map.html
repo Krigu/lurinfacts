@@ -6,7 +6,7 @@
             <div class="markerPopUp">
                 <h4>{{selectedMarker.imageTitle}}</h4>
                 <div>
-                <img class="thumb" id="markerPopUpImg" ng-src="{{selectedMarker.thumbnail}}" />
+                    <img class="thumb" id="markerPopUpImg" ng-src="{{selectedMarker.thumbnail}}" />
                 </div>
                 <div class="thumbFooter">{{selectedMarker.funFact}}</div>
             </div>
@@ -17,13 +17,9 @@
         </ui-gmap-markers>
     </ui-gmap-google-map>
 
-    <flex-slider class="container" id="mapFooter" 
-    animation="slide" animation-loop="false" 
-    item-margin="0" 
-    slideshow-speed="5000" initDelay="2000"
-    slide="marker in mapCtrl.markers track by $index" 
-    control-nav="false" touch="true" 
-    pause-on-hover="true" keyboard="true">
+    <flex-slider class="container" id="mapFooter" animation="slide" animation-loop="false" item-margin="0" slideshow-speed="5000"
+        initDelay="2000" slide="marker in mapCtrl.markers track by $index" control-nav="false" touch="true" pause-on-hover="true"
+        keyboard="true">
         <li style="cursor:pointer;height:100px;width:auto !important">
             <img ng-src="{{marker.thumbnail}}" ng-click="zoom(marker)" style="height:100%;width:auto">
         </li>
