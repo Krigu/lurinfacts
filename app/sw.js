@@ -16,6 +16,8 @@ var urlsToCache = [
   "images/twitter_logo.png",
   "/scripts/scripts.js",
   "/scripts/vendor.js",
+  "/scripts/companion.js",
+  "/scripts/sw-toolbox.js",
   "/styles/vendor.css",
   "/fonts/glyphicons-halflings-regular.eot",
   "/fonts/glyphicons-halflings-regular.woff2"
