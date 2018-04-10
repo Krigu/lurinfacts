@@ -25,6 +25,12 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
+    <script>
+        var isHttpAndNotLocalhost = location.protocol != 'https:' && window.location.href.indexOf('localhost') == -1;
+        if (isHttpAndNotLocalhost) {
+            location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+        }
+    </script>
 </head>
 
 <body ng-app="lurinfacts">
@@ -189,10 +195,6 @@
 
     <!-- endbuild -->
     <script>
-        var isHttpAndNotLocalhost = location.protocol != 'https:' && window.location.href.indexOf('localhost') == -1;
-        if (isHttpAndNotLocalhost) {
-            location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
-        }
         // Initialize Firebase
         var config = {
             apiKey: "AIzaSyCkg9lEDwpI3a_YteembM0t_iOmR3jdOD8",
