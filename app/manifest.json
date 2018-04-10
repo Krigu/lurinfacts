@@ -17,9 +17,14 @@
       "src": "images/logo192m.png",
       "type": "image/png",
       "sizes": "192x192"
+    },
+    {
+      "src": "images/logo512m.png",
+      "type": "image/png",
+      "sizes": "512x512"
     }
   ],
-  "start_url": "/#/home?utm_source=homescreen",
+  "start_url": "/#/home",
   "background_color": "#F2EA00",
   "display": "standalone",
   "theme_color": "#F2EA00"
