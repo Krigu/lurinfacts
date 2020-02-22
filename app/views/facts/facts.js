@@ -16,7 +16,7 @@
     "NotificationService",
     function($scope, $routeParams, $factsFactory, $location, NotificationService) {
       $scope.name = "FactsCtrl";
-
+      $scope.isShareAvailable = navigator && navigator.share;
       $scope.facts = [];
 
       $scope.update = function(fact) {
@@ -37,6 +37,17 @@
             NotificationService.error("lurin doesn't like this fact, error during save.");
           }
         );
+      };
+
+      $scope.share = function(fact) {
+        navigator
+          .share({
+            title: "lurinfacts.ch",
+            text: fact.fact,
+            url: location.href
+          })
+          .then(() => console.log("Successful share", fact))
+          .catch(error => console.log("Error sharing", error));
       };
 
       $scope.selectFact = function(fact) {

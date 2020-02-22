@@ -11,13 +11,13 @@
             <i class="imageLoading">Facts loading</i>
         </span>
         <ul>
-            <li style="cursor:pointer" ng-repeat="fact in facts | filter:factsCtrl.searchText | orderBy:'insertTime':true" class="shadow"
-                data-ng-click="selectFact(fact)">
-                <span>
+            <li style="cursor:pointer" ng-repeat="fact in facts | filter:factsCtrl.searchText | orderBy:'insertTime':true" class="shadow">
+            <button class="shareFactButton" ng-show="isShareAvailable" data-ng-click="share(fact)">Share</button>
+            <div class="factText" data-ng-click="selectFact(fact)">
                     <b>{{ fact.fact }}</b>
                     <br/> @ {{ fact.insertTime | date:'medium' }} | by {{ fact.contributor }}
-                </span>
-            </li>
+            </div>
+        </li>
 
         </ul>
     </div>
