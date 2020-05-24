@@ -1,6 +1,6 @@
 # Project Lurinfacts 2.0 [![BuildStatus](https://travis-ci.org/Krigu/lurinfacts.svg?branch=master)](https://travis-ci.org/Krigu/lurinfacts)
 
-An AngularJS application that pays tribute to one of the greatest tech guys ever.
+An svelte pwa application that pays tribute to one of the greatest tech guys ever.
 
 ## Build
 
@@ -9,9 +9,8 @@ To run the development environment:
 ```
 $ git clone git@github.com:Krigu/lurinfacts.git
 $ cd lurinfacts
-$ npm install --save-dev
-$ bower install
-$ gulp serve
+$ npm install
+$ npm run dev
 
 ```
 
@@ -25,4 +24,4 @@ For questions, bugs and discussions please use the [Github Issues](https://githu
 
 ## License
 
-Apache License (Version 2.0)
+MIT
