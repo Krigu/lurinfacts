@@ -16,7 +16,7 @@ $ npm run dev
 
 ## Contribute
 
-Any help appreciated
+Any help appreciated.
 
 ## Bugs and Feedback
 
