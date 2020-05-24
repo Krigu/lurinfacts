@@ -1,13 +1,11 @@
 env:
   global:
-  - secure: YnEtNKmAvTvzteefMBJL/QlLvKHRA9pIymBHRx2n6JSGfzO1HuL7AkVwvIMGn/6KTGlYFO51CivZyqq2OiLWEBvkLpgbrYUzE2GFrEdopdTC5saJaJmpyqAqQdKbuA8HskQOiUcBy5StxLiaEJJ0q/tve9ShFiDKMUdWpPWapd8=
-  - secure: bQ4o5ftLM80Oo4T3kyWQJadQfIBcTfUFHEs24wkhLBW7l39guBMWuRdBbKRUrxXQ53GUa35M4vq/WfZwoQD6efp0vlQPMup81La6KxFJbwuipc9v2y8iDztJJhoEQNhBaeTcvuGEjxACIJJUFNLOEwJQFQbs2GwLEPem5toCwSA=
+    - secure: YnEtNKmAvTvzteefMBJL/QlLvKHRA9pIymBHRx2n6JSGfzO1HuL7AkVwvIMGn/6KTGlYFO51CivZyqq2OiLWEBvkLpgbrYUzE2GFrEdopdTC5saJaJmpyqAqQdKbuA8HskQOiUcBy5StxLiaEJJ0q/tve9ShFiDKMUdWpPWapd8=
+    - secure: bQ4o5ftLM80Oo4T3kyWQJadQfIBcTfUFHEs24wkhLBW7l39guBMWuRdBbKRUrxXQ53GUa35M4vq/WfZwoQD6efp0vlQPMup81La6KxFJbwuipc9v2y8iDztJJhoEQNhBaeTcvuGEjxACIJJUFNLOEwJQFQbs2GwLEPem5toCwSA=
 language: node_js
 node_js:
   - "stable"
-before_script:
-  - npm install -g gulp
-script: gulp build
+script: npm run build
 after_success: "cd dist && find . -type f -exec curl --user $FTP_USER:$FTP_PW --ftp-create-dirs -T {} ftp://www.lurinfacts.ch/{} \\;"
 cache:
   directories:
