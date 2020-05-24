@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href="components.css" />
+    <link rel="manifest" href="/manifest.json" />
+
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/assets/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/assets/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/assets/favicon-16x16.png"
+    />
+    <link rel="shortcut icon" href="/assets/favicon.ico" />
+    <meta name="msapplication-TileColor" content="#b91d47" />
+    <meta name="msapplication-config" content="/assets/browserconfig.xml" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="sgtoilet" />
+    <meta
+      name="description"
+      content="Lurinfacts.ch - a site about the greatest coder ever."
+    />
+
+    <meta
+      itemprop="name"
+      content="Lurinfacts.ch - a site about the greatest coder ever."
+    />
+    <meta
+      itemprop="description"
+      content="Lurinfacts.ch - a site about the greatest coder ever."
+    />
+    <meta itemprop="image" content="/assets/lurinfacts-header.png" />
+
+    <meta property="og:url" content="www.lurinfacts.ch" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Lurinfacts.ch - a site about the greatest coder ever."
+    />
+    <meta
+      property="og:description"
+      content="Lurinfacts.ch - a site about the greatest coder ever."
+    />
+    <meta property="og:image" content="/assets/lurinfacts-header.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Lurinfacts.ch - a site about the greatest coder ever."
+    />
+    <meta
+      name="twitter:description"
+      content="Lurinfacts.ch - a site about the greatest coder ever."
+    />
+    <meta name="twitter:image" content="/assets/lurinfacts-header.png" />
+    <meta name="theme-color" content="#ffff65" />
+
+    <link crossorigin rel="preconnect" href="https://fonts.gstatic.com" />
+
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap"
+    />
+
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+      href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
+    />
+
+    <script type="text/javascript">
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("./service-worker.js")
+          .then(function (reg) {
+            console.log("Registrierung erfolgreich. Scope ist " + reg.scope);
+          })
+          .catch(function (error) {
+            console.log("Registrierung fehlgeschlagen mit " + error);
+          });
+      }
+    </script>
+    <title>Lurinfacts</title>
+  </head>
+  <body>
+    <noscript>
+      <div class="flex items-center h-full">
+        <h1 class="text-gray-600 px-8">
+          Oops! Javascript required here! Allow it and try again!
+        </h1>
+      </div>
+    </noscript>
+    <script src="main.js"></script>
+  </body>
+</html>

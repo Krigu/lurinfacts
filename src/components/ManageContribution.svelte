@@ -71,7 +71,7 @@
 </style>
 
 <div class="contentpadding">
-  <h1>Manage fact purposals</h1>
+  <h1>Fact proposals</h1>
   <ul class="list">
     {#each facts as fact}
       <li class="list-item">

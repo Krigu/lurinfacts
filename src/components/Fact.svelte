@@ -1,7 +1,7 @@
 <script>
   import { createEventDispatcher } from "svelte";
   import { getDisplayTime } from "../services/displayTime.js";
-  import Card from "@smui/Card";
+  import Card from "@smui/card";
   import Button, { Label } from "@smui/button";
 
   export let fact;

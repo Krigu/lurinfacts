@@ -150,7 +150,7 @@
             {#if !minimized}
               <Icon class="material-icons">lock</Icon>
             {/if}
-            Contributions
+            Facts proposals
           </a>
         </li>
         <li>
