@@ -5,8 +5,4 @@ dist/*.css.map
 dist/assets
 .firebase/
 node_modules/
-
-config_secret.js.bak
-
-
 .package-lock.json
