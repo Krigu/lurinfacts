@@ -17,7 +17,7 @@ $ gulp serve
 Any help appreciated
 
 ## Bugs and Feedback
-For questions, bugs and discussions please use the [Github Issues](https://github.com/Krigu/lurinfacts/issues)
+For questions, bugs and discussions please use the [Github Issues] (https://github.com/Krigu/lurinfacts/issues)
 
 ## License
 Apache License (Version 2.0)
