@@ -6,7 +6,7 @@ language: node_js
 node_js:
   - "stable"
 script: npm run build
-after_success: "cd dist && find . -type f -exec curl --user $FTP_USER:$FTP_PW --ftp-create-dirs -T {} ftp://www.lurinfacts.ch/{} \\;"
+after_success: "cd dist && find . -type f -exec curl --ftp-ssl-ccc-mode active --user $FTP_USER:$FTP_PW --ftp-create-dirs -T {} ftp://www.lurinfacts.ch/{} \\;"
 cache:
   directories:
     - "node_modules"
