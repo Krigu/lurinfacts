@@ -105,6 +105,7 @@
   }
   .col {
     flex: auto;
+    display: inline-flex;
   }
 </style>
 
