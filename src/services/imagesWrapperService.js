@@ -1,6 +1,7 @@
 import * as Comlink from "comlink";
 import { writable } from "svelte/store";
 const worker = new Worker("worker.js");
+import { readImages } from "./../webworker/indexedDbService.js";
 
 let images = writable([]);
 let newestImages = writable([]);
@@ -17,8 +18,7 @@ export async function subscribeToNewestImages() {
 }
 
 async function loadImages() {
-  var storedImages = localStorage.getItem("images") || "[]";
-  const imagesArray = JSON.parse(storedImages);
+  const imagesArray = (await readImages()) || [];
 
   images.set(imagesArray);
   newestImages.set(getNewest(imagesArray));
@@ -26,26 +26,23 @@ async function loadImages() {
   function callback(f) {
     imageAdapter.set(f);
   }
+  console.log("subscribe to images via comlink");
   dataInterface.subscribeToImages(Comlink.proxy(callback));
 
   imageAdapter.subscribe((f) => {
-    // console.log("got call back from comlink", f);
     var valToAdd = Array.isArray(f) ? f : [f];
 
-    var notYetStoredImages = valToAdd.filter(
+    var newImages = valToAdd.filter(
       (x) => !imagesArray.some((a) => a.key == x.key)
     );
 
-    if (notYetStoredImages.length == 0) {
+    if (newImages.length == 0) {
       return;
     }
 
-    imagesArray.push(...notYetStoredImages);
+    imagesArray.push(...newImages);
 
     imagesArray.sort((x, y) => y.insertTime - x.insertTime);
-
-    let imagesForLocalStore = imagesArray.filter((x, idx) => idx < 10);
-    localStorage.setItem("images", JSON.stringify(imagesForLocalStore));
 
     images.set(imagesArray);
     newestImages.set(getNewest(imagesArray));

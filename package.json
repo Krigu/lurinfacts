@@ -70,6 +70,7 @@
     "@material/feature-targeting": "^5.1.0",
     "comlink": "^4.3.0",
     "firebase": "^7.13.1",
+    "idb": "^5.0.4",
     "page": "^1.11.5",
     "sass": "^1.26.3"
   }

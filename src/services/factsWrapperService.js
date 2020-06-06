@@ -1,6 +1,7 @@
 import * as Comlink from "comlink";
 import { writable } from "svelte/store";
 const worker = new Worker("worker.js");
+import { readFacts } from "./../webworker/indexedDbService.js";
 
 let facts = writable([]);
 let newestFacts = writable([]);
@@ -37,8 +38,7 @@ export async function subscribeToNewestFacts() {
 }
 
 async function loadFacts() {
-  var storedFacts = localStorage.getItem("facts") || "[]";
-  const factsArray = JSON.parse(storedFacts);
+  const factsArray = (await readFacts()) || [];
 
   facts.set(factsArray);
   newestFacts.set(getNewest(factsArray));
@@ -49,23 +49,19 @@ async function loadFacts() {
   dataInterface.subscribeToFacts(Comlink.proxy(callback));
 
   factAdapter.subscribe((f) => {
-    // console.log("got call back from comlink", f);
     var valToAdd = Array.isArray(f) ? f : [f];
 
-    var notYetStoredFacts = valToAdd.filter(
+    var newFacts = valToAdd.filter(
       (x) => !factsArray.some((a) => a.key == x.key)
     );
 
-    if (notYetStoredFacts.length == 0) {
+    if (newFacts.length == 0) {
       return;
     }
 
-    factsArray.push(...notYetStoredFacts);
+    factsArray.push(...newFacts);
 
     factsArray.sort((x, y) => y.insertTime - x.insertTime);
-
-    let factsForLocalStore = factsArray.filter((x, idx) => idx < 10);
-    localStorage.setItem("facts", JSON.stringify(factsForLocalStore));
 
     facts.set(factsArray);
     newestFacts.set(getNewest(factsArray));
