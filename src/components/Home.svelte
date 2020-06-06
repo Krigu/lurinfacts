@@ -51,7 +51,7 @@
 
   <div id="maskedLogo" />
   <div style="text-align: center;">
-    A site dedicated to the greatest coder ever.
+    A site dedicated to the greatest IT guy ever.
   </div>
   <div class="list">
     <div class="list-item">

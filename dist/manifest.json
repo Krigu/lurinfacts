@@ -40,5 +40,27 @@
         }
       ]
     }
-  }
+  },
+  "shortcuts": [
+    {
+      "name": "Facts",
+      "description": "View a list of all facts about Lurin",
+      "url": "/facts"
+    },
+    {
+      "name": "Images",
+      "description": "View a list of all places Lurin has visited",
+      "url": "/images"
+    },
+    {
+      "name": "Map",
+      "description": "View the map with all the awesome places Lurin has visited",
+      "url": "/map"
+    },
+    {
+      "name": "Contribute",
+      "description": "Contribute your own wisdom about Lurin",
+      "url": "/contribute"
+    }
+  ]
 }
