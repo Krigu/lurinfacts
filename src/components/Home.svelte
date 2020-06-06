@@ -36,20 +36,20 @@
     margin-bottom: 20px;
   }
 
-  #maskedLogo {
+  #maskedLogoHome {
     margin-top: 20px;
     margin: auto;
     width: 256px;
     height: 115px;
     background-color: var(--mdc-theme-on-primary, black);
-    -webkit-mask-image: url(./../assets/lurinfacts-header-transparent.png);
-    mask-image: url(./../assets/lurinfacts-header-transparent.png);
+    -webkit-mask-image: url(./../assets/lurinfacts-header-transparent.webp);
+    mask-image: url(./../assets/lurinfacts-header-transparent.webp);
   }
 </style>
 
 <div class="contentpadding">
 
-  <div id="maskedLogo" />
+  <div id="maskedLogoHome" />
   <div style="text-align: center;">
     A site dedicated to the greatest IT guy ever.
   </div>

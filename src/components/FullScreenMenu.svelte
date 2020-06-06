@@ -106,8 +106,8 @@
     width: 30px;
     height: 30px;
     background-color: var(--mdc-theme-on-primary, black);
-    -webkit-mask-image: url(./../assets/lurinfacts-icon-transparent.png);
-    mask-image: url(./../assets/lurinfacts-icon-transparent.png);
+    -webkit-mask-image: url(./../assets/lurinfacts-icon-transparent.webp);
+    mask-image: url(./../assets/lurinfacts-icon-transparent.webp);
   }
 </style>
 
