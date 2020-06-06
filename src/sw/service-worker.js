@@ -55,7 +55,7 @@ registerRoute("/_share-target", shareTargetHandler, "POST");
 registerRoute(new RegExp("/_media/"), cachedMediaHandler);
 
 registerRoute(
-  /\.(?:png|jpg|jpeg|gif|ico)$/,
+  /\.(?:gif|jpg|jpeg|png|ico|webp)$/,
   new CacheFirst({
     cacheName: "my-image-cache",
   })
