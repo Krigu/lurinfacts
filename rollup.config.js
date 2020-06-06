@@ -39,7 +39,7 @@ export default [
       globals(),
       builtins(),
       copy({
-        assets: ["src/assets"],
+        assets: ["src/assets", "index.html", "manifest.json"],
       }),
       postcss({
         extensions: [".scss", ".sass"],

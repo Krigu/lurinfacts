@@ -1,0 +1,66 @@
+{
+  "name": "Lurinfacts",
+  "short_name": "Lurinfacts",
+  "description": "Lurinfacts, the site about the world greatest coder",
+  "icons": [
+    {
+      "src": "assets/android-chrome-32x32.png",
+      "type": "image/png",
+      "sizes": "32x32"
+    },
+    {
+      "src": "assets/android-chrome-256x256.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "assets/android-chrome-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "assets/android-chrome-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/home",
+  "background_color": "#F2EA00",
+  "display": "standalone",
+  "theme_color": "#F2EA00",
+  "share_target": {
+    "action": "/_share-target",
+    "enctype": "multipart/form-data",
+    "method": "POST",
+    "params": {
+      "files": [
+        {
+          "name": "media",
+          "accept": ["image/*"]
+        }
+      ]
+    }
+  },
+  "shortcuts": [
+    {
+      "name": "Facts",
+      "description": "View a list of all facts about Lurin",
+      "url": "/facts"
+    },
+    {
+      "name": "Images",
+      "description": "View a list of all places Lurin has visited",
+      "url": "/images"
+    },
+    {
+      "name": "Map",
+      "description": "View the map with all the awesome places Lurin has visited",
+      "url": "/map"
+    },
+    {
+      "name": "Contribute",
+      "description": "Contribute your own wisdom about Lurin",
+      "url": "/contribute"
+    }
+  ]
+}

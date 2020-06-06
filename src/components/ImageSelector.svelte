@@ -52,7 +52,7 @@
   async function deleteCachedImage(e) {
     e.preventDefault();
     await deleteCachedMediaMetadata(cachedImage.src);
-    cachedImage = null;
+    cachedImage = {};
     cachedImageLoading = true;
     loadCachedImage();
     return false;

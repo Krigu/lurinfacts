@@ -10,6 +10,8 @@
   import FormField from "@smui/form-field";
   import { Icon } from "@smui/icon-button";
   import { createEventDispatcher } from "svelte";
+  import { notify } from "./../services/notifyService.js";
+
   const dispatch = createEventDispatcher();
 
   export let location = {};
@@ -50,8 +52,13 @@
 
   async function updateLocationByCoords(lat, lng) {
     try {
-      location = await getPositionByCoords(lat, lng);
-      dispatch("locationChoosen", location);
+      let foundLocation = await getPositionByCoords(lat, lng);
+      if (foundLocation == null) {
+        notify("could not get location by coordinates.");
+      } else {
+        location = foundLocation;
+        dispatch("locationChoosen", location);
+      }
     } catch (e) {
       console.log("updateLocationByCoords: error while looking up coords", e);
     }
@@ -59,8 +66,13 @@
   async function getByAddress(e) {
     e.preventDefault();
     try {
-      location = await getPositionByAddress(addressSearch);
-      dispatch("locationChoosen", location);
+      let foundLocation = await getPositionByAddress(addressSearch);
+      if (foundLocation == null) {
+        notify("could not get location by address.");
+      } else {
+        location = foundLocation;
+        dispatch("locationChoosen", location);
+      }
     } catch (e) {
       console.log("getByAddress: error while looking up coords", e);
     }
@@ -180,7 +192,7 @@
     </div>
   {/if}
 
-  {#if location.address}
+  {#if location && location.address}
     <h3>Choosen location</h3>
     Latitdude: {location.latitude}
     <br />
