@@ -6,15 +6,20 @@ import {
 import { clientsClaim, skipWaiting } from "workbox-core";
 import { precacheAndRoute } from "workbox-precaching";
 import { preparePushMessage } from "./pushMessageHandler.js";
-import { registerRoute } from "workbox-routing";
 import { RangeRequestsPlugin } from "workbox-range-requests";
 import { CacheableResponsePlugin } from "workbox-cacheable-response";
 import { ExpirationPlugin } from "workbox-expiration";
+import { createHandlerBoundToURL } from "workbox-precaching";
+import { NavigationRoute, registerRoute } from "workbox-routing";
 
 import {
   addMediaToCache,
   webShareMediaCache,
 } from "./../services/imageMediaDataCache";
+
+// This will be replaced by the list of files to precache by
+// the `workbox injectManifest` build step.
+const precachedRoutes = self.__WB_MANIFEST;
 
 const shareTargetHandler = async ({ event }) => {
   console.log("Saving media locally...");
@@ -46,9 +51,13 @@ const cachedMediaHandler = new CacheOnly({
 skipWaiting();
 clientsClaim();
 
-// This will be replaced by the list of files to precache by
-// the `workbox injectManifest` build step.
-precacheAndRoute(self.__WB_MANIFEST);
+precacheAndRoute(precachedRoutes);
+
+//this handler catches the request to urls like: lurinfacts.ch/map and serves the index.html
+//it not registered and the app is offline, no site will be returned by sw => 404 notfound
+const handler = createHandlerBoundToURL("index.html");
+const navigationRoute = new NavigationRoute(handler);
+registerRoute(navigationRoute);
 
 registerRoute("/_share-target", shareTargetHandler, "POST");
 

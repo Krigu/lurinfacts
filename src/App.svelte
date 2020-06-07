@@ -25,8 +25,10 @@
   router("/contributions", () => (page = ManageContribution));
   router("/addImage", () => (page = AddPlaceToBe));
   router("/shareApiTest", () => (page = ShareApiTest));
-
   router("/facts", () => (page = Facts));
+  router("/map", () => (page = Map));
+  router("/images", () => (page = Images));
+
   router(
     "/facts?key=:factKey",
     (ctx, next) => {
@@ -35,9 +37,6 @@
     },
     () => (page = Facts)
   );
-
-  router("/map", () => (page = Map));
-  router("/images", () => (page = Images));
 
   router(
     "/slideShow",
