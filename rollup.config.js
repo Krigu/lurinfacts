@@ -39,7 +39,12 @@ export default [
       globals(),
       builtins(),
       copy({
-        assets: ["src/assets", "index.html", "manifest.json"],
+        assets: [
+          "src/assets",
+          "src/manifest.json",
+          "src/index.html",
+          "src/.htaccess",
+        ],
       }),
       postcss({
         extensions: [".scss", ".sass"],
@@ -66,7 +71,7 @@ export default [
       sourcemap: true,
       format: "iife",
       name: "workbox",
-      file: "dist/service-worker_temp.js",
+      file: "dist/service-worker.js",
     },
     plugins: [
       replace({
@@ -77,7 +82,7 @@ export default [
       resolve(),
       injectManifest(
         {
-          swSrc: "dist/service-worker_temp.js",
+          swSrc: "dist/service-worker.js",
           swDest: "dist/service-worker.js",
           globDirectory: "dist/",
         },
