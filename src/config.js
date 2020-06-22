@@ -1,7 +1,7 @@
 export default {
   secret: {
     firebaseConfig: {
-      apiKey: "AIzaSyD8VGHGirHaCxLM4F1jVGV_Mq-HhBBaqEA",
+      apiKey: "AIzaSyAh8HYV64zUAiR0CJH2LMnm1a8LBO_ssZk",
       authDomain: "burning-inferno-892.firebaseapp.com",
       databaseURL: "https://burning-inferno-892.firebaseio.com",
       projectId: "burning-inferno-892",
