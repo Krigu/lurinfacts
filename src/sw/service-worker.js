@@ -79,12 +79,6 @@ registerRoute(
   })
 );
 
-// test content: {"type":"newfact","itemKey":"-Ldehm5uG6-Aij15awKw","message":"newfact!!","title":"pushTitle"}
-self.addEventListener("push", function (event) {
-  var msg = preparePushMessage(event);
-  event.waitUntil(self.registration.showNotification(msg.title, msg.options));
-});
-
 // Cache the Google Fonts stylesheets with a stale-while-revalidate strategy.
 registerRoute(
   ({ url }) => url.origin === "https://fonts.googleapis.com",
@@ -109,3 +103,23 @@ registerRoute(
     ],
   })
 );
+
+// test content: {"type":"newfact","itemKey":"-Ldehm5uG6-Aij15awKw","message":"newfact!!","title":"pushTitle"}
+self.addEventListener("push", function (event) {
+  var msg = preparePushMessage(event);
+  event.waitUntil(self.registration.showNotification(msg.title, msg.options));
+});
+
+self.addEventListener("notificationclick", function (event) {
+  console.log("notificationclick: ", event);
+  const clickedNotification = event.notification;
+  clickedNotification.close();
+
+  const lurinfactsLink =
+    self.location.origin +
+      "/" +
+      (clickedNotification.data && clickedNotification.data.url) || "/";
+
+  const promiseChain = clients.openWindow(lurinfactsLink);
+  event.waitUntil(promiseChain);
+});
