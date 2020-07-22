@@ -72,7 +72,7 @@
     text-align: center;
     padding: 10px 20px;
     margin-bottom: 10px;
-    font-size: 4vw;
+    font-size: 2vw;
     transition: 0.5s;
   }
   a {
