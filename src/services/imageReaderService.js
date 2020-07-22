@@ -14,8 +14,8 @@ export async function readFile(file) {
         e.target.result,
         orientation.degree
       );
-      let promiseThumb = resizeImage(rotatedResult, 256);
-      let promise = resizeImage(rotatedResult, 2048);
+      let promiseThumb = resizeImage(rotatedResult, 512);
+      let promise = resizeImage(rotatedResult, 4096);
       Promise.all([promiseThumb, promise])
         .then((r) => {
           resolve(r);

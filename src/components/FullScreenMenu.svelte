@@ -47,7 +47,7 @@
     background-color: var(--mdc-theme-primary, yellow);
     height: calc(100vh - 20px);
     padding: 10px;
-    transition: 1s;
+    transition: 0.5s;
     cursor: pointer;
   }
   nav.minimized {
@@ -58,7 +58,7 @@
 
   ul {
     list-style: none;
-    transition: 1s;
+    transition: 0.5s;
   }
 
   nav.minimized ul {
@@ -72,7 +72,7 @@
     text-align: center;
     padding: 10px 20px;
     margin-bottom: 10px;
-    font-size: 2vw;
+    font-size: 30px;
     transition: 0.5s;
   }
   a {

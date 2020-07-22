@@ -25,7 +25,7 @@ var resizeLoadedImage = function (image, size) {
   var ctx = mainCanvas.getContext("2d");
   ctx.drawImage(image, 0, 0, mainCanvas.width, mainCanvas.height);
   //size = parseInt($('#size').get(0).value, 10);
-  while (mainCanvas.width > size || mainCanvas.height > size) {
+  while (mainCanvas.width > size && mainCanvas.height > size) {
     mainCanvas = halfSize(mainCanvas);
   }
   return mainCanvas.toDataURL("image/jpeg");

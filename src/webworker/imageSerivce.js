@@ -46,7 +46,7 @@ export function preloadImageByKey(imageKey, callback) {
   tangRef.getDownloadURL().then(async (url) => {
     const response = await fetch(url);
     const blob = await response.blob();
-    console.log("preloaded image in worker" + url);
+    console.log("preloaded image in worker: " + url);
     callback(url);
   });
 }

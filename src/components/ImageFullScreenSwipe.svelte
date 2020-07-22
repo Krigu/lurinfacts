@@ -63,7 +63,14 @@
     loadFullSizeImage(i).then(url => {
       i.fullImageSizeUrl = url;
       i.url = url;
-      console.log("preload ok for: " + i.imageTitle, idx);
+      console.log(
+        "preload ok for: " +
+          i.imageTitle +
+          "imageKey; " +
+          i.imageKey +
+          " idx: " +
+          idx
+      );
       images[idx] = Object.assign({}, i);
     });
   }
