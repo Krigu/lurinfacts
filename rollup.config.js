@@ -31,7 +31,7 @@ export default [
           style: svelte_preprocess_postcss(),
         },
         css: (css) => {
-          css.write("dist/components.css");
+          css.write("dist/style.css");
         },
       }),
       resolve(),
