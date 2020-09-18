@@ -80,7 +80,7 @@
   }
 
   nav.minimized ul li {
-    background-color: black;
+    background-color: var(--mdc-theme-on-primary, black);
     margin-bottom: 0px;
     padding: 0px;
     transition: 1s;
