@@ -117,7 +117,6 @@ self.addEventListener("notificationclick", function (event) {
 
   const lurinfactsLink =
     self.location.origin +
-      "/" +
       (clickedNotification.data && clickedNotification.data.url) || "/";
 
   const promiseChain = clients.openWindow(lurinfactsLink);
