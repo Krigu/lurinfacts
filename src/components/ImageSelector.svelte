@@ -71,6 +71,12 @@
     fullsizeImage = null;
     dispatch("imageChoosen", { thumbnailImage, fullsizeImage });
   }
+
+  function size(base64EncodeImage) {
+    var base64str = base64EncodeImage.split(",")[1];
+    var len = atob(base64str).length;
+    return Math.round(len / 1024, 2) + " KB";
+  }
 </script>
 
 <style type="text/postcss">
@@ -106,6 +112,15 @@
   .col {
     flex: auto;
     display: inline-flex;
+  }
+  .imageReadyContainer {
+    padding: 0px 4px;
+    width: 100%;
+  }
+  .imagePreview {
+    max-height: 60px;
+    height: 100%;
+    padding: 0px 4px;
   }
 </style>
 
@@ -149,34 +164,45 @@
   {/if}
   {#if thumbnailImage}
     <div class="flex-grid-imageOk">
-      <div class="col" style="padding: 4px;">
-        <img
-          src={thumbnailImage}
-          style="max-height:60px;height:100%"
-          alt="thmbnail" />
-      </div>
-      <div class="col" style="padding-top: 12px;">
-        <Icon class="material-icons" style="vertical-align: text-bottom;">
-          done
-        </Icon>
-        Thumbnail is ready!
-        {#if fullsizeImage}
+      <div class="col">
+        <div class="imageReadyContainer">
+          <img
+            align="left"
+            src={thumbnailImage}
+            class="imagePreview"
+            alt="thmbnail" />
+          {size(thumbnailImage)}
           <br />
           <Icon class="material-icons" style="vertical-align: text-bottom;">
             done
           </Icon>
-          Fullsize is ready!
-        {/if}
+          Thumbnail is ready!
+        </div>
+        <div class="imageReadyContainer">
+          {#if fullsizeImage}
+            <img
+              align="left"
+              src={fullsizeImage}
+              class="imagePreview"
+              alt="thmbnail" />
+            {size(fullsizeImage)}
+            <br />
+            <Icon class="material-icons" style="vertical-align: text-bottom;">
+              done
+            </Icon>
+            Fullsize is ready!
+          {/if}
+        </div>
       </div>
-      <div class="col" style="height:100px">
-        <Button
-          on:click={deleteImages}
-          disabled={!thumbnailImage}
-          variant="raised"
-          class="formButton">
-          <Label>Delete</Label>
-        </Button>
-      </div>
+    </div>
+    <div style="height:100px">
+      <Button
+        on:click={deleteImages}
+        disabled={!thumbnailImage}
+        variant="raised"
+        class="formButton">
+        <Label>Delete</Label>
+      </Button>
     </div>
   {/if}
 </div>

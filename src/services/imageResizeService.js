@@ -1,6 +1,6 @@
-export function resizeImage(src, size) {
+export function resizeImage(src, sizeInKb) {
   return loadImage(src).then((img) => {
-    return resizeLoadedImage(img, size);
+    return resizeLoadedImage(img, sizeInKb);
   });
 }
 
@@ -17,18 +17,23 @@ function loadImage(src) {
   });
 }
 
-var resizeLoadedImage = function (image, size) {
+var resizeLoadedImage = function (image, maxSizeInKb) {
   var mainCanvas = document.createElement("canvas");
-  //portrait or landscape image?
   mainCanvas.width = image.width;
   mainCanvas.height = image.height;
   var ctx = mainCanvas.getContext("2d");
   ctx.drawImage(image, 0, 0, mainCanvas.width, mainCanvas.height);
-  //size = parseInt($('#size').get(0).value, 10);
-  while (mainCanvas.width > size && mainCanvas.height > size) {
+  var currentSize = maxSizeInKb;
+  while (true) {
     mainCanvas = halfSize(mainCanvas);
+    var resizedImage = mainCanvas.toDataURL("image/jpeg");
+    var base64str = resizedImage.split(",")[1];
+    var currentSize = atob(base64str).length;
+
+    if (currentSize < maxSizeInKb * 1024) {
+      return resizedImage;
+    }
   }
-  return mainCanvas.toDataURL("image/jpeg");
 };
 
 /*
@@ -36,8 +41,8 @@ var resizeLoadedImage = function (image, size) {
  */
 var halfSize = function (i) {
   var canvas = document.createElement("canvas");
-  canvas.width = i.width / 2;
-  canvas.height = i.height / 2;
+  canvas.width = i.width * 0.75;
+  canvas.height = i.height * 0.75;
   var ctx = canvas.getContext("2d");
   ctx.drawImage(i, 0, 0, canvas.width, canvas.height);
   return canvas;

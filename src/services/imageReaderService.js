@@ -4,26 +4,14 @@ import {
   rotatePhoto,
 } from "./imageResizeService.js";
 
+const maxSizeFullSizeImageInKB = 300;
+const maxSizeThumbnailImageInKB = 30;
+
 export async function readFile(file) {
   return new Promise((resolve, reject) => {
     var reader = new FileReader();
     reader.onload = async function (e) {
-      let orientation = await getOrientation(file);
-      console.log(`orientation of photo is: ${orientation.degree}`);
-      var rotatedResult = await rotatePhoto(
-        e.target.result,
-        orientation.degree
-      );
-      let promiseThumb = resizeImage(rotatedResult, 512);
-      let promise = resizeImage(rotatedResult, 4096);
-      Promise.all([promiseThumb, promise])
-        .then((r) => {
-          resolve(r);
-        })
-        .catch((e) => {
-          console.log(e);
-          reject(e);
-        });
+      handleFile(file, e.target.result, resolve, reject);
     };
     reader.readAsDataURL(file);
   });
@@ -37,18 +25,24 @@ export async function getImageFormUrl(url) {
       type: "image/jpeg",
     };
     let file = new File([data], "test.jpg", metadata);
-    let orientation = await getOrientation(file);
-    console.log(`orientation of photo is: ${orientation.degree}`);
-    var rotatedResult = await rotatePhoto(url, orientation.degree);
-    var promiseThumb = resizeImage(rotatedResult, 256);
-    var promise = resizeImage(rotatedResult, 2048);
-    Promise.all([promiseThumb, promise])
-      .then((r) => {
-        resolve(r);
-      })
-      .catch((e) => {
-        console.log(e);
-        reject(e);
-      });
+    handleFile(file, url, resolve, reject);
   });
+}
+
+async function handleFile(file, url, resolve, reject) {
+  let orientation = await getOrientation(file);
+  console.log(
+    `orientation of photo is: ${orientation.degree}, rotating is switched off.`
+  );
+  // var rotatedResult = await rotatePhoto(url, orientation.degree);
+  var promiseThumb = resizeImage(url, maxSizeThumbnailImageInKB);
+  var promise = resizeImage(url, maxSizeFullSizeImageInKB);
+  return Promise.all([promiseThumb, promise])
+    .then((r) => {
+      resolve(r);
+    })
+    .catch((e) => {
+      console.log(e);
+      reject(e);
+    });
 }

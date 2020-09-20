@@ -1,10 +1,5 @@
 <script>
   import { saveImageAndMetadata } from "./../services/imagesWrapperService.js";
-  import {
-    resizeImage,
-    getOrientation,
-    rotatePhoto
-  } from "./../services/imageResizeService.js";
   import IconButton, { Icon } from "@smui/icon-button";
   import { notify } from "./../services/notifyService.js";
   import { form } from "svelte-forms";
