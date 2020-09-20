@@ -2,21 +2,29 @@ import { db, storage } from "./customfirebase";
 import { triggerPush } from "./pushService";
 const firebaseMetaData = db.ref().child("imageMetaData");
 const storageRef = storage.ref();
-export function saveImageAndMetadata(metaData, image, thumbnail) {
-  return saveImage(image).then((imageKey) => {
-    metaData.imageKey = imageKey;
-    metaData.thumbnail = thumbnail;
-    var ok = saveMetaData(metaData);
-    if (ok) {
-      triggerPush();
-    }
-    return ok;
+export function saveImageAndMetadata(
+  metaData,
+  thumbnailImage,
+  fullsizeImage,
+  originalImage
+) {
+  return saveImage(fullsizeImage, "locations").then((imageKey) => {
+    return saveImage(originalImage, "originals").then((imageKeyOriginal) => {
+      metaData.imageKey = imageKey;
+      metaData.imageKeyOriginal = imageKeyOriginal;
+      metaData.thumbnail = thumbnailImage;
+      var ok = saveMetaData(metaData);
+      if (ok) {
+        triggerPush();
+      }
+      return ok;
+    });
   });
 }
 
-function saveImage(image) {
+function saveImage(image, folder) {
   var imageKey = +new Date();
-  var ref = storageRef.child(toImageUrl(imageKey));
+  var ref = storageRef.child(toImageUrl(imageKey, folder));
   return ref.putString(image, "data_url").then(function () {
     return imageKey;
   });
@@ -34,14 +42,17 @@ function saveMetaData(metaData) {
   });
 }
 
-function toImageUrl(imageKey) {
-  return "locations/" + imageKey + ".jpg";
+function toImageUrl(imageKey, folder) {
+  return folder + "/" + imageKey + ".jpg";
 }
 
 export function deleteImageAndMetadata(metaData) {
   return Promise.all([
     deleteMetadata(metaData),
-    deleteImage(metaData.imageKey),
+    deleteImage(metaData.imageKey, "locations"),
+    metaData.imageKeyOriginal
+      ? deleteImage(metaData.imageKeyOriginal, "originals")
+      : Promise.resolve(),
   ]);
 }
 
@@ -49,7 +60,7 @@ var deleteMetadata = function (metaData) {
   return firebaseMetaData.child(metaData.key).remove();
 };
 
-var deleteImage = function (imageKey) {
-  var deleteRef = storageRef.child(toImageUrl(imageKey));
+var deleteImage = function (imageKey, folder) {
+  var deleteRef = storageRef.child(toImageUrl(imageKey, folder));
   return deleteRef.delete();
 };

@@ -17,12 +17,13 @@
     thumbnail: ""
   };
   let thumbnailImage = null;
-
   let fullsizeImage = null;
+  let originalImage = null;
 
   function updateImage(event) {
     fullsizeImage = event.detail.fullsizeImage;
     thumbnailImage = event.detail.thumbnailImage;
+    originalImage = event.detail.originalImage;
   }
 
   function updateLocation(event) {
@@ -47,7 +48,8 @@
       var result = await saveImageAndMetadata(
         imageObj,
         thumbnailImage,
-        fullsizeImage
+        fullsizeImage,
+        originalImage
       );
       if (result) {
         imageObj = {
@@ -59,6 +61,7 @@
         };
         thumbnailImage = null;
         fullsizeImage = null;
+        originalImage = null;
         notify("thanks for adding this gem.");
         page("/images");
       } else {
@@ -71,12 +74,13 @@
     return false;
   }
 
-  function handleFiles(e) {
-    readFile(e.target.files[0]).then(([thumb, fullSize]) => {
-      thumbnailImage = thumb;
-      fullsizeImage = fullSize;
-    });
-  }
+  // function handleFiles(e) {
+  //   readFile(e.target.files[0]).then(([thumb, fullSize, original]) => {
+  //     thumbnailImage = thumb;
+  //     fullsizeImage = fullSize;
+  //     originalImage = original;
+  //   });
+  // }
 </script>
 
 <style type="text/postcss">

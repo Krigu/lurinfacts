@@ -36,8 +36,8 @@ async function handleFile(file, url, resolve, reject) {
   );
   // var rotatedResult = await rotatePhoto(url, orientation.degree);
   var promiseThumb = resizeImage(url, maxSizeThumbnailImageInKB);
-  var promise = resizeImage(url, maxSizeFullSizeImageInKB);
-  return Promise.all([promiseThumb, promise])
+  var promiseFullsize = resizeImage(url, maxSizeFullSizeImageInKB);
+  return Promise.all([promiseThumb, promiseFullsize, Promise.resolve(url)])
     .then((r) => {
       resolve(r);
     })

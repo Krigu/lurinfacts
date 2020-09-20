@@ -19,6 +19,7 @@
   let uploadedFiles = [];
   let thumbnailImage = null;
   let fullsizeImage = null;
+  let originalImage = null;
   let cachedImage = {};
   let cachedImageLoading = true;
   onMount(async () => {
@@ -31,19 +32,22 @@
     const images = await getCachedMediaMetadata("image");
     let img = images ? images[0] : null;
     if (img) {
-      let [thumb, fullSize] = await getImageFormUrl(img.src);
+      let [thumb, fullSize, original] = await getImageFormUrl(img.src);
       cachedImage = img;
       cachedImage.thumbnailImage = thumb;
       cachedImage.fullsizeImage = fullSize;
+      cachedImage.originalImage = original;
     }
     cachedImageLoading = false;
   }
 
   async function useCachedImage(e) {
     e.preventDefault();
-    thumbnailImage = cachedImage.thumbnailImage;
-    fullsizeImage = cachedImage.fullsizeImage;
-    dispatch("imageChoosen", { thumbnailImage, fullsizeImage });
+    dispatchImageChoosen(
+      cachedImage.thumbnailImage,
+      cachedImage.fullsizeImage,
+      cachedImage.originalImage
+    );
     deleteCachedMediaMetadata(cachedImage.src).then(
       result => (cachedImage = {})
     );
@@ -59,17 +63,24 @@
   }
 
   function readUploadedFiles(e) {
-    readFile(e.target.files[0]).then(([thumb, fullSize]) => {
-      thumbnailImage = thumb;
-      fullsizeImage = fullSize;
-      dispatch("imageChoosen", { thumbnailImage, fullsizeImage });
+    readFile(e.target.files[0]).then(([thumb, fullSize, original]) => {
+      dispatchImageChoosen(thumb, fullSize, original);
+    });
+  }
+
+  function dispatchImageChoosen(thumb, fullsize, original) {
+    thumbnailImage = thumb;
+    fullsizeImage = fullsize;
+    originalImage = original;
+    dispatch("imageChoosen", {
+      thumbnailImage,
+      fullsizeImage,
+      originalImage
     });
   }
 
   function deleteImages() {
-    thumbnailImage = null;
-    fullsizeImage = null;
-    dispatch("imageChoosen", { thumbnailImage, fullsizeImage });
+    dispatchImageChoosen(null, null, null);
   }
 
   function size(base64EncodeImage) {
