@@ -1,6 +1,6 @@
 {
   "name": "lurinfacts",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "A site about the greatest coder ever.",
   "main": " ",
   "scripts": {
@@ -18,8 +18,9 @@
   },
   "keywords": [
     "Svelte",
-    "starter",
-    "PostCSS"
+    "Lurinfacts",
+    "Facts",
+    "PlaceToBe"
   ],
   "author": "Stef Käser",
   "license": "MIT",
