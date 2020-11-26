@@ -1,21 +1,22 @@
 <script>
+  import IconButton, { Icon } from "@smui/icon-button";
   import ImageFullScreen from "./ImageFullScreen.svelte";
   import {
     subscribeToImages,
     loadFullSizeImage
   } from "./../services/imagesWrapperService.js";
-
+  import { getDisplayTime } from "../services/displayTime.js";
   import { tick, onMount } from "svelte";
-  import { notify } from "./../services/notifyService.js";
+  import { notifyInAWhile } from "./../services/notifyService.js";
   import { writable } from "svelte/store";
 
   import page from "page";
   export let params;
 
+  let currentIndex = 0;
+  const canShare = "canShare" in navigator;
+  let storiesElement; 
   let images = [];
-  let imageRatioContain = true;
-  let slider;
-  let defaultIndex = -1;
   let backUrl = params.backUrl;
 
   onMount(async function() {
@@ -23,24 +24,94 @@
     imageObservable.subscribe(x => {
       var idx = x.findIndex(y => y.key == params.key);
       console.log("default index is:", idx);
-      images = x.map(x => {
-        x.url = x.fullImageSizeUrl || x.thumbnail;
-        return x;
-      });
-      if (idx == -1) {
-        idx = 0;
-      } else if (defaultIndex != idx) {
-        defaultIndex = idx;
-        preloadImage(defaultIndex);
-        preloadImage(defaultIndex + 1);
-        preloadImage(defaultIndex - 1);
+      images = x;
+      if (idx != -1) {
+        currentIndex = idx;
+      }else{
+      currentIndex = Math.max(x.length-1,0);
+      }
+      if(x.length > 0){
+        preloadImageRange(currentIndex);
       }
     });
 
-    notify("use arrow keys or swipe to navigate between images.");
+    notifyInAWhile("use arrow keys or click to navigate between images.","image_navigate",30*24*60*60);
     await tick();
-    slider.scrollLeft = (slider.scrollWidth / images.length) * defaultIndex;
+
+    storiesElement.addEventListener('click', e => {
+      console.log('got click event',e.clientX);
+      if (e.target.nodeName !== 'ARTICLE') 
+      return
+      var  median = e.currentTarget.offsetLeft + (e.currentTarget.clientWidth / 2);
+      navigateStories(
+      e.clientX > median 
+        ? 'next' 
+        : 'prev')
+      })
   });
+
+  document.addEventListener('keydown', ({key}) => {
+  if (key !== 'ArrowDown' || key !== 'ArrowUp')
+    navigateStories(
+      key === 'ArrowDown'
+        ? 'next'
+        : 'prev')
+});
+
+  async function shareImage(e) {
+    let image = images[currentIndex];
+    let response = await fetch(image.fullImageSizeUrl);
+    let data = await response.blob();
+    let metadata = {
+      type: "image/jpeg"
+    };
+    let file = new File([data], image.key + ".jpg", metadata);
+    const files = [file];
+    if (canShare && navigator.canShare({ files })) {
+      try {
+        navigator.share({ files });
+      } catch (ex) {
+        console.log("sharerror", ex);
+      }
+    }
+  }
+  async function showOnMap(){
+    page('/map?key=' + images[currentIndex].key);
+  }
+
+  async function closeSlideShow(){
+    page('/' + backUrl + '#:~:text=' + encodeURIComponent( images[currentIndex].imageTitle))
+  }
+
+const navigateStories = direction => {
+
+  var state = {
+      current_story: storiesElement.children[0].children[currentIndex]
+    }
+
+  const story = state.current_story
+  const lastItemInUserStory = story.parentNode.lastElementChild
+  const firstItemInUserStory = story.parentNode.firstElementChild
+  console.log("story "+story.innerText+ " last: "+lastItemInUserStory.innerText+" first "+firstItemInUserStory.innerText,currentIndex);
+  if (direction === 'next') {
+    if (lastItemInUserStory === story){
+      currentIndex = 0;
+    }
+    else {
+      currentIndex++;
+    }
+  }
+  else if(direction === 'prev') {
+    if (firstItemInUserStory === story){
+      currentIndex = images.length-1;
+    }
+    else {
+      currentIndex--;
+    }
+  }
+  console.log('new index is:',currentIndex);
+  preloadImageRange(currentIndex);
+}
 
   function getIndex(idx) {
     if (idx < 0) {
@@ -52,17 +123,25 @@
     return idx;
   }
 
+  function preloadImageRange(defaultIndex){
+        preloadImage(defaultIndex);
+        preloadImage(defaultIndex + 1);
+        preloadImage(defaultIndex - 1);
+  }
+
   function preloadImage(idx) {
     idx = getIndex(idx);
     let i = images[idx];
-    if (!i || i.fullImageSizeUrl) {
+    if (i.fullImageSizeUrl) {
+       i.imageUrlForDisplay = i.fullImageSizeUrl;
       console.log(i.imageTitle + " is already preloaded");
       return;
     }
+    //use thumbnail as loong as full screen is not available
+     i.imageUrlForDisplay = i.thumbnail;
 
     loadFullSizeImage(i).then(url => {
       i.fullImageSizeUrl = url;
-      i.url = url;
       console.log(
         "preload ok for: " +
           i.imageTitle +
@@ -71,60 +150,188 @@
           " idx: " +
           idx
       );
+      i.imageUrlForDisplay = url;
       images[idx] = Object.assign({}, i);
     });
   }
 
-  function sliderScrolled(e) {
-    let width = e.target.scrollWidth / images.length;
-    let idx = Math.round(e.target.scrollLeft / width, 0);
-    if (idx != defaultIndex) {
-      activeChanged(idx);
-    }
-  }
-
-  function imageRatioChanged(e) {
-    imageRatioContain = e.detail.imageRatioContain;
-    console.log("new ratio " + imageRatioContain);
-  }
-
-  function activeChanged(idx) {
-    defaultIndex = idx;
-    console.log("activechange to:", images[idx].imageTitle, idx);
-    tick();
-    page("/slideShow?key=" + images[idx].key);
-    preloadImage(idx + 2);
-    preloadImage(idx + 1);
-    preloadImage(idx - 1);
-    preloadImage(idx - 2);
-  }
 </script>
 
 <style>
-  .slider {
+.slideContainer {
+  min-height: 100vh;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  place-items: center;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif;
+  margin: 0;
+  background: hsl(200, 15%, 93%);
+  position:absolute;
+  top: 0px;
+
+  /* parent owned aspects of the responsive stories */
+}
+
+.slideContainer > .stories {
     width: 100vw;
-    height: calc(100vh - 50px);
-    display: flex;
-    overflow-x: scroll;
-    scroll-snap-type: x mandatory;
+    height: 100vh;
   }
-  .slide {
-    flex-shrink: 0;
-    width: 100vw;
-    height: calc(100vh - 50px);
-    scroll-snap-align: start;
+
+
+.slideContainer > .stories {
+    padding: inherit;
+    /* desktop constraint */
+  }
+
+@media (hover: hover) and (min-width: 480px) {
+
+/* .slideContainer > .stories {
+      max-width: 480px;
+      max-height: 848px
+  }
+} */
+
+.slideContainer > .stories {
+    max-width: inherit;
+    /* smaller desktop constraint */
+  }
+
+@media (hover: hover) and (max-height: 880px) and (min-width: 720px) {
+
+.slideContainer > .stories {
+      max-width: 320px;
+      max-height: 568px
+  }
+    }
+
+.stories {
+  display: grid;
+  grid: 1fr / auto-flow 100%;
+  grid-gap: 1ch;
+  gap: 1ch;
+  overflow-x: auto;
+  -ms-scroll-snap-type: x mandatory;
+      scroll-snap-type: x mandatory;
+  -ms-scroll-chaining: none;
+      overscroll-behavior: contain;
+  touch-action: pan-x;
+}
+
+.user {
+  /* outer */
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+
+  /* inner */
+  display: grid;
+  grid: [story] 1fr / [story] 1fr;
+}
+
+.story {
+  width: 100vw;
+  grid-area: story;
+  background-size: cover;
+  background-image: 
+  var(--bg), 
+  linear-gradient(to top, rgb(249, 249, 249), rgb(226, 226, 226));
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+  transition: opacity .3s cubic-bezier(0.4, 0.0, 1, 1), background-position-x 9s, background-position-y 9s;
+  background-position-x: 0%;
+  background-position-y: 0%;
+}
+
+.hidden {
+  	opacity: 0;
+    pointer-events: none;
+    background-position-x: 100%;
+    background-position-y: 100%;
+} 
+
+  .textContainer {
+    background-color: #000; 
+    background-color: rgb(255 255 101 / 0.7);
+    border: 1px solid #000;
+    border-radius: 20px;
+    padding: 10px;
+    margin: 10px;
+  }
+    
+  .textContainer .title {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  .textContainer .text {
+    font-size: 14px;
+  }
+.actionButtons{
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  display: flex;
+}
+
+  .actionButton {
+    background-color: #000;
+    background-color: rgba(255,255,101,.7);
+    border: 1px solid #000;
+    border-radius: 30px;
+    padding: 5px 2px 5px 6px;
+    margin: -3px 0;
+    height: 30px;
+    width: 30px;
   }
 </style>
-
-<div class="slider" on:scroll={sliderScrolled} bind:this={slider}>
-  {#each images as image}
-    <div class="slide">
-      <ImageFullScreen
-        {backUrl}
-        {image}
-        {imageRatioContain}
-        on:ratio={imageRatioChanged} />
+<div class="slideContainer">
+<div class="stories" bind:this={storiesElement}> 
+  <section class="user">
+     {#each images as image,i}
+    <article class="story {i != currentIndex ? 'hidden' : ''}" style={"background-image: url('"+image.imageUrlForDisplay+"');"}>
+      <div
+    class="textContainer">
+    <div>
+      <div>
+        <span class="title">{image.imageTitle}</span>
+      </div>
+      <div class="text">{image.funFact}</div>
+      <div class="text">{getDisplayTime(image.insertTime)}</div>
     </div>
-  {/each}
+    <div>
+    </article> 
+     {/each}
+  </section>
+</div>
+    <div class="actionButtons">
+    <div class="actionButton">
+      <IconButton
+        on:click={showOnMap}
+        class="lurinsnavicons material-icons"
+        aria-label="Open map">
+        place
+      </IconButton>
+    </div>
+    {#if canShare}
+    <div class="actionButton">
+        <IconButton
+          on:click={shareImage}
+          class="lurinsnavicons material-icons"
+          aria-label="Share">
+          share
+        </IconButton>
+    </div>
+    {/if}
+    <div class="actionButton">
+      <IconButton
+        on:click={closeSlideShow}
+        class="lurinsnavicons material-icons"
+        aria-label="Open map">
+        close
+      </IconButton>
+    </div>
+    </div>
 
 </div>
