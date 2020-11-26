@@ -254,15 +254,11 @@ const navigateStories = direction => {
   display: flex;
 }
 
-.actionButton {
+:global(.actionButton) {
   background-color: #000;
   background-color: rgba(255,255,101,.7);
   border: 1px solid #000;
   border-radius: 30px;
-  padding: 5px 2px 5px 6px;
-  margin: -3px 0;
-  height: 30px;
-  width: 30px;
 }
 
 </style>
@@ -286,32 +282,25 @@ const navigateStories = direction => {
   </section>
 </div>
     <div class="actionButtons">
-    <div class="actionButton">
-      <IconButton
-        on:click={showOnMap}
-        class="lurinsnavicons material-icons"
-        aria-label="Open map">
-        place
-      </IconButton>
-    </div>
-    {#if canShare}
-    <div class="actionButton">
         <IconButton
-          on:click={shareImage}
-          class="lurinsnavicons material-icons"
-          aria-label="Share">
-          share
+          on:click={showOnMap}
+          class="material-icons actionButton"
+          aria-label="Open map">
+          place
+        </IconButton>
+      {#if canShare}
+          <IconButton
+            on:click={shareImage}
+            class="material-icons actionButton"
+            aria-label="Share">
+            share
+          </IconButton>
+      {/if}
+        <IconButton
+          on:click={closeSlideShow}
+          class="material-icons actionButton"
+          aria-label="Close">
+          close
         </IconButton>
     </div>
-    {/if}
-    <div class="actionButton">
-      <IconButton
-        on:click={closeSlideShow}
-        class="lurinsnavicons material-icons"
-        aria-label="Open map">
-        close
-      </IconButton>
-    </div>
-    </div>
-
 </div>

@@ -10,6 +10,7 @@
   import { userStore } from "./../services/loginWrapperService.js";
   import page from "page";
   import { onMount } from "svelte";
+  import Card from "@smui/card";
 
   onMount(async function() {
     var s = await subscribeToFacts();
@@ -73,7 +74,6 @@
     min-width: 300px;
     flex: 1 1 0px;
   }
-
   ul {
     padding-inline-start: 5px;
   }
@@ -87,6 +87,11 @@
   </div>
   <div>
     <ul class="list">
+      <li class="list-item">
+      <Card  style="background-color: #ffff65;border:2px solid #616161;margin-bottom: 20px;" padded>
+      What Chuck Norris is to action movies, Lurin is to the IT world. Here you find some of the most impressiv facts and tales about Lurin.
+      </Card>
+      </li>
       {#each facts as fact}
         <li class="list-item" on:click={() => selectFact(fact)}>
           <Fact

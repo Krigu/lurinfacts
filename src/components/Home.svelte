@@ -54,8 +54,17 @@
     A site dedicated to the greatest IT guy ever.
   </div>
   <div class="list">
+   <div class="list-item">
+      <h1>Latest trips</h1>
+      {#each images as image}
+        <Image {image} hasDeleteButton={false} />
+      {/each}
+      <Button href="/images" variant="raised" class="formButton">
+        <Label>Show me all images</Label>
+      </Button>
+    </div>
     <div class="list-item">
-      <h1>Newest facts</h1>
+      <h1>Latest facts</h1>
       {#each facts as fact}
         <div class="fact">
           <Fact {fact} hasDeleteButton={false} hasAcceptButton={false} />
@@ -65,15 +74,5 @@
         <Label>Show me all facts</Label>
       </Button>
     </div>
-    <div class="list-item">
-      <h1>Newest image</h1>
-      {#each images as image}
-        <Image {image} hasDeleteButton={false} />
-      {/each}
-      <Button href="/images" variant="raised" class="formButton">
-        <Label>Show me all images</Label>
-      </Button>
-    </div>
-
   </div>
 </div>
