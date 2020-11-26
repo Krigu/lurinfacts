@@ -3,16 +3,28 @@
   import { createEventDispatcher } from "svelte";
   import Button, { Label } from "@smui/button";
   import page from "page";
+  import { onMount } from "svelte";
 
   export let image;
   export let hasDeleteButton;
 
   let pathName = location.pathname || "home";
   pathName = pathName.indexOf("/") == 0 ? pathName.substring(1) : PathName;
-
+  let imageContainer;
   let landscapeClass = "portrait";
+  let displayUrl = "";
 
   const dispatch = createEventDispatcher();
+
+  onMount(async function() {
+    var intersectionObserver = new IntersectionObserver(function(entries) {
+      if(entries[0].intersectionRatio > 0){
+        console.log("intersection observer for "+image.imageTitle,entries );
+        displayUrl = image.thumbnail;
+      }
+    });
+    intersectionObserver.observe(imageContainer);
+  });
 
   function deleteLocation(e) {
     e.stopPropagation();
@@ -75,14 +87,14 @@
   }
 </style>
 
-<div
+<div bind:this={imageContainer}
   class="imageContainer mdc-card"
   on:click={() => page('/slideShow?key=' + image.key + '&backUrl=' + pathName)}>
   <div>
     <div class="imageText">{image.imageTitle}</div>
     <div class="square">
       <img
-        src={image.thumbnail}
+        src={displayUrl}
         class={landscapeClass}
         on:load={imageLoaded}
         alt={image.funFact} />

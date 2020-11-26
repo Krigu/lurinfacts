@@ -52,6 +52,7 @@ async function loadImages() {
     imagesLoaded = true;
     newestImages.set(getNewest(imagesArray));
   });
+  return images;
 }
 
 function getNewest(imagesArray) {
