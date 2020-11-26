@@ -3,14 +3,16 @@ import { writable } from "svelte/store";
 const worker = new Worker("worker.js");
 import { readImages } from "./../webworker/indexedDbService.js";
 
-let images = writable([]);
 let newestImages = writable([]);
 let imageAdapter = writable([]);
-
+let imagesLoaded = false;
 let dataInterface = Comlink.wrap(worker);
 
+
 export async function subscribeToImages() {
-  return images;
+let subscribeableImageStore = loadImages();
+
+return subscribeableImageStore;
 }
 
 export async function subscribeToNewestImages() {
@@ -18,9 +20,11 @@ export async function subscribeToNewestImages() {
 }
 
 async function loadImages() {
+  let images = writable([]);
+
   const imagesArray = (await readImages()) || [];
 
-  images.set(imagesArray);
+  images.set([...imagesArray]);
   newestImages.set(getNewest(imagesArray));
 
   function callback(f) {
@@ -44,7 +48,8 @@ async function loadImages() {
 
     imagesArray.sort((x, y) => y.insertTime - x.insertTime);
 
-    images.set(imagesArray);
+    images.set([...imagesArray]);
+    imagesLoaded = true;
     newestImages.set(getNewest(imagesArray));
   });
 }
@@ -76,5 +81,3 @@ export async function loadFullSizeImage(image) {
   });
   return p1;
 }
-
-loadImages();

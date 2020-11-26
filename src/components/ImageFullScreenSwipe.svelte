@@ -1,6 +1,5 @@
 <script>
   import IconButton, { Icon } from "@smui/icon-button";
-  import ImageFullScreen from "./ImageFullScreen.svelte";
   import {
     subscribeToImages,
     loadFullSizeImage
@@ -51,12 +50,12 @@
   });
 
   document.addEventListener('keydown', ({key}) => {
-  if (key !== 'ArrowDown' || key !== 'ArrowUp')
-    navigateStories(
-      key === 'ArrowDown'
-        ? 'next'
-        : 'prev')
-});
+    if (key !== 'ArrowDown' || key !== 'ArrowUp')
+      navigateStories(
+        key === 'ArrowDown'
+          ? 'next'
+          : 'prev');
+  });
 
   async function shareImage(e) {
     let image = images[currentIndex];
@@ -133,12 +132,12 @@ const navigateStories = direction => {
     idx = getIndex(idx);
     let i = images[idx];
     if (i.fullImageSizeUrl) {
-       i.imageUrlForDisplay = i.fullImageSizeUrl;
+      i.imageUrlForDisplay = i.fullImageSizeUrl;
       console.log(i.imageTitle + " is already preloaded");
       return;
     }
     //use thumbnail as loong as full screen is not available
-     i.imageUrlForDisplay = i.thumbnail;
+    i.imageUrlForDisplay = i.thumbnail;
 
     loadFullSizeImage(i).then(url => {
       i.fullImageSizeUrl = url;
@@ -184,26 +183,6 @@ const navigateStories = direction => {
     /* desktop constraint */
   }
 
-@media (hover: hover) and (min-width: 480px) {
-
-/* .slideContainer > .stories {
-      max-width: 480px;
-      max-height: 848px
-  }
-} */
-
-.slideContainer > .stories {
-    max-width: inherit;
-    /* smaller desktop constraint */
-  }
-
-@media (hover: hover) and (max-height: 880px) and (min-width: 720px) {
-
-.slideContainer > .stories {
-      max-width: 320px;
-      max-height: 568px
-  }
-    }
 
 .stories {
   display: grid;
@@ -246,28 +225,28 @@ const navigateStories = direction => {
 }
 
 .hidden {
-  	opacity: 0;
-    pointer-events: none;
-    background-position-x: 100%;
-    background-position-y: 100%;
+  opacity: 0;
+  pointer-events: none;
+  background-position-x: 100%;
+  background-position-y: 100%;
 } 
 
-  .textContainer {
-    background-color: #000; 
-    background-color: rgb(255 255 101 / 0.7);
-    border: 1px solid #000;
-    border-radius: 20px;
-    padding: 10px;
-    margin: 10px;
-  }
-    
-  .textContainer .title {
-    font-size: 20px;
-    font-weight: bold;
-  }
-  .textContainer .text {
-    font-size: 14px;
-  }
+.textContainer {
+  background-color: #000; 
+  background-color: rgb(255 255 101 / 0.7);
+  border: 1px solid #000;
+  border-radius: 20px;
+  padding: 10px;
+  margin: 10px;
+}
+  
+.textContainer .title {
+  font-size: 20px;
+  font-weight: bold;
+}
+.textContainer .text {
+  font-size: 14px;
+}
 .actionButtons{
   position: absolute;
   bottom: 10px;
@@ -275,16 +254,17 @@ const navigateStories = direction => {
   display: flex;
 }
 
-  .actionButton {
-    background-color: #000;
-    background-color: rgba(255,255,101,.7);
-    border: 1px solid #000;
-    border-radius: 30px;
-    padding: 5px 2px 5px 6px;
-    margin: -3px 0;
-    height: 30px;
-    width: 30px;
-  }
+.actionButton {
+  background-color: #000;
+  background-color: rgba(255,255,101,.7);
+  border: 1px solid #000;
+  border-radius: 30px;
+  padding: 5px 2px 5px 6px;
+  margin: -3px 0;
+  height: 30px;
+  width: 30px;
+}
+
 </style>
 <div class="slideContainer">
 <div class="stories" bind:this={storiesElement}> 

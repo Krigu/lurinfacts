@@ -7,18 +7,21 @@
   import { userStore } from "./../services/loginWrapperService.js";
 
   import { notify, ask } from "./../services/notifyService.js";
-  import { onMount } from "svelte";
-
-  export let params;
+  import { onMount,onDestroy  } from "svelte";
 
   let images = [];
-
+  let unsubscribe;
   onMount(async function() {
     console.log("images mounted");
     let imageObservable = await subscribeToImages();
-    imageObservable.subscribe(x => {
+    unsubscribe = imageObservable.subscribe(x => {
+      console.log("images got imagesData:"+ x.length+ " current count "+images.length);
       images = x;
     });
+  });
+
+  onDestroy(async function(){
+    unsubscribe();
   });
 
   let loggedIn = false;
