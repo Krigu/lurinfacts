@@ -45,22 +45,26 @@
     {
       "name": "Facts",
       "description": "View a list of all facts about Lurin",
-      "url": "/facts"
+      "url": "/facts",
+      "icons":[]
     },
     {
       "name": "Images",
       "description": "View a list of all places Lurin has visited",
-      "url": "/images"
+      "url": "/images",
+      "icons":[]
     },
     {
       "name": "Map",
       "description": "View the map with all the awesome places Lurin has visited",
-      "url": "/map"
+      "url": "/map",
+      "icons":[]
     },
     {
       "name": "Contribute",
       "description": "Contribute your own wisdom about Lurin",
-      "url": "/contribute"
+      "url": "/contribute",
+      "icons":[]
     }
   ]
 }
