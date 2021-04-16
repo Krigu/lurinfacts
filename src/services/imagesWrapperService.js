@@ -16,6 +16,9 @@ return subscribeableImageStore;
 }
 
 export async function subscribeToNewestImages() {
+  if(!imagesLoaded){
+    await loadImages();
+  }
   return newestImages;
 }
 
