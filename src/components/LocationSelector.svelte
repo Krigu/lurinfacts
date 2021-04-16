@@ -4,7 +4,6 @@
     getPositionByCoords,
     getPositionByAddress
   } from "./../services/geoLocationService.js";
-  import { loadMapScript } from "./../services/mapsLoaderService.js";
   import Button, { Label } from "@smui/button";
   import Radio from "@smui/radio";
   import FormField from "@smui/form-field";

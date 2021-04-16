@@ -134,10 +134,7 @@
         <a on:click={checkIsOpened} href="/images">Images</a>
       </li>
       <li>
-        <a on:click={checkIsOpened} href="/googlemap">GMap</a>
-      </li>
-      <li>
-        <a on:click={checkIsOpened} href="/map">LeafletMap</a>
+        <a on:click={checkIsOpened} href="/map">Map</a>
       </li>
       <li>
         <a on:click={checkIsOpened} href="/settings">Settings</a>
