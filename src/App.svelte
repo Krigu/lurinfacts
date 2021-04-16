@@ -2,7 +2,8 @@
   import "./App.scss";
   import Facts from "./components/Facts.svelte";
   import Images from "./components/Images.svelte";
-  import Map from "./components/Map.svelte";
+  import GMap from "./components/GoogleMap.svelte";
+  import LeafletMap from "./components/LeafletMap.svelte";
   import Home from "./components/Home.svelte";
   import Settings from "./components/Settings.svelte";
   import Login from "./components/Login.svelte";
@@ -26,7 +27,8 @@
   router("/addImage", () => (page = AddPlaceToBe));
   router("/shareApiTest", () => (page = ShareApiTest));
   router("/facts", () => (page = Facts));
-  router("/map", () => (page = Map));
+  router("/gmap", () => (page = GoogleMap));
+  router("/map", () => (page = LeafletMap));
   router("/images", () => (page = Images));
 
   router(
