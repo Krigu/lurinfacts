@@ -22,31 +22,23 @@
   let selectedOption = "map";
   let addressSearch = "";
   function initMap() {
-    var observer = loadMapScript();
-    observer.subscribe(loaded => {
-      if (loaded) {
-        let initialCoords = { lat: 46.65, lng: 7.709 };
+    
+      let initialCoords = [46.65, 7.709];
 
         if (location && location.latitude) {
-          initialCoords = { lat: location.latitude, lng: location.longitude };
+          initialCoords = [location.latitude, location.longitude];
         } else {
           updateLocationByCoords(initialCoords.lat, initialCoords.lng);
         }
-        map = new google.maps.Map(mapElement, {
-          center: initialCoords,
-          zoom: 8
-        });
-        marker = new google.maps.Marker({
-          map: map,
-          draggable: true,
-          animation: google.maps.Animation.DROP,
-          position: initialCoords
-        });
-        marker.addListener("dragend", function() {
-          console.log(marker);
-          updateLocationByCoords(marker.position.lat(), marker.position.lng());
-        });
-      }
+
+    map = L.map('map').setView(initialCoords, 6);
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {attribution: 'OSM'}).addTo(map);
+
+    marker = L.marker(initialCoords,{draggable:true}).addTo(map);
+    marker.on('dragend', function() {
+      var latLng = marker.getLatLng()
+      console.log('moved marker',latLng);
+      updateLocationByCoords(latLng.lat,latLng.lng);
     });
   }
 
@@ -56,8 +48,7 @@
       if (foundLocation == null) {
         notify("could not get location by coordinates.");
       } else {
-        location = foundLocation;
-        dispatch("locationChoosen", location);
+        setLocation(foundLocation);
       }
     } catch (e) {
       console.log("updateLocationByCoords: error while looking up coords", e);
@@ -70,13 +61,18 @@
       if (foundLocation == null) {
         notify("could not get location by address.");
       } else {
-        location = foundLocation;
-        dispatch("locationChoosen", location);
+        setLocation(foundLocation);
       }
     } catch (e) {
       console.log("getByAddress: error while looking up coords", e);
     }
     return false;
+  }
+
+  function setLocation(newLocation){
+    location = newLocation;
+    marker.setLatLng([newLocation.latitude,newLocation.longitude])
+    dispatch("locationChoosen", location);
   }
 
   onMount(async () => {
@@ -188,7 +184,7 @@
   {:else if selectedOption == 'map'}
     <div>
       <h3>Choose by map</h3>
-      <div id="map" bind:this={mapElement} />
+      <div id="map"></div>
     </div>
   {/if}
 

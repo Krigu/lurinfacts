@@ -150,5 +150,5 @@ function checkIfMapsIsLoaded() {
 {/if}
 
 <div class="mapContainer">
-   <div id="map"></div>
+  <div id="map"></div>
 </div>
