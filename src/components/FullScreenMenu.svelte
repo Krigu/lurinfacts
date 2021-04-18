@@ -170,7 +170,7 @@
         class="twitterLink"
         target="_blank"
         rel="noopener"
-        href="https://www.twitter.com/@lurin_tha_one"
+        href="https://www.twitter.com/lurin_tha_one"
         alt="follow Lurin on twitter">
         <img src="./../assets/twitter_logo.png" alt="Twitter Logo" />
       </a>
