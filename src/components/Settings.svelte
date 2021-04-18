@@ -1,15 +1,25 @@
 <script>
   import {
     disablePush,
-    enablePush,
-    getCurrentSubscription
+    enablePush
   } from "./../services/pushNotificationService.js";
   import { notify } from "./../services/notifyService.js";
   import Button, { Label } from "@smui/button";
 
   let isWorking = false;
+  let skipServiceWorkerRegistration = localStorage.getItem('skipServiceWorkerRegistration') || false;
   let hasServiceWorker = "serviceWorker" in navigator;
   let isPushFeatured = hasServiceWorker && "PushManager" in window;
+  
+  let serviceWorkerInfo = '';
+if(hasServiceWorker){
+navigator.serviceWorker.getRegistrations().then(registrations => {
+    console.log('',registrations);
+    serviceWorkerInfo = 'Registered at: '+  new Date(+localStorage.getItem("swRegistrationTime") || 0);
+});
+}
+
+
 
   async function togglePush(disable) {
     isWorking = true;
@@ -21,6 +31,11 @@
     }
     notify(result.msg);
     isWorking = false;
+  }
+
+  async function toggleSwRegistration() {
+    skipServiceWorkerRegistration = !skipServiceWorkerRegistration;
+    localStorage.setItem('skipServiceWorkerRegistration',+skipServiceWorkerRegistration);
   }
 
   async function clearStorage() {
@@ -89,12 +104,23 @@
   <div class="configItem">
     {#if hasServiceWorker}
       <h2>Service Worker</h2>
+      {serviceWorkerInfo || 'No service-worker info'}<br/>
+      Skip register service worker on startup: {skipServiceWorkerRegistration ? 'Yes' : 'Nope'}
+      <br/>
+      <Button
+        on:click={() => toggleSwRegistration()}
+        variant="raised"
+        class="formButton">
+        <Label>{skipServiceWorkerRegistration ? 'Register at startup' : 'Skip at startup'} </Label>
+      </Button>
+        {#if serviceWorkerInfo}
       <Button
         on:click={() => unregisterServiceWorker()}
         variant="raised"
         class="formButton">
         <Label>Unregister Service Worker</Label>
       </Button>
+        {/if}
     {/if}
   </div>
 

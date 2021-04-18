@@ -7,7 +7,7 @@ let unregisterPushUrl =
 
 export async function disablePush() {
   try {
-    var subscription = await getCurrentSubscription()
+    var subscription = await getCurrentPushSubscription()
     if (subscription == null) {
       return { sucess: true, msg: 'Push notifications disabled!' }
     }
@@ -43,7 +43,7 @@ export async function enablePush() {
   }
 }
 
-export function getCurrentSubscription() {
+export function getCurrentPushSubscription() {
   return registerServiceWorker().then(function (registration) {
     return registration.pushManager.getSubscription()
   })
@@ -84,6 +84,7 @@ function registerServiceWorker() {
   return navigator.serviceWorker
     .register('service-worker.js')
     .then(function (registration) {
+      localStorage.setItem("swRegistrationTime",+new Date())
       console.log('Service worker successfully registered.')
       return registration
     })
