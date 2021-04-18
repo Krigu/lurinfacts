@@ -1,4 +1,5 @@
 dist/
+distbak/
 .firebase/
 node_modules/
 
