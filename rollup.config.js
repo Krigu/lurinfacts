@@ -4,6 +4,7 @@ import commonjs from "rollup-plugin-commonjs";
 import postcss from "rollup-plugin-postcss";
 import replace from "@rollup/plugin-replace";
 import { injectManifest } from "rollup-plugin-workbox";
+import rollup_copy from "rollup-plugin-copy-assets";
 import rollup_sizes from "rollup-plugin-sizes";
 import rollup_analyze from "rollup-plugin-analyzer";
 module.exports = [{
@@ -34,6 +35,14 @@ module.exports = [{
     }),
     rollup_sizes(),
     rollup_analyze({ limit: 10 }),
+    rollup_copy({
+      assets: [
+        "src/assets",
+        "src/manifest.json",
+        "src/index.html",
+        "src/.htaccess",
+      ],
+    })
   ],
   watch: {
     clearScreen: false,

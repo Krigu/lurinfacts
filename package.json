@@ -44,6 +44,7 @@
     "rollup-plugin-analyzer": "^3.2.2",
     "rollup-plugin-sizes": "^1.0.4",
     "rollup-plugin-workbox": "^5.2.1",
+    "rollup-plugin-copy-assets": "^2.0.3",
     "sass": "^1.32.8",
     "serve": "^11.3.2",
     "svelte": "^3.37.0",
