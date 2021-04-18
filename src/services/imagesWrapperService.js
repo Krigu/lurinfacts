@@ -59,7 +59,7 @@ async function loadImages() {
 }
 
 function getNewest(imagesArray) {
-  return imagesArray.filter((x, idx) => idx < 1);
+  return imagesArray[imagesArray.length-1];
 }
 
 export async function deleteImageAndMetadata(...p) {
