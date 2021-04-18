@@ -5,7 +5,6 @@
     acceptFactProposal
   } from "./../services/factsWrapperService.js";
   import Fact from "./Fact.svelte";
-  import Button, { Label } from "@smui/button";
   import { notify } from "./../services/notifyService";
   import { userStore } from "./../services/loginWrapperService.js";
   import { onMount } from "svelte";
@@ -53,17 +52,6 @@
     padding: 0.5em;
     width: 350px;
     flex-grow: 1;
-  }
-
-  .list-content {
-    background-color: #fff;
-    display: flex;
-    flex-direction: column;
-    padding: 1em;
-    width: 100%;
-  }
-  .list-content p {
-    flex: 1 0 auto;
   }
   ul {
     padding-inline-start: 5px;

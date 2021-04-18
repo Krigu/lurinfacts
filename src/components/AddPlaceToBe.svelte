@@ -73,14 +73,6 @@
     }
     return false;
   }
-
-  // function handleFiles(e) {
-  //   readFile(e.target.files[0]).then(([thumb, fullSize, original]) => {
-  //     thumbnailImage = thumb;
-  //     fullsizeImage = fullSize;
-  //     originalImage = original;
-  //   });
-  // }
 </script>
 
 <style type="text/postcss">

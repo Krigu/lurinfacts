@@ -143,7 +143,7 @@
     <div class="col">
       <img
         src={cachedImage.thumbnailImage}
-        alt="shared image"
+        alt="use this one this previous shared for your next post"
         style="max-height:100px;height:auto" />
     </div>
     <div class="col">
