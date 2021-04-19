@@ -6,7 +6,8 @@
   "scripts": {
     "build": "rollup -c",
     "build:auto": "rollup -c -w",
-    "serve": "serve dist"
+    "serve": "sirv dist --single",
+    "serve:dev": "sirv dist --dev --single"
   },
   "repository": {
     "type": "git",
@@ -48,7 +49,7 @@
     "rollup-plugin-svelte": "^7.1.0",
     "rollup-plugin-workbox": "^5.2.1",
     "sass": "^1.32.8",
-    "serve": "^11.3.2",
+    "sirv-cli": "^1.0.11",
     "svelte": "^3.37.0",
     "svelte-forms": "^1.2.0"
   },
