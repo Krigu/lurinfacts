@@ -1,10 +1,5 @@
 <script>
-
 </script>
-
-<style>
-
-</style>
 
 <div>
   <br />
@@ -19,3 +14,6 @@
     <button>send</button>
   </form>
 </div>
+
+<style>
+</style>

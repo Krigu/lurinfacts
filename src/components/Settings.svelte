@@ -1,25 +1,26 @@
 <script>
   import {
     disablePush,
-    enablePush
+    enablePush,
   } from "./../services/pushNotificationService.js";
   import { notify } from "./../services/notifyService.js";
   import Button, { Label } from "@smui/button";
 
   let isWorking = false;
-  let skipServiceWorkerRegistration = localStorage.getItem('skipServiceWorkerRegistration') || false;
+  let skipServiceWorkerRegistration =
+    localStorage.getItem("skipServiceWorkerRegistration") || false;
   let hasServiceWorker = "serviceWorker" in navigator;
   let isPushFeatured = hasServiceWorker && "PushManager" in window;
-  
-  let serviceWorkerInfo = '';
-if(hasServiceWorker){
-navigator.serviceWorker.getRegistrations().then(registrations => {
-    console.log('',registrations);
-    serviceWorkerInfo = 'Registered at: '+  new Date(+localStorage.getItem("swRegistrationTime") || 0);
-});
-}
 
-
+  let serviceWorkerInfo = "";
+  if (hasServiceWorker) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      console.log("", registrations);
+      serviceWorkerInfo =
+        "Registered at: " +
+        new Date(+localStorage.getItem("swRegistrationTime") || 0);
+    });
+  }
 
   async function togglePush(disable) {
     isWorking = true;
@@ -35,7 +36,10 @@ navigator.serviceWorker.getRegistrations().then(registrations => {
 
   async function toggleSwRegistration() {
     skipServiceWorkerRegistration = !skipServiceWorkerRegistration;
-    localStorage.setItem('skipServiceWorkerRegistration',+skipServiceWorkerRegistration);
+    localStorage.setItem(
+      "skipServiceWorkerRegistration",
+      +skipServiceWorkerRegistration
+    );
   }
 
   async function clearStorage() {
@@ -49,7 +53,7 @@ navigator.serviceWorker.getRegistrations().then(registrations => {
   }
 
   function unregisterServiceWorker() {
-    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+    navigator.serviceWorker.getRegistrations().then(function (registrations) {
       for (let registration of registrations) {
         registration.unregister();
         notify("ServiceWorker kicked!");
@@ -58,14 +62,7 @@ navigator.serviceWorker.getRegistrations().then(registrations => {
   }
 </script>
 
-<style type="text/postcss">
-  .configItem {
-    padding-bottom: 60px;
-  }
-</style>
-
 <div class="contentpadding">
-
   <div class="configItem">
     <h1>Settings</h1>
 
@@ -76,14 +73,16 @@ navigator.serviceWorker.getRegistrations().then(registrations => {
         on:click={() => togglePush(true)}
         disabled={isWorking}
         variant="raised"
-        class="formButton">
+        class="formButton"
+      >
         <Label>Disable</Label>
       </Button>
       <Button
         on:click={() => togglePush(false)}
         disabled={isWorking}
         variant="raised"
-        class="formButton">
+        class="formButton"
+      >
         <Label>Enable</Label>
       </Button>
     {:else}
@@ -94,7 +93,6 @@ navigator.serviceWorker.getRegistrations().then(registrations => {
     {/if}
   </div>
   <div class="configItem">
-
     <h2>Cache</h2>
     <p>Clear LocalStorage and IndexDB</p>
     <Button on:click={() => clearStorage()} variant="raised" class="formButton">
@@ -104,24 +102,37 @@ navigator.serviceWorker.getRegistrations().then(registrations => {
   <div class="configItem">
     {#if hasServiceWorker}
       <h2>Service Worker</h2>
-      {serviceWorkerInfo || 'No service-worker info'}<br/>
-      Skip register service worker on startup: {skipServiceWorkerRegistration ? 'Yes' : 'Nope'}
-      <br/>
+      {serviceWorkerInfo || "No service-worker info"}<br />
+      Skip register service worker on startup: {skipServiceWorkerRegistration
+        ? "Yes"
+        : "Nope"}
+      <br />
       <Button
         on:click={() => toggleSwRegistration()}
         variant="raised"
-        class="formButton">
-        <Label>{skipServiceWorkerRegistration ? 'Register at startup' : 'Skip at startup'} </Label>
+        class="formButton"
+      >
+        <Label
+          >{skipServiceWorkerRegistration
+            ? "Register at startup"
+            : "Skip at startup"}
+        </Label>
       </Button>
-        {#if serviceWorkerInfo}
-      <Button
-        on:click={() => unregisterServiceWorker()}
-        variant="raised"
-        class="formButton">
-        <Label>Unregister Service Worker</Label>
-      </Button>
-        {/if}
+      {#if serviceWorkerInfo}
+        <Button
+          on:click={() => unregisterServiceWorker()}
+          variant="raised"
+          class="formButton"
+        >
+          <Label>Unregister Service Worker</Label>
+        </Button>
+      {/if}
     {/if}
   </div>
-
 </div>
+
+<style type="text/postcss">
+  .configItem {
+    padding-bottom: 60px;
+  }
+</style>

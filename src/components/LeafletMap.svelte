@@ -17,27 +17,32 @@
   function initMap() {
     let initialCoords = [46.65, 7.709];
 
-    map = L.map('map').setView(initialCoords, 6);
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {attribution: 'OSM'}).addTo(map);
+    map = L.map("map").setView(initialCoords, 6);
+    L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+      attribution: "OSM",
+    }).addTo(map);
   }
 
   function addImageToMap(image) {
-    if (markers.some(x => x.key == image.key)) {
+    if (markers.some((x) => x.key == image.key)) {
       return;
     }
 
-    var marker = L.marker([image.location.latitude, image.location.longitude]).addTo(map);
+    var marker = L.marker([
+      image.location.latitude,
+      image.location.longitude,
+    ]).addTo(map);
 
     markers.push(marker);
-    var popup =  marker.bindPopup(getTemplate(image));
-    popup.on('popupopen', function() {
+    var popup = marker.bindPopup(getTemplate(image));
+    popup.on("popupopen", function () {
       page("/map?key=" + image.key);
     });
     if (params.key == image.key) {
       popup.openPopup();
     }
   }
-  
+
   function getTemplate(image) {
     return `<div id="content" class="markerPopUp">
     <h2>${image.imageTitle}</h2>
@@ -52,7 +57,7 @@
       let i = 0;
       while (images.length > 0 && i++ < 10) {
         var img = images.pop();
-        if (!addedImagesKeys.find(x => x.key == img.key)) {
+        if (!addedImagesKeys.find((x) => x.key == img.key)) {
           delayedAdd(img);
           addedImagesKeys.push(img.key);
         }
@@ -61,7 +66,7 @@
   }
 
   function delayedAdd(img) {
-    window.setTimeout(function() {
+    window.setTimeout(function () {
       addImageToMap(img);
     }, 1000 + Math.random() * 7000);
   }
@@ -75,24 +80,24 @@
     waitForMapToLoaded();
   });
 
-const isLoaded = writable(false);
+  const isLoaded = writable(false);
 
-function loadMapScript() {
-  setTimeout(checkIfMapsIsLoaded, 100);
-  return isLoaded;
-}
-
-function checkIfMapsIsLoaded() {
-  if (L && L.map) {
-    isLoaded.set(true);
-  } else {
-    setTimeout(checkIfMapsIsLoaded, 300);
+  function loadMapScript() {
+    setTimeout(checkIfMapsIsLoaded, 100);
+    return isLoaded;
   }
-}
 
- async function waitForMapToLoaded() {
+  function checkIfMapsIsLoaded() {
+    if (L && L.map) {
+      isLoaded.set(true);
+    } else {
+      setTimeout(checkIfMapsIsLoaded, 300);
+    }
+  }
+
+  async function waitForMapToLoaded() {
     var observer = loadMapScript();
-    observer.subscribe(async loaded => {
+    observer.subscribe(async (loaded) => {
       if (loaded) {
         loadState = "loaded";
         initMap();
@@ -100,8 +105,20 @@ function checkIfMapsIsLoaded() {
       }
     });
   }
-
 </script>
+
+{#if loadState == "loading"}
+  <h1>Waiting for OpenStreetMap to load....</h1>
+{:else if loadState == "offline"}
+  <h1>Sorry, OpenStreetMap only work when online!</h1>
+  Go to
+  <a href="/images">Images</a>
+  instead.
+{/if}
+
+<div class="mapContainer">
+  <div id="map" />
+</div>
 
 <style type="text/postcss">
   .mapContainer {
@@ -139,16 +156,3 @@ function checkIfMapsIsLoaded() {
     max-height: 150px;
   }
 </style>
-
-{#if loadState == 'loading'}
-  <h1>Waiting for OpenStreetMap to load....</h1>
-{:else if loadState == 'offline'}
-  <h1>Sorry, OpenStreetMap only work when online!</h1>
-  Go to
-  <a href="/images">Images</a>
-  instead.
-{/if}
-
-<div class="mapContainer">
-  <div id="map"></div>
-</div>

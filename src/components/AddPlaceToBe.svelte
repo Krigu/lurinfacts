@@ -14,7 +14,7 @@
     funFact: "",
     imageKey: "",
     location: {},
-    thumbnail: ""
+    thumbnail: "",
   };
   let thumbnailImage = null;
   let fullsizeImage = null;
@@ -33,12 +33,12 @@
   const imageForm = form(() => ({
     title: {
       value: imageObj.imageTitle,
-      validators: ["required", "min:5", "max:80"]
+      validators: ["required", "min:5", "max:80"],
     },
     funFact: {
       value: imageObj.funFact,
-      validators: ["required", "min:5", "max:240"]
-    }
+      validators: ["required", "min:5", "max:240"],
+    },
   }));
 
   async function saveData(e) {
@@ -57,7 +57,7 @@
           funFact: "",
           imageKey: "",
           location: {},
-          thumbnail: ""
+          thumbnail: "",
         };
         thumbnailImage = null;
         fullsizeImage = null;
@@ -74,10 +74,6 @@
     return false;
   }
 </script>
-
-<style type="text/postcss">
-
-</style>
 
 <div class="contentpadding">
   <h1>Add place to be</h1>
@@ -96,11 +92,21 @@
 
       <LocationSelector on:locationChoosen={updateLocation} />
       <Button
-        disabled={!($imageForm.valid && imageObj.funFact.length > 0 && fullsizeImage && thumbnailImage && location)}
+        disabled={!(
+          $imageForm.valid &&
+          imageObj.funFact.length > 0 &&
+          fullsizeImage &&
+          thumbnailImage &&
+          location
+        )}
         variant="raised"
-        class="formButton">
+        class="formButton"
+      >
         <Label>Send</Label>
       </Button>
     </div>
   </form>
 </div>
+
+<style type="text/postcss">
+</style>

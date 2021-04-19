@@ -20,23 +20,6 @@
   }
 </script>
 
-<style>
-  .factContainer {
-    width: 100%;
-  }
-
-  .factSubtitle {
-    font-size: 12px;
-    text-align: right;
-    padding-top: 4px;
-  }
-  @media (prefers-color-scheme: dark) {
-    .factContainer {
-      color: black;
-    }
-  }
-</style>
-
 <div style="display: flex; flex-wrap: wrap;width:100%">
   <div class="card-container short factContainer">
     <Card style="background-color: #ffff65;" padded>
@@ -57,3 +40,20 @@
     {/if}
   </div>
 </div>
+
+<style type="text/postcss">
+  .factContainer {
+    width: 100%;
+  }
+
+  .factSubtitle {
+    font-size: 12px;
+    text-align: right;
+    padding-top: 4px;
+  }
+  @media (prefers-color-scheme: dark) {
+    .factContainer {
+      color: black;
+    }
+  }
+</style>

@@ -1,7 +1,7 @@
 <script>
   import {
     readFile,
-    getImageFormUrl
+    getImageFormUrl,
   } from "./../services/imageReaderService.js";
   import LinearProgress from "@smui/linear-progress";
   import { Icon } from "@smui/icon-button";
@@ -9,7 +9,7 @@
   import { createEventDispatcher } from "svelte";
   import {
     getCachedMediaMetadata,
-    deleteCachedMediaMetadata
+    deleteCachedMediaMetadata,
   } from "./../services/imageMediaDataCache.js";
   import { tick } from "svelte";
   import { onMount } from "svelte";
@@ -49,7 +49,7 @@
       cachedImage.originalImage
     );
     deleteCachedMediaMetadata(cachedImage.src).then(
-      result => (cachedImage = {})
+      (result) => (cachedImage = {})
     );
   }
 
@@ -75,7 +75,7 @@
     dispatch("imageChoosen", {
       thumbnailImage,
       fullsizeImage,
-      originalImage
+      originalImage,
     });
   }
 
@@ -89,6 +89,94 @@
     return Math.round(len / 1024, 2) + " KB";
   }
 </script>
+
+<div>
+  <h2>Select image</h2>
+  {#if cachedImageLoading}
+    <LinearProgress indeterminate />
+  {:else if cachedImage.src}
+    <div class="col">
+      <img
+        src={cachedImage.thumbnailImage}
+        alt="use this one this previous shared for your next post"
+        style="max-height:100px;height:auto"
+      />
+    </div>
+    <div class="col">
+      <Button on:click={useCachedImage} variant="raised" class="formButton">
+        <Label>Use this image</Label>
+      </Button>
+      <Button on:click={deleteCachedImage} variant="raised" class="formButton">
+        <Label>Choose other image</Label>
+      </Button>
+    </div>
+  {/if}
+  {#if !cachedImageLoading && !cachedImage.src && !thumbnailImage}
+    <div class="dropZoneContainer">
+      <input
+        type="file"
+        id="drop_zone"
+        bind:value={uploadedFiles}
+        class="FileUpload"
+        accept=".jpg,.png,.gif"
+        on:change={readUploadedFiles}
+      />
+      <div class="dropZoneOverlay">
+        Drag and drop your image
+        <br />
+        or
+        <br />
+        Click to add
+      </div>
+    </div>
+  {/if}
+  {#if thumbnailImage}
+    <div class="flex-grid-imageOk">
+      <div class="col">
+        <div class="imageReadyContainer">
+          <img
+            align="left"
+            src={thumbnailImage}
+            class="imagePreview"
+            alt="thmbnail"
+          />
+          {size(thumbnailImage)}
+          <br />
+          <Icon class="material-icons" style="vertical-align: text-bottom;">
+            done
+          </Icon>
+          Thumbnail is ready!
+        </div>
+        <div class="imageReadyContainer">
+          {#if fullsizeImage}
+            <img
+              align="left"
+              src={fullsizeImage}
+              class="imagePreview"
+              alt="thmbnail"
+            />
+            {size(fullsizeImage)}
+            <br />
+            <Icon class="material-icons" style="vertical-align: text-bottom;">
+              done
+            </Icon>
+            Fullsize is ready!
+          {/if}
+        </div>
+      </div>
+    </div>
+    <div style="height:100px">
+      <Button
+        on:click={deleteImages}
+        disabled={!thumbnailImage}
+        variant="raised"
+        class="formButton"
+      >
+        <Label>Delete</Label>
+      </Button>
+    </div>
+  {/if}
+</div>
 
 <style type="text/postcss">
   .dropZoneOverlay,
@@ -134,86 +222,3 @@
     padding: 0px 4px;
   }
 </style>
-
-<div>
-  <h2>Select image</h2>
-  {#if cachedImageLoading}
-    <LinearProgress indeterminate />
-  {:else if cachedImage.src}
-    <div class="col">
-      <img
-        src={cachedImage.thumbnailImage}
-        alt="use this one this previous shared for your next post"
-        style="max-height:100px;height:auto" />
-    </div>
-    <div class="col">
-      <Button on:click={useCachedImage} variant="raised" class="formButton">
-        <Label>Use this image</Label>
-      </Button>
-      <Button on:click={deleteCachedImage} variant="raised" class="formButton">
-        <Label>Choose other image</Label>
-      </Button>
-    </div>
-  {/if}
-  {#if !cachedImageLoading && !cachedImage.src && !thumbnailImage}
-    <div class="dropZoneContainer">
-      <input
-        type="file"
-        id="drop_zone"
-        bind:value={uploadedFiles}
-        class="FileUpload"
-        accept=".jpg,.png,.gif"
-        on:change={readUploadedFiles} />
-      <div class="dropZoneOverlay">
-        Drag and drop your image
-        <br />
-        or
-        <br />
-        Click to add
-      </div>
-    </div>
-  {/if}
-  {#if thumbnailImage}
-    <div class="flex-grid-imageOk">
-      <div class="col">
-        <div class="imageReadyContainer">
-          <img
-            align="left"
-            src={thumbnailImage}
-            class="imagePreview"
-            alt="thmbnail" />
-          {size(thumbnailImage)}
-          <br />
-          <Icon class="material-icons" style="vertical-align: text-bottom;">
-            done
-          </Icon>
-          Thumbnail is ready!
-        </div>
-        <div class="imageReadyContainer">
-          {#if fullsizeImage}
-            <img
-              align="left"
-              src={fullsizeImage}
-              class="imagePreview"
-              alt="thmbnail" />
-            {size(fullsizeImage)}
-            <br />
-            <Icon class="material-icons" style="vertical-align: text-bottom;">
-              done
-            </Icon>
-            Fullsize is ready!
-          {/if}
-        </div>
-      </div>
-    </div>
-    <div style="height:100px">
-      <Button
-        on:click={deleteImages}
-        disabled={!thumbnailImage}
-        variant="raised"
-        class="formButton">
-        <Label>Delete</Label>
-      </Button>
-    </div>
-  {/if}
-</div>

@@ -3,7 +3,7 @@
     login,
     logout,
     userStore,
-    resetPasswordRequest
+    resetPasswordRequest,
   } from "./../services/loginWrapperService.js";
   import { form } from "svelte-forms";
   import Button, { Label } from "@smui/button";
@@ -12,7 +12,7 @@
 
   let user = {};
   let showLogin = true;
-  const unsubscribe = userStore.subscribe(u => {
+  const unsubscribe = userStore.subscribe((u) => {
     showLogin = !u.loggedIn;
     user = u;
   });
@@ -20,22 +20,22 @@
   const loginForm = form(() => ({
     email: {
       value: loginObj.email,
-      validators: ["required", "email", "min:5", "max:150"]
+      validators: ["required", "email", "min:5", "max:150"],
     },
     password: {
       value: loginObj.password,
-      validators: ["required", "min:5", "max:80"]
-    }
+      validators: ["required", "min:5", "max:80"],
+    },
   }));
 
   function logoutUser(e) {
     e.preventDefault();
-    logout().then(u => (user = u));
+    logout().then((u) => (user = u));
     return false;
   }
 
   function sendPasswordResetLink() {
-    resetPasswordRequest(user).then(resposne => {
+    resetPasswordRequest(user).then((resposne) => {
       notify(
         "Password reset email sent. I hope you remember the password of your email account."
       );
@@ -59,10 +59,6 @@
   }
 </script>
 
-<style type="text/postcss">
-
-</style>
-
 <div class="contentpadding">
   {#if showLogin}
     <h1>Login</h1>
@@ -77,9 +73,12 @@
         <input type="password" name="password" bind:value={loginObj.password} />
       </div>
       <Button
-        disabled={!$loginForm.valid || loginObj.email.length == 0 || loginObj.password.length == 0}
+        disabled={!$loginForm.valid ||
+          loginObj.email.length == 0 ||
+          loginObj.password.length == 0}
         variant="raised"
-        class="formButton">
+        class="formButton"
+      >
         <Label>Login</Label>
       </Button>
     </form>
@@ -87,7 +86,8 @@
       on:click={sendPasswordResetLink}
       disabled={!$loginForm.email.valid || loginObj.email.length == 0}
       variant="raised"
-      class="formButton">
+      class="formButton"
+    >
       <Label>Send password reset link</Label>
     </Button>
   {:else}
@@ -100,3 +100,6 @@
     </form>
   {/if}
 </div>
+
+<style type="text/postcss">
+</style>

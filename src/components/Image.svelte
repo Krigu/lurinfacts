@@ -16,10 +16,10 @@
 
   const dispatch = createEventDispatcher();
 
-  onMount(async function() {
-    var intersectionObserver = new IntersectionObserver(function(entries) {
-      if(entries[0].intersectionRatio > 0){
-        console.log("intersection observer for "+image.imageTitle,entries );
+  onMount(async function () {
+    var intersectionObserver = new IntersectionObserver(function (entries) {
+      if (entries[0].intersectionRatio > 0) {
+        console.log("intersection observer for " + image.imageTitle, entries);
         displayUrl = image.thumbnail;
       }
     });
@@ -37,6 +37,31 @@
     }
   }
 </script>
+
+<div
+  bind:this={imageContainer}
+  class="imageContainer mdc-card"
+  on:click={() => page("/slideShow?key=" + image.key + "&backUrl=" + pathName)}
+>
+  <div>
+    <div class="imageText">{image.imageTitle}</div>
+    <div class="square">
+      <img
+        src={displayUrl}
+        class={landscapeClass}
+        on:load={imageLoaded}
+        alt={image.funFact}
+      />
+    </div>
+    <div class="imageText">{image.funFact}</div>
+    <div class="imageSubtitle">{getDisplayTime(image.insertTime)}</div>
+    {#if hasDeleteButton}
+      <Button on:click={deleteLocation} variant="raised" class="formButton">
+        <Label>Delete location</Label>
+      </Button>
+    {/if}
+  </div>
+</div>
 
 <style>
   .imageContainer {
@@ -86,25 +111,3 @@
     object-fit: cover;
   }
 </style>
-
-<div bind:this={imageContainer}
-  class="imageContainer mdc-card"
-  on:click={() => page('/slideShow?key=' + image.key + '&backUrl=' + pathName)}>
-  <div>
-    <div class="imageText">{image.imageTitle}</div>
-    <div class="square">
-      <img
-        src={displayUrl}
-        class={landscapeClass}
-        on:load={imageLoaded}
-        alt={image.funFact} />
-    </div>
-    <div class="imageText">{image.funFact}</div>
-    <div class="imageSubtitle">{getDisplayTime(image.insertTime)}</div>
-    {#if hasDeleteButton}
-      <Button on:click={deleteLocation} variant="raised" class="formButton">
-        <Label>Delete location</Label>
-      </Button>
-    {/if}
-  </div>
-</div>

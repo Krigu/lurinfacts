@@ -7,7 +7,7 @@
   import {
     login,
     logout,
-    userStore
+    userStore,
   } from "./../services/loginWrapperService.js";
 
   const dispatch = createEventDispatcher();
@@ -18,7 +18,7 @@
   }
 
   let loggedIn = false;
-  const unsubscribe = userStore.subscribe(user => {
+  const unsubscribe = userStore.subscribe((user) => {
     loggedIn = user.loggedIn;
   });
   let minimized = true;
@@ -35,6 +35,74 @@
     dispatch("message", minimized);
   }
 </script>
+
+<nav on:click={toggleMenu} class={minimized ? "minimized" : ""}>
+  <div>
+    {#if minimized}
+      <div style="display:inline-flex">
+        <div id="maskedLogo">&bnsp;</div>
+        <span class="pageTitle" style="margin: auto;padding-left: 10px;">
+          Lurinfacts
+        </span>
+      </div>
+    {/if}
+  </div>
+  <div class="menuDiv">
+    <ul>
+      <li>
+        <a on:click={checkIsOpened} href="/">Home</a>
+      </li>
+      <li>
+        <a on:click={checkIsOpened} href="/facts">Facts</a>
+      </li>
+      <li>
+        <a on:click={checkIsOpened} href="/images">Images</a>
+      </li>
+      <li>
+        <a on:click={checkIsOpened} href="/map">Map</a>
+      </li>
+      <li>
+        <a on:click={checkIsOpened} href="/settings">Settings</a>
+      </li>
+      <li>
+        <a on:click={checkIsOpened} href="/login">
+          {loggedIn ? "Logout" : "Login"}
+        </a>
+      </li>
+      {#if loggedIn}
+        <li>
+          <a on:click={checkIsOpened} href="/contributions">
+            {#if !minimized}
+              <Icon class="material-icons">lock</Icon>
+            {/if}
+            Facts proposals
+          </a>
+        </li>
+        <li>
+          <a on:click={checkIsOpened} href="/addImage">
+            {#if !minimized}
+              <Icon class="material-icons">lock</Icon>
+            {/if}
+            Add image
+          </a>
+        </li>
+      {/if}
+    </ul>
+  </div>
+  {#if minimized}
+    <div style="justify-self: end;margin-top: 5px;">
+      <a
+        class="twitterLink"
+        target="_blank"
+        rel="noopener"
+        href="https://www.twitter.com/lurin_tha_one"
+        alt="follow Lurin on twitter"
+      >
+        <img src="./../assets/twitter_logo.png" alt="Twitter Logo" />
+      </a>
+    </div>
+  {/if}
+</nav>
 
 <style type="text/postcss">
   .pageTitle {
@@ -110,72 +178,3 @@
     mask-image: url(./../assets/lurinfacts-icon-transparent.webp);
   }
 </style>
-
-<nav on:click={toggleMenu} class={minimized ? 'minimized' : ''}>
-  <div>
-    {#if minimized}
-      <div style="display:inline-flex">
-        <div id="maskedLogo">&bnsp;</div>
-        <span class="pageTitle" style="margin: auto;padding-left: 10px;">
-          Lurinfacts
-        </span>
-      </div>
-    {/if}
-  </div>
-  <div class="menuDiv">
-    <ul>
-      <li>
-        <a on:click={checkIsOpened} href="/">Home</a>
-      </li>
-      <li>
-        <a on:click={checkIsOpened} href="/facts">Facts</a>
-      </li>
-      <li>
-        <a on:click={checkIsOpened} href="/images">Images</a>
-      </li>
-      <li>
-        <a on:click={checkIsOpened} href="/map">Map</a>
-      </li>
-      <li>
-        <a on:click={checkIsOpened} href="/settings">Settings</a>
-      </li>
-      <li>
-        <a on:click={checkIsOpened} href="/login">
-          {loggedIn ? 'Logout' : 'Login'}
-        </a>
-      </li>
-      {#if loggedIn}
-        <li>
-          <a on:click={checkIsOpened} href="/contributions">
-            {#if !minimized}
-              <Icon class="material-icons">lock</Icon>
-            {/if}
-            Facts proposals
-          </a>
-        </li>
-        <li>
-          <a on:click={checkIsOpened} href="/addImage">
-            {#if !minimized}
-              <Icon class="material-icons">lock</Icon>
-            {/if}
-            Add image
-          </a>
-        </li>
-      {/if}
-    </ul>
-  </div>
-  {#if minimized}
-    <div style="justify-self: end;margin-top: 5px;">
-      <a
-        class="twitterLink"
-        target="_blank"
-        rel="noopener"
-        href="https://www.twitter.com/lurin_tha_one"
-        alt="follow Lurin on twitter">
-        <img src="./../assets/twitter_logo.png" alt="Twitter Logo" />
-      </a>
-
-    </div>
-  {/if}
-</nav>
- 

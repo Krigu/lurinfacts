@@ -1,7 +1,7 @@
 <script>
   import {
     notificationStore,
-    questionStore
+    questionStore,
   } from "./../services/notifyService.js";
   import { Label } from "@smui/button";
   import { onMount } from "svelte";
@@ -13,12 +13,12 @@
   let mySnackbarText;
 
   onMount(async () => {
-    notificationStore.subscribe(x => {
+    notificationStore.subscribe((x) => {
       mySnackbarText = x.msg;
       mySnackbarText && mySnackbar.open();
     });
 
-    questionStore.subscribe(x => {
+    questionStore.subscribe((x) => {
       if (!x.msg) {
         return;
       }
@@ -32,20 +32,20 @@
     }
     kitchen.push({
       props: {
-        variant: "stacked"
+        variant: "stacked",
       },
       label: msg,
       actions: [
         {
           onClick: () => reslove(true),
-          text: "Yes, please"
+          text: "Yes, please",
         },
         {
           text: "Nope",
-          onClick: () => reslove(false)
-        }
+          onClick: () => reslove(false),
+        },
       ],
-      dismissButton: false
+      dismissButton: false,
     });
   }
 </script>

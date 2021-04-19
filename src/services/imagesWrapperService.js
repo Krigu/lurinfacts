@@ -8,15 +8,14 @@ let imageAdapter = writable([]);
 let imagesLoaded = false;
 let dataInterface = Comlink.wrap(worker);
 
-
 export async function subscribeToImages() {
-let subscribeableImageStore = loadImages();
+  let subscribeableImageStore = loadImages();
 
-return subscribeableImageStore;
+  return subscribeableImageStore;
 }
 
 export async function subscribeToNewestImages() {
-  if(!imagesLoaded){
+  if (!imagesLoaded) {
     await loadImages();
   }
   return newestImages;
@@ -59,7 +58,7 @@ async function loadImages() {
 }
 
 function getNewest(imagesArray) {
-  return imagesArray[imagesArray.length-1];
+  return imagesArray[imagesArray.length - 1];
 }
 
 export async function deleteImageAndMetadata(...p) {

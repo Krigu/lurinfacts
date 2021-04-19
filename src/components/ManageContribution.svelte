@@ -2,7 +2,7 @@
   import {
     getFactsProposals,
     deleteFactProposal,
-    acceptFactProposal
+    acceptFactProposal,
   } from "./../services/factsWrapperService.js";
   import Fact from "./Fact.svelte";
   import { notify } from "./../services/notifyService";
@@ -11,17 +11,17 @@
 
   let facts = [];
 
-  onMount(async function() {
+  onMount(async function () {
     facts = await getFactsProposals();
   });
 
   let loggedIn = false;
-  userStore.subscribe(user => {
+  userStore.subscribe((user) => {
     loggedIn = user.loggedIn;
   });
 
   function onDeleteFactProposal(event) {
-    deleteFactProposal(event.detail.fact).then(success => {
+    deleteFactProposal(event.detail.fact).then((success) => {
       if (success) {
         notify("fact was deleted");
       } else {
@@ -31,7 +31,7 @@
   }
 
   function onAcceptFactProposal(event) {
-    acceptFactProposal(event.detail.fact).then(success => {
+    acceptFactProposal(event.detail.fact).then((success) => {
       if (success) {
         notify("fact was accepted");
       } else {
@@ -40,6 +40,24 @@
     });
   }
 </script>
+
+<div class="contentpadding">
+  <h1>Fact proposals</h1>
+  <ul class="list">
+    {#each facts as fact}
+      <li class="list-item">
+        <Fact
+          {fact}
+          hasDeleteButton={loggedIn}
+          hasAcceptButton={loggedIn}
+          on:delete={onDeleteFactProposal}
+          on:accept={onAcceptFactProposal}
+          class="list-content"
+        />
+      </li>
+    {/each}
+  </ul>
+</div>
 
 <style type="text/postcss">
   .list {
@@ -57,20 +75,3 @@
     padding-inline-start: 5px;
   }
 </style>
-
-<div class="contentpadding">
-  <h1>Fact proposals</h1>
-  <ul class="list">
-    {#each facts as fact}
-      <li class="list-item">
-        <Fact
-          {fact}
-          hasDeleteButton={loggedIn}
-          hasAcceptButton={loggedIn}
-          on:delete={onDeleteFactProposal}
-          on:accept={onAcceptFactProposal}
-          class="list-content" />
-      </li>
-    {/each}
-  </ul>
-</div>

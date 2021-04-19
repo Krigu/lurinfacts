@@ -47,7 +47,7 @@
   <h1>Contribute</h1>
   <form on:submit={sendContribution} class="lurinForm">
 
-    <div>
+    <div> 
       <label for="contributor">Contributor</label>
       <input type="text" name="contributor" bind:value={factObj.contributor} />
     </div>

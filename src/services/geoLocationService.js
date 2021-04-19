@@ -18,7 +18,7 @@ async function geoCodeService(geoUrl) {
   console.log(json);
   if (json.length > 0) {
     var res0 = json[0];
-    var addressParts = res0.display_name.split(',');
+    var addressParts = res0.display_name.split(",");
     var location = {
       latitude: res0.lat,
       longitude: res0.lon,

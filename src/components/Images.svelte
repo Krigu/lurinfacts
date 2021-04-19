@@ -1,31 +1,33 @@
 <script>
   import {
     subscribeToImages,
-    deleteImageAndMetadata
+    deleteImageAndMetadata,
   } from "./../services/imagesWrapperService.js";
   import Image from "./Image.svelte";
   import { userStore } from "./../services/loginWrapperService.js";
 
   import { notify, ask } from "./../services/notifyService.js";
-  import { onMount,onDestroy  } from "svelte";
+  import { onMount, onDestroy } from "svelte";
 
   let images = [];
   let unsubscribe;
-  onMount(async function() {
+  onMount(async function () {
     console.log("images mounted");
     let imageObservable = await subscribeToImages();
-    unsubscribe = imageObservable.subscribe(x => {
-      console.log("images got imagesData:"+ x.length+ " current count "+images.length);
+    unsubscribe = imageObservable.subscribe((x) => {
+      console.log(
+        "images got imagesData:" + x.length + " current count " + images.length
+      );
       images = x;
     });
   });
 
-  onDestroy(async function(){
+  onDestroy(async function () {
     unsubscribe();
   });
 
   let loggedIn = false;
-  userStore.subscribe(user => {
+  userStore.subscribe((user) => {
     loggedIn = user.loggedIn;
   });
 
@@ -48,6 +50,20 @@
   }
 </script>
 
+<div>
+  <ul class="list">
+    {#each images as image}
+      <li class="list-item">
+        <Image
+          {image}
+          hasDeleteButton={loggedIn}
+          on:delete={onDeleteLocation}
+        />
+      </li>
+    {/each}
+  </ul>
+</div>
+
 <style type="text/postcss">
   .list {
     display: flex;
@@ -59,21 +75,4 @@
     padding: 0.5em;
     width: 300px;
   }
-
-  .list-content p {
-    flex: 1 0 auto;
-  }
 </style>
-
-<div>
-  <ul class="list">
-    {#each images as image}
-      <li class="list-item">
-        <Image
-          {image}
-          hasDeleteButton={loggedIn}
-          on:delete={onDeleteLocation} />
-      </li>
-    {/each}
-  </ul>
-</div>
