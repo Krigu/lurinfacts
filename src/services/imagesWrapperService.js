@@ -27,7 +27,7 @@ async function loadImages() {
   const imagesArray = (await readImages()) || [];
 
   images.set([...imagesArray]);
-  newestImages.set(getNewest(imagesArray));
+  newestImages.set(getNewestImages(imagesArray));
 
   function callback(f) {
     imageAdapter.set(f);
@@ -52,13 +52,18 @@ async function loadImages() {
 
     images.set([...imagesArray]);
     imagesLoaded = true;
-    newestImages.set(getNewest(imagesArray));
+    newestImages.set(getNewestImages(imagesArray));
   });
   return images;
 }
 
-function getNewest(imagesArray) {
-  return imagesArray[imagesArray.length - 1];
+function getNewestImages(imagesArray) {
+  var newest = [];
+  let newestCount = 1;
+  for (let i = 0; i < newestCount; i++) {
+    newest.push(imagesArray[i]);
+  }
+  return newest;
 }
 
 export async function deleteImageAndMetadata(...p) {
