@@ -26,7 +26,7 @@
     if (location && location.latitude) {
       initialCoords = [location.latitude, location.longitude];
     } else {
-      updateLocationByCoords(initialCoords.lat, initialCoords.lng);
+      updateLocationByCoords(initialCoords[0], initialCoords[1]);
     }
 
     map = L.map("map").setView(initialCoords, 6);
@@ -37,7 +37,7 @@
     marker = L.marker(initialCoords, { draggable: true }).addTo(map);
     marker.on("dragend", function () {
       var latLng = marker.getLatLng();
-      console.log("moved marker", latLng);
+      //console.log("moved marker", latLng);
       updateLocationByCoords(latLng.lat, latLng.lng);
     });
   }
@@ -131,25 +131,25 @@
   <div>
     <FormField>
       <Radio
-        bind:group={selectedOption}
+        bind:group="{selectedOption}"
         value="address"
-        on:change={optionChanged}
+        on:change="{optionChanged}"
       />
       <span slot="label">By address</span>
     </FormField>
     <FormField>
       <Radio
-        bind:group={selectedOption}
+        bind:group="{selectedOption}"
         value="map"
-        on:change={optionChanged}
+        on:change="{optionChanged}"
       />
       <span slot="label">By map location</span>
     </FormField>
     <FormField>
       <Radio
-        bind:group={selectedOption}
+        bind:group="{selectedOption}"
         value="device"
-        on:change={optionChanged}
+        on:change="{optionChanged}"
       />
       <span slot="label">Device location</span>
     </FormField>
@@ -160,11 +160,11 @@
       <h3>Choose by address</h3>
       <div class="lurinForm">
         <label for="contributor">Address</label>
-        <input type="text" name="contributor" bind:value={addressSearch} />
+        <input type="text" name="contributor" bind:value="{addressSearch}" />
         Where have you been? Enter a address, Lurin will guess the coordinates.
       </div>
       <div style="width: 100%;height: 80px;">
-        <Button on:click={getByAddress} variant="raised" class="formButton">
+        <Button on:click="{getByAddress}" variant="raised" class="formButton">
           <Label>Get coords by address</Label>
         </Button>
       </div>
@@ -180,7 +180,7 @@
   {:else if selectedOption == "map"}
     <div>
       <h3>Choose by map</h3>
-      <div id="map" />
+      <div id="map"></div>
     </div>
   {/if}
 
