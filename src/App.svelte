@@ -8,7 +8,7 @@
   import Login from "./components/Login.svelte";
   import FullScreenMenu from "./components/FullScreenMenu.svelte";
   import AddPlaceToBe from "./components/AddPlaceToBe.svelte";
-  import ImageFullScreenSwipe from "./components/ImageFullScreenSwipe.svelte";
+  import ImageFullScreen from "./components/ImageFullScreen.svelte";
   import ShareApiTest from "./components/ShareApiTest.svelte";
   import Contribution from "./components/Contribution.svelte";
   import ManageContribution from "./components/ManageContribution.svelte";
@@ -48,7 +48,7 @@
       }, {});
       next();
     },
-    () => (page = ImageFullScreenSwipe)
+    () => (page = ImageFullScreen)
   );
 
   router("/*", () => (page = Home));
@@ -59,6 +59,12 @@
     menuOpened = !menuOpened;
   }
 </script>
+
+<FullScreenMenu on:message="{menuOpen}" />
+<main class="mainContainer" style="{menuOpened ? 'display:none' : ''}">
+  <svelte:component this="{page}" params="{params}" />
+</main>
+<Notification />
 
 <style>
   :global(body) {
@@ -86,9 +92,3 @@
     font-family: Roboto, sans-serif;
   }
 </style>
-
-<FullScreenMenu on:message={menuOpen} />
-<main class="mainContainer" style={menuOpened ? 'display:none' : ''}>
-  <svelte:component this={page} {params} />
-</main>
-<Notification />

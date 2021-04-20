@@ -162,12 +162,12 @@
 </script>
 
 <div class="slideContainer">
-  <div class="stories" bind:this={storiesElement}>
+  <div class="stories" bind:this="{storiesElement}">
     <section class="user">
       {#each images as image, i}
         <article
           class="story {i != currentIndex ? 'hidden' : ''}"
-          style={"background-image: url('" + image.imageUrlForDisplay + "');"}
+          style="{"background-image: url('" + image.imageUrlForDisplay + "');"}"
         >
           <div class="textContainer">
             <div>
@@ -177,7 +177,7 @@
               <div class="text">{image.funFact}</div>
               <div class="text">{getDisplayTime(image.insertTime)}</div>
             </div>
-            <div />
+            <div></div>
           </div>
         </article>
       {/each}
@@ -185,7 +185,7 @@
   </div>
   <div class="actionButtons">
     <IconButton
-      on:click={showOnMap}
+      on:click="{showOnMap}"
       class="material-icons actionButton"
       aria-label="Open map"
     >
@@ -193,7 +193,7 @@
     </IconButton>
     {#if canShare}
       <IconButton
-        on:click={shareImage}
+        on:click="{shareImage}"
         class="material-icons actionButton"
         aria-label="Share"
       >
@@ -201,7 +201,7 @@
       </IconButton>
     {/if}
     <IconButton
-      on:click={closeSlideShow}
+      on:click="{closeSlideShow}"
       class="material-icons actionButton"
       aria-label="Close"
     >
@@ -307,7 +307,7 @@
     display: flex;
   }
 
-  :global(.actionButton) {
+  :global(button.actionButton) {
     background-color: #000;
     background-color: rgba(255, 255, 101, 0.7);
     border: 1px solid #000;
