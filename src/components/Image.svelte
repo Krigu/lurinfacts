@@ -12,7 +12,7 @@
   pathName = pathName.indexOf("/") == 0 ? pathName.substring(1) : PathName;
   let imageContainer;
   let landscapeClass = "portrait";
-  let displayUrl = "";
+  let displayUrl = "assets/image_placeholder.jpg";
 
   const dispatch = createEventDispatcher();
 
@@ -39,24 +39,25 @@
 </script>
 
 <div
-  bind:this={imageContainer}
+  bind:this="{imageContainer}"
   class="imageContainer mdc-card"
-  on:click={() => page("/slideShow?key=" + image.key + "&backUrl=" + pathName)}
+  on:click="{() =>
+    page('/slideShow?key=' + image.key + '&backUrl=' + pathName)}"
 >
   <div>
     <div class="imageText">{image.imageTitle}</div>
     <div class="square">
       <img
-        src={displayUrl}
-        class={landscapeClass}
-        on:load={imageLoaded}
-        alt={image.funFact}
+        src="{displayUrl}"
+        class="{landscapeClass}"
+        on:load="{imageLoaded}"
+        alt="{image.funFact}"
       />
     </div>
     <div class="imageText">{image.funFact}</div>
     <div class="imageSubtitle">{getDisplayTime(image.insertTime)}</div>
     {#if hasDeleteButton}
-      <Button on:click={deleteLocation} variant="raised" class="formButton">
+      <Button on:click="{deleteLocation}" variant="raised" class="formButton">
         <Label>Delete location</Label>
       </Button>
     {/if}
