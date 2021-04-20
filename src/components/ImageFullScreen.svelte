@@ -1,5 +1,5 @@
 <script>
-  import IconButton, { Icon } from "@smui/icon-button";
+  import IconButton from "@smui/icon-button";
   import {
     subscribeToImages,
     loadFullSizeImage,
@@ -7,7 +7,6 @@
   import { getDisplayTime } from "../services/displayTime.js";
   import { tick, onMount } from "svelte";
   import { notifyInAWhile } from "./../services/notifyService.js";
-  import { writable } from "svelte/store";
 
   import page from "page";
   export let params;
@@ -22,7 +21,7 @@
     let imageObservable = await subscribeToImages();
     imageObservable.subscribe((x) => {
       var idx = x.findIndex((y) => y.key == params.key);
-      console.log("default index is:", idx);
+      //console.log("default index is:", idx);
       images = x;
       if (idx != -1) {
         currentIndex = idx;
@@ -115,6 +114,12 @@
       }
     }
     console.log("new index is:", currentIndex);
+    page(
+      "/slideShow?key=" +
+        images[currentIndex].key +
+        "&backUrl=" +
+        params.backUrl
+    );
     preloadImageRange(currentIndex);
   };
 

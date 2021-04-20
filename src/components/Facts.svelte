@@ -3,7 +3,7 @@
     deleteFact,
     subscribeToFacts,
   } from "./../services/factsWrapperService.js";
-  import Dialog, { Title, Content, Actions, InitialFocus } from "@smui/dialog";
+  import Dialog, { Title, Content, Actions } from "@smui/dialog";
   import { notify, ask } from "./../services/notifyService";
   import Fact from "./Fact.svelte";
   import Button, { Label } from "@smui/button";
@@ -12,18 +12,25 @@
   import { onMount } from "svelte";
   import Card from "@smui/card";
 
-  onMount(async function () {
-    var s = await subscribeToFacts();
-    s.subscribe((x) => {
-      facts = x;
-    });
-  });
-
   let facts = [];
   export let params;
   let selectedFactDialog;
   let selectedFact = null;
   let loggedIn = false;
+
+  onMount(async function () {
+    var s = await subscribeToFacts();
+    s.subscribe((x) => {
+      facts = x;
+      if (params.key) {
+        selectedFact = facts.filter((x) => x.key == params.key)[0];
+        if (selectedFact) {
+          selectFact(selectedFact);
+        }
+      }
+    });
+  });
+
   userStore.subscribe((user) => {
     loggedIn = user.loggedIn;
   });
@@ -41,15 +48,6 @@
         notify("fact was deleted");
       } else {
         notify("something went wrong while deleting the fact");
-      }
-    });
-  }
-
-  if (params.factKey) {
-    svelteFactStore.subscribe((facts) => {
-      selectedFact = facts.filter((x) => (x.key = params.factKey))[0];
-      if (selectedFact) {
-        selectFact(selectedFact);
       }
     });
   }
@@ -79,12 +77,12 @@
         </Card>
       </li>
       {#each facts as fact}
-        <li class="list-item" on:click={() => selectFact(fact)}>
+        <li class="list-item" on:click="{() => selectFact(fact)}">
           <Fact
-            {fact}
-            hasDeleteButton={loggedIn}
-            on:delete={onDeleteFact}
-            hasAcceptButton={false}
+            fact="{fact}"
+            hasDeleteButton="{loggedIn}"
+            on:delete="{onDeleteFact}"
+            hasAcceptButton="{false}"
           />
         </li>
       {/each}
@@ -93,7 +91,7 @@
 </div>
 
 <Dialog
-  bind:this={selectedFactDialog}
+  bind:this="{selectedFactDialog}"
   aria-labelledby="list-title"
   aria-describedby="list-content"
 >
@@ -101,9 +99,9 @@
   <Content>
     {#if selectedFact}
       <Fact
-        fact={selectedFact}
-        hasDeleteButton={false}
-        hasAcceptButton={false}
+        fact="{selectedFact}"
+        hasDeleteButton="{false}"
+        hasAcceptButton="{false}"
       />
     {/if}
   </Content>

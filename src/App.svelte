@@ -18,6 +18,14 @@
   let page;
   let params = {};
 
+  function reduceQueryString(ctx) {
+    return ctx.querystring.split("&").reduce((red, keyval) => {
+      let [key, val] = keyval.split("=");
+      red[key] = val;
+      return red;
+    }, {});
+  }
+
   router("/login", () => (page = Login));
   router("/home", () => (page = Home));
   router("/settings", () => (page = Settings));
@@ -25,14 +33,13 @@
   router("/contributions", () => (page = ManageContribution));
   router("/addImage", () => (page = AddPlaceToBe));
   router("/shareApiTest", () => (page = ShareApiTest));
-  router("/facts", () => (page = Facts));
   router("/map", () => (page = LeafletMap));
   router("/images", () => (page = Images));
 
   router(
-    "/facts?key=:factKey",
+    "/facts",
     (ctx, next) => {
-      params = ctx.params;
+      params = reduceQueryString(ctx);
       next();
     },
     () => (page = Facts)
@@ -41,11 +48,7 @@
   router(
     "/slideShow",
     (ctx, next) => {
-      params = ctx.querystring.split("&").reduce((red, keyval) => {
-        let [key, val] = keyval.split("=");
-        red[key] = val;
-        return red;
-      }, {});
+      params = reduceQueryString(ctx);
       next();
     },
     () => (page = ImageFullScreen)
