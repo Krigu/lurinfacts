@@ -15,7 +15,6 @@ async function geoCodeService(geoUrl) {
   let data = await makeRequest(geoUrl);
   let json = JSON.parse(data.responseText);
 
-  console.log(json);
   if (json.length > 0) {
     var res0 = json[0];
     var addressParts = res0.display_name.split(",");
