@@ -6,7 +6,8 @@ export function saveImageAndMetadata(
   metaData,
   thumbnailImage,
   fullsizeImage,
-  originalImage
+  originalImage,
+  triggerPushMessage
 ) {
   return saveImage(fullsizeImage, "locations").then((imageKey) => {
     return saveImage(originalImage, "originals").then((imageKeyOriginal) => {
@@ -14,7 +15,7 @@ export function saveImageAndMetadata(
       metaData.imageKeyOriginal = imageKeyOriginal;
       metaData.thumbnail = thumbnailImage;
       var ok = saveMetaData(metaData);
-      if (ok) {
+      if (ok && triggerPushMessage) {
         triggerPush();
       }
       return ok;

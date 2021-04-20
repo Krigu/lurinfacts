@@ -1,10 +1,10 @@
 <script>
   import { saveImageAndMetadata } from "./../services/imagesWrapperService.js";
-  import IconButton, { Icon } from "@smui/icon-button";
+  import Checkbox from "@smui/checkbox";
+  import FormField from "@smui/form-field";
   import { notify } from "./../services/notifyService.js";
   import { form } from "svelte-forms";
   import Button, { Label } from "@smui/button";
-  import { onMount } from "svelte";
   import LocationSelector from "./LocationSelector.svelte";
   import ImageSelector from "./ImageSelector.svelte";
   import page from "page";
@@ -16,6 +16,7 @@
     location: {},
     thumbnail: "",
   };
+  let triggerPushMessage = true;
   let thumbnailImage = null;
   let fullsizeImage = null;
   let originalImage = null;
@@ -49,7 +50,8 @@
         imageObj,
         thumbnailImage,
         fullsizeImage,
-        originalImage
+        originalImage,
+        triggerPushMessage
       );
       if (result) {
         imageObj = {
@@ -77,36 +79,46 @@
 
 <div class="contentpadding">
   <h1>Add place to be</h1>
-  <form style="max-width: 400px;" on:submit={saveData}>
+  <form style="max-width: 400px;" on:submit="{saveData}">
     <div class="lurinForm">
       <div>
         <label for="title">Location, Country</label>
-        <input type="text" name="title" bind:value={imageObj.imageTitle} />
+        <input type="text" name="title" bind:value="{imageObj.imageTitle}" />
       </div>
       <div>
         <label for="fact">Fun Fact</label>
-        <input type="text" name="fact" bind:value={imageObj.funFact} />
+        <input type="text" name="fact" bind:value="{imageObj.funFact}" />
       </div>
 
-      <ImageSelector on:imageChoosen={updateImage} />
+      <ImageSelector on:imageChoosen="{updateImage}" />
 
-      <LocationSelector on:locationChoosen={updateLocation} />
-      <Button
-        disabled={!(
-          $imageForm.valid &&
-          imageObj.funFact.length > 0 &&
-          fullsizeImage &&
-          thumbnailImage &&
-          location
-        )}
-        variant="raised"
-        class="formButton"
-      >
-        <Label>Send</Label>
-      </Button>
+      <LocationSelector on:locationChoosen="{updateLocation}" />
+      <div class="formButtons">
+        <FormField>
+          <Checkbox bind:checked="{triggerPushMessage}" />
+          <span slot="label">Trigger PushMessage</span>
+        </FormField>
+        <Button
+          disabled="{!(
+            $imageForm.valid &&
+            imageObj.funFact.length > 0 &&
+            fullsizeImage &&
+            thumbnailImage &&
+            location
+          )}"
+          variant="raised"
+          class="formButton"
+        >
+          <Label>Send</Label>
+        </Button>
+      </div>
     </div>
   </form>
 </div>
 
 <style type="text/postcss">
+  .formButtons {
+    display: flex;
+    justify-content: space-between;
+  }
 </style>
