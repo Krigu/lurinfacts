@@ -79,6 +79,7 @@
 
 <div class="contentpadding">
   <h1>Add place to be</h1>
+  <!-- svelte-ignore component-name-lowercase -->
   <form style="max-width: 400px;" on:submit="{saveData}">
     <div class="lurinForm">
       <div>

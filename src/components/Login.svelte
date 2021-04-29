@@ -62,20 +62,25 @@
 <div class="contentpadding">
   {#if showLogin}
     <h1>Login</h1>
-    <form on:submit={loginUser} class="lurinForm">
+    <!-- svelte-ignore component-name-lowercase -->
+    <form on:submit="{loginUser}" class="lurinForm">
       <div>
         <label for="email">Email Address</label>
-        <input type="text" name="email" bind:value={loginObj.email} />
+        <input type="text" name="email" bind:value="{loginObj.email}" />
       </div>
       <br />
       <div>
         <label for="password">Password</label>
-        <input type="password" name="password" bind:value={loginObj.password} />
+        <input
+          type="password"
+          name="password"
+          bind:value="{loginObj.password}"
+        />
       </div>
       <Button
-        disabled={!$loginForm.valid ||
+        disabled="{!$loginForm.valid ||
           loginObj.email.length == 0 ||
-          loginObj.password.length == 0}
+          loginObj.password.length == 0}"
         variant="raised"
         class="formButton"
       >
@@ -83,8 +88,8 @@
       </Button>
     </form>
     <Button
-      on:click={sendPasswordResetLink}
-      disabled={!$loginForm.email.valid || loginObj.email.length == 0}
+      on:click="{sendPasswordResetLink}"
+      disabled="{!$loginForm.email.valid || loginObj.email.length == 0}"
       variant="raised"
       class="formButton"
     >
@@ -93,7 +98,8 @@
   {:else}
     <h1>LoggedIn</h1>
     <h3>As: {user.email}</h3>
-    <form on:submit={logoutUser}>
+    <!-- svelte-ignore component-name-lowercase -->
+    <form on:submit="{logoutUser}">
       <Button class="formButton" variant="raised">
         <Label>Logout</Label>
       </Button>
