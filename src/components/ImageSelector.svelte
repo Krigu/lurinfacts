@@ -30,6 +30,7 @@
 
   async function loadCachedImage() {
     const images = await getCachedMediaMetadata("image");
+    console.log(`got ${(images && images.length) || 0} in cache`, images);
     let img = images ? images[0] : null;
     if (img) {
       let [thumb, fullSize, original] = await getImageFormUrl(img.src);

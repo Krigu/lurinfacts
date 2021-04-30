@@ -56,6 +56,8 @@
     navigator.serviceWorker.getRegistrations().then(function (registrations) {
       for (let registration of registrations) {
         registration.unregister();
+        localStorage.setItem("swRegistrationTime", null);
+        serviceWorkerInfo = "";
         notify("ServiceWorker kicked!");
       }
     });
@@ -70,16 +72,16 @@
     <p>Get the latest and greatest news about lurins trips and wisdom.</p>
     {#if isPushFeatured}
       <Button
-        on:click={() => togglePush(true)}
-        disabled={isWorking}
+        on:click="{() => togglePush(true)}"
+        disabled="{isWorking}"
         variant="raised"
         class="formButton"
       >
         <Label>Disable</Label>
       </Button>
       <Button
-        on:click={() => togglePush(false)}
-        disabled={isWorking}
+        on:click="{() => togglePush(false)}"
+        disabled="{isWorking}"
         variant="raised"
         class="formButton"
       >
@@ -95,7 +97,11 @@
   <div class="configItem">
     <h2>Cache</h2>
     <p>Clear LocalStorage and IndexDB</p>
-    <Button on:click={() => clearStorage()} variant="raised" class="formButton">
+    <Button
+      on:click="{() => clearStorage()}"
+      variant="raised"
+      class="formButton"
+    >
       <Label>Clear</Label>
     </Button>
   </div>
@@ -108,7 +114,7 @@
         : "Nope"}
       <br />
       <Button
-        on:click={() => toggleSwRegistration()}
+        on:click="{() => toggleSwRegistration()}"
         variant="raised"
         class="formButton"
       >
@@ -120,7 +126,7 @@
       </Button>
       {#if serviceWorkerInfo}
         <Button
-          on:click={() => unregisterServiceWorker()}
+          on:click="{() => unregisterServiceWorker()}"
           variant="raised"
           class="formButton"
         >

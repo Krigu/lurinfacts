@@ -114,7 +114,7 @@
       }
       if (
         "serviceWorker" in navigator &&
-        !localStorage.getItem("skipServiceWorkerRegistration")
+        !!localStorage.getItem("skipServiceWorkerRegistration")
       ) {
         navigator.serviceWorker
           .register("./service-worker.js", { scope: "/" })

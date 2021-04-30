@@ -9,6 +9,13 @@
   let charsTyped = 0;
   let isFastTyper = false;
   let timeoutHandle = null;
+  import { onMount } from "svelte";
+
+  export let params;
+
+  onMount(async function () {
+    factObj = { fact: params.q || "", contributor: params.c };
+  });
 
   const contributeForm = form(() => ({
     fact: { value: factObj.fact, validators: ["required", "min:5", "max:150"] },
