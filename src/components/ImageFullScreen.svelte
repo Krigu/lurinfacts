@@ -21,7 +21,6 @@
     let imageObservable = await subscribeToImages();
     imageObservable.subscribe((x) => {
       var idx = x.findIndex((y) => y.key == params.key);
-      //console.log("default index is:", idx);
       images = x;
       if (idx != -1) {
         currentIndex = idx;

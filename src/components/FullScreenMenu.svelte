@@ -1,24 +1,14 @@
 <script>
   import "./../App.scss";
-  import page from "page";
-  import IconButton, { Icon } from "@smui/icon-button";
+  import { Icon } from "@smui/icon-button";
   import { createEventDispatcher } from "svelte";
 
-  import {
-    login,
-    logout,
-    userStore,
-  } from "./../services/loginWrapperService.js";
+  import { userStore } from "./../services/loginWrapperService.js";
 
   const dispatch = createEventDispatcher();
 
-  function deleteLocation(e) {
-    e.stopPropagation();
-    dispatch("delete", image);
-  }
-
   let loggedIn = false;
-  const unsubscribe = userStore.subscribe((user) => {
+  userStore.subscribe((user) => {
     loggedIn = user.loggedIn;
   });
   let minimized = true;
@@ -36,7 +26,7 @@
   }
 </script>
 
-<nav on:click={toggleMenu} class={minimized ? "minimized" : ""}>
+<nav on:click="{toggleMenu}" class="{minimized ? 'minimized' : ''}">
   <div>
     {#if minimized}
       <div style="display:inline-flex">
@@ -50,28 +40,28 @@
   <div class="menuDiv">
     <ul>
       <li>
-        <a on:click={checkIsOpened} href="/">Home</a>
+        <a on:click="{checkIsOpened}" href="/">Home</a>
       </li>
       <li>
-        <a on:click={checkIsOpened} href="/facts">Facts</a>
+        <a on:click="{checkIsOpened}" href="/facts">Facts</a>
       </li>
       <li>
-        <a on:click={checkIsOpened} href="/images">Images</a>
+        <a on:click="{checkIsOpened}" href="/images">Images</a>
       </li>
       <li>
-        <a on:click={checkIsOpened} href="/map">Map</a>
+        <a on:click="{checkIsOpened}" href="/map">Map</a>
       </li>
       <li>
-        <a on:click={checkIsOpened} href="/settings">Settings</a>
+        <a on:click="{checkIsOpened}" href="/settings">Settings</a>
       </li>
       <li>
-        <a on:click={checkIsOpened} href="/login">
+        <a on:click="{checkIsOpened}" href="/login">
           {loggedIn ? "Logout" : "Login"}
         </a>
       </li>
       {#if loggedIn}
         <li>
-          <a on:click={checkIsOpened} href="/contributions">
+          <a on:click="{checkIsOpened}" href="/contributions">
             {#if !minimized}
               <Icon class="material-icons">lock</Icon>
             {/if}
@@ -79,7 +69,7 @@
           </a>
         </li>
         <li>
-          <a on:click={checkIsOpened} href="/addImage">
+          <a on:click="{checkIsOpened}" href="/addImage">
             {#if !minimized}
               <Icon class="material-icons">lock</Icon>
             {/if}

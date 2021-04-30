@@ -50,7 +50,7 @@
   }
 </script>
 
-<Snackbar bind:this={mySnackbar} labelText={mySnackbarText}>
+<Snackbar bind:this="{mySnackbar}" labelText="{mySnackbarText}">
   <Label />
 </Snackbar>
-<Kitchen bind:this={kitchen} dismiss$class="material-icons" />
+<Kitchen bind:this="{kitchen}" dismiss$class="material-icons" />

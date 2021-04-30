@@ -12,7 +12,7 @@
 
   let user = {};
   let showLogin = true;
-  const unsubscribe = userStore.subscribe((u) => {
+  userStore.subscribe((u) => {
     showLogin = !u.loggedIn;
     user = u;
   });
@@ -35,7 +35,7 @@
   }
 
   function sendPasswordResetLink() {
-    resetPasswordRequest(user).then((resposne) => {
+    resetPasswordRequest(user).then(() => {
       notify(
         "Password reset email sent. I hope you remember the password of your email account."
       );

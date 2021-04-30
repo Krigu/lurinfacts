@@ -48,9 +48,7 @@
       cachedImage.fullsizeImage,
       cachedImage.originalImage
     );
-    deleteCachedMediaMetadata(cachedImage.src).then(
-      (result) => (cachedImage = {})
-    );
+    deleteCachedMediaMetadata(cachedImage.src).then(() => (cachedImage = {}));
   }
 
   async function deleteCachedImage(e) {
@@ -97,16 +95,20 @@
   {:else if cachedImage.src}
     <div class="col">
       <img
-        src={cachedImage.thumbnailImage}
+        src="{cachedImage.thumbnailImage}"
         alt="use this one this previous shared for your next post"
         style="max-height:100px;height:auto"
       />
     </div>
     <div class="col">
-      <Button on:click={useCachedImage} variant="raised" class="formButton">
+      <Button on:click="{useCachedImage}" variant="raised" class="formButton">
         <Label>Use this image</Label>
       </Button>
-      <Button on:click={deleteCachedImage} variant="raised" class="formButton">
+      <Button
+        on:click="{deleteCachedImage}"
+        variant="raised"
+        class="formButton"
+      >
         <Label>Choose other image</Label>
       </Button>
     </div>
@@ -116,10 +118,10 @@
       <input
         type="file"
         id="drop_zone"
-        bind:value={uploadedFiles}
+        bind:value="{uploadedFiles}"
         class="FileUpload"
         accept=".jpg,.png,.gif"
-        on:change={readUploadedFiles}
+        on:change="{readUploadedFiles}"
       />
       <div class="dropZoneOverlay">
         Drag and drop your image
@@ -136,7 +138,7 @@
         <div class="imageReadyContainer">
           <img
             align="left"
-            src={thumbnailImage}
+            src="{thumbnailImage}"
             class="imagePreview"
             alt="thmbnail"
           />
@@ -151,7 +153,7 @@
           {#if fullsizeImage}
             <img
               align="left"
-              src={fullsizeImage}
+              src="{fullsizeImage}"
               class="imagePreview"
               alt="thmbnail"
             />
@@ -167,8 +169,8 @@
     </div>
     <div style="height:100px">
       <Button
-        on:click={deleteImages}
-        disabled={!thumbnailImage}
+        on:click="{deleteImages}"
+        disabled="{!thumbnailImage}"
         variant="raised"
         class="formButton"
       >
