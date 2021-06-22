@@ -3,7 +3,7 @@
   import { createEventDispatcher } from "svelte";
   import Button, { Label } from "@smui/button";
   import page from "page";
-  import { onMount } from "svelte";
+  import { onMount, onDestroy } from "svelte";
 
   export let image;
   export let hasDeleteButton;
@@ -13,7 +13,7 @@
   let imageContainer;
   let landscapeClass = "portrait";
   let displayUrl = "assets/image_placeholder.jpg";
-
+  let intersectionObserver;
   const dispatch = createEventDispatcher();
 
   onMount(async function () {
@@ -24,6 +24,10 @@
       }
     });
     intersectionObserver.observe(imageContainer);
+  });
+
+  onDestroy(async function () {
+    intersectionObserver && intersectionObserver.disconnect();
   });
 
   function deleteLocation(e) {
