@@ -34,22 +34,33 @@
     ]).addTo(map);
 
     markers.push(marker);
-    var popup = marker.bindPopup(getTemplate(image), {
-      maxWidth: 1000,
+    var elementKey = "img_" + image.key;
+    var popup = marker.bindPopup(getTemplate(image, elementKey), {
+      maxWidth: "auto",
     });
-    popup.on("popupopen", function () {
+    popup.on("popupopen", function (e) {
       page("/map?key=" + image.key);
+
+      let loadEvent = function () {
+        console.log("popupupdated", elementKey);
+        e.popup.update();
+        document
+          .getElementById(elementKey)
+          .removeEventListener("load", loadEvent);
+      };
+
+      document.getElementById(elementKey).addEventListener("load", loadEvent);
     });
     if (params.key == image.key) {
       popup.openPopup();
     }
   }
 
-  function getTemplate(image) {
+  function getTemplate(image, elementKey) {
     return `<div id="content" class="markerPopUp">
     <h2>${image.imageTitle}</h2>
     <div>
-    <img src="${image.thumbnail}" alt="${image.imageTitle}" />
+    <img id="${elementKey}" src="${image.thumbnail}" alt="${image.imageTitle}" />
     <p>${image.funFact}</p>
     </div></div>`;
   }
@@ -137,7 +148,7 @@
 
   :global(.markerPopUp) {
     padding: 10px;
-
+    min-width: 210px;
     text-align: center;
   }
 
