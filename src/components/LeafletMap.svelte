@@ -18,7 +18,7 @@
     let initialCoords = [46.65, 7.709];
 
     map = L.map("map").setView(initialCoords, 6);
-    L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+    L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
       attribution: "OSM",
     }).addTo(map);
   }
@@ -34,7 +34,9 @@
     ]).addTo(map);
 
     markers.push(marker);
-    var popup = marker.bindPopup(getTemplate(image));
+    var popup = marker.bindPopup(getTemplate(image), {
+      maxWidth: 1000,
+    });
     popup.on("popupopen", function () {
       page("/map?key=" + image.key);
     });
@@ -117,7 +119,7 @@
 {/if}
 
 <div class="mapContainer">
-  <div id="map" />
+  <div id="map"></div>
 </div>
 
 <style type="text/postcss">
@@ -137,7 +139,6 @@
     padding: 10px;
 
     text-align: center;
-    max-width: 210px;
   }
 
   @media (prefers-color-scheme: dark) {
