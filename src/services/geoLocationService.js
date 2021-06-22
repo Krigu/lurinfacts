@@ -3,7 +3,7 @@ import { makeRequest } from "./httpRequestService";
 let baseUrl = "https://nominatim.openstreetmap.org/search?format=json&limit=3";
 export async function getPositionByCoords(lat, lng) {
   var geoUrl = baseUrl + "&q=" + lat + "," + lng;
-  return geoCodeService(geoUrl);
+  return geoCodeService(geoUrl,lat,lng);
 }
 
 export async function getPositionByAddress(address) {
@@ -11,7 +11,7 @@ export async function getPositionByAddress(address) {
   return location;
 }
 
-async function geoCodeService(geoUrl) {
+async function geoCodeService(geoUrl,lat,lng) {
   let data = await makeRequest(geoUrl);
   let json = JSON.parse(data.responseText);
 
@@ -19,8 +19,8 @@ async function geoCodeService(geoUrl) {
     var res0 = json[0];
     var addressParts = res0.display_name.split(",");
     var location = {
-      latitude: res0.lat,
-      longitude: res0.lon,
+      latitude: lat || res0.lat,
+      longitude: lng || res0.lon,
       address: res0.display_name,
       country: addressParts[addressParts.length - 1],
     };
