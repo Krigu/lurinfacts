@@ -16,8 +16,10 @@ html {
 }
 
 :root {
-  --mdc-theme-primary: #ffff65;
+  --mdc-theme-primary: #ffff42;
+  --mdc-theme-primary-transparent: rgba(255, 255, 101,0.7);
   --mdc-theme-on-primary: black;
+  --mdc-theme-on-primary-transparent: rgba(0, 0, 0, 0.78);
 }
 body {
   background-color: #f8f8f8;
@@ -31,9 +33,11 @@ ul {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --mdc-theme-on-primary: #ffff65;
     --mdc-theme-primary: black;
+    --mdc-theme-primary-transparent: rgba(0, 0, 0, 0.459);
     --mdc-theme-text-primary-on-background: white;
+    --mdc-theme-on-primary: #ffff42;
+    --mdc-theme-on-primary-transparent: rgba(255, 255, 101,0.7);
   }
   body {
     background-color: #5f5353;
@@ -79,8 +83,7 @@ ul {
 .mdc-text-field--focused
   .mdc-text-field__input:required
   ~ .mdc-floating-label:after,
-.md
-  -text-field--focused
+.mdc-text-field--focused
   .mdc-text-field__input:required
   ~ .mdc-notched-outline
   .mdc-floating-label:after,
@@ -88,13 +91,6 @@ ul {
   color: rgba(0, 0, 0, 0.87) !important;
 }
 
-// @import "@material/linear-progress/mixins";
-// @import "@material/theme/color-palette";
-
-// .my-colored-bar {
-//   @include mdc-linear-progress-bar-color($material-color-green-500);
-//   @include mdc-linear-progress-buffer-color($material-color-green-100);
-// }
 .lurinForm {
   max-width: 400px;
 }

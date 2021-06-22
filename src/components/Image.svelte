@@ -71,7 +71,7 @@
 <style>
   .imageContainer {
     margin: 5px;
-    background-color: #ffff65;
+    background-color: #ffff42;
     font-size: 18px;
     border-radius: 6px;
     width: 100%;

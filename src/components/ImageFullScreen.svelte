@@ -11,6 +11,7 @@
   import page from "page";
   export let params;
 
+  let moveImage = true;
   let currentIndex = 0;
   const canShare = "canShare" in navigator;
   let storiesElement;
@@ -170,7 +171,10 @@
     <section class="user">
       {#each images as image, i}
         <article
-          class="story {i != currentIndex ? 'hidden' : ''}"
+          class="story {moveImage ? 'story-move' : 'story-starr'}  {i !=
+          currentIndex
+            ? 'hidden'
+            : ''}"
           style="{"background-image: url('" + image.imageUrlForDisplay + "');"}"
         >
           <div class="textContainer">
@@ -188,6 +192,13 @@
     </section>
   </div>
   <div class="actionButtons">
+    <IconButton
+      on:click="{() => (moveImage = !moveImage)}"
+      class="material-icons actionButton"
+      aria-label="toggle image perspective"
+    >
+      photo_size_select_small
+    </IconButton>
     <IconButton
       on:click="{showOnMap}"
       class="material-icons actionButton"
@@ -268,13 +279,24 @@
     width: 100vw;
     grid-area: story;
     background-size: cover;
-    background-image: var(--bg),
+    background-image: var(--mdc-theme-primary, black),
       linear-gradient(to top, rgb(249, 249, 249), rgb(226, 226, 226));
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
     touch-action: manipulation;
+  }
+
+  .story-starr {
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: contain;
+    background-color: var(--mdc-theme-primary, black);
+  }
+
+  .story-move {
     transition: opacity 0.3s cubic-bezier(0.4, 0, 1, 1),
       background-position-x 9s, background-position-y 9s;
     background-position-x: 0%;
@@ -289,9 +311,8 @@
   }
 
   .textContainer {
-    background-color: #000;
-    background-color: rgb(255 255 101 / 0.7);
-    border: 1px solid #000;
+    background-color: var(--mdc-theme-primary-transparent, #ffff42);
+    border: 1px solid var(--mdc-theme-on-primary, black);
     border-radius: 20px;
     padding: 10px;
     margin: 10px;
@@ -312,9 +333,8 @@
   }
 
   :global(button.actionButton) {
-    background-color: #000;
-    background-color: rgba(255, 255, 101, 0.7);
-    border: 1px solid #000;
+    background-color: var(--mdc-theme-primary-transparent, #ffff42);
+    border: 1px solid var(--mdc-theme-on-primary, black);
     border-radius: 30px;
   }
 </style>

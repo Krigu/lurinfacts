@@ -69,7 +69,7 @@
     <ul class="list">
       <li class="list-item">
         <Card
-          style="background-color: #ffff65;border:2px solid #616161;margin-bottom: 20px;"
+          style="background-color: #ffff42;border:2px solid #616161;margin-bottom: 20px;"
           padded
         >
           What Chuck Norris is to action movies, Lurin is to the IT world. Here

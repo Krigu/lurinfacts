@@ -22,19 +22,19 @@
 
 <div style="display: flex; flex-wrap: wrap;width:100%">
   <div class="card-container short factContainer">
-    <Card style="background-color: #ffff65;" padded>
+    <Card style="background-color: #ffff42;" padded>
       {fact.fact}
       <div class="factSubtitle">
         {getDisplayTime(fact.insertTime)} | by {fact.contributor}
       </div>
     </Card>
     {#if hasDeleteButton}
-      <Button on:click={deleteFact} variant="raised" class="formButton">
+      <Button on:click="{deleteFact}" variant="raised" class="formButton">
         <Label>Delete fact</Label>
       </Button>
     {/if}
     {#if hasAcceptButton}
-      <Button on:click={acceptFact} variant="raised" class="formButton">
+      <Button on:click="{acceptFact}" variant="raised" class="formButton">
         <Label>Accept fact</Label>
       </Button>
     {/if}
