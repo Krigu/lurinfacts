@@ -37,6 +37,7 @@
     var elementKey = "img_" + image.key;
     var popup = marker.bindPopup(getTemplate(image, elementKey), {
       maxWidth: "auto",
+      className: "lurinPopupStyle",
     });
     popup.on("popupopen", function (e) {
       page("/map?key=" + image.key);
@@ -151,19 +152,11 @@
     min-width: 210px;
     text-align: center;
   }
-
-  @media (prefers-color-scheme: dark) {
-    :global(.gm-style-iw-d) {
-      background-color: black !important;
-      overflow: hidden !important;
-    }
-    :global(.gm-style-iw) {
-      background-color: black !important;
-    }
-    :global(.gm-style-iw-t::after) {
-      background: black !important;
-    }
+  :global(.lurinPopupStyle .leaflet-popup-content-wrapper) {
+    background-color: var(--mdc-theme-primary, #ffff42);
+    color: var(--mdc-theme-on-primary, black);
   }
+
   :global(.markerPopUp img) {
     max-height: 150px;
   }

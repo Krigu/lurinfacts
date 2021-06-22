@@ -35,13 +35,13 @@ ul {
   :root {
     --mdc-theme-primary: black;
     --mdc-theme-primary-transparent: rgba(0, 0, 0, 0.459);
-    --mdc-theme-text-primary-on-background: white;
+    --mdc-theme-text-primary-on-background: #ffff42;
     --mdc-theme-on-primary: #ffff42;
     --mdc-theme-on-primary-transparent: rgba(255, 255, 101,0.7);
   }
   body {
     background-color: #5f5353;
-    color: white;
+    color: #ffff42;
     padding: 0px;
   }
   .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input {
