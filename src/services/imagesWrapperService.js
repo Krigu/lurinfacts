@@ -9,6 +9,7 @@ let imagesLoaded = false;
 let dataInterface = Comlink.wrap(worker);
 
 export async function subscribeToImages() {
+  //console.log("imagesServiceWrapper:subscribeToImages");
   let subscribeableImageStore = loadImages();
 
   return subscribeableImageStore;
@@ -36,6 +37,7 @@ async function loadImages() {
   dataInterface.subscribeToImages(Comlink.proxy(callback));
 
   imageAdapter.subscribe((f) => {
+    //console.log("imageAdapter got subscription count=" + f.length);
     var valToAdd = Array.isArray(f) ? f : [f];
 
     var newImages = valToAdd.filter(
@@ -60,7 +62,7 @@ async function loadImages() {
 function getNewestImages(imagesArray) {
   var newest = [];
   let newestCount = 1;
-  for (let i = 0; i < newestCount; i++) {
+  for (let i = 0; i < Math.min(newestCount, imagesArray.length); i++) {
     newest.push(imagesArray[i]);
   }
   return newest;

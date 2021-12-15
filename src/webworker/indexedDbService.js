@@ -43,20 +43,28 @@ export async function store(objectToStore, storeName) {
   if (obj) {
     return false;
   }
-  console.log("store image/fact in idb", objectToStore);
+  //console.log("store image/fact in idb", objectToStore);
   await db.put(storeName, objectToStore);
   return true;
 }
 
 export async function read(objectStoreName) {
   let objects = [];
-  let cursor = await (await getDBRef())
-    .transaction(objectStoreName)
-    .store.index("insertTime")
-    .openCursor(null, "prev");
-  while (cursor) {
-    objects.push(cursor.value);
-    cursor = await cursor.continue();
+  try {
+    var ref = await getDBRef();
+    let cursor = await ref
+      .transaction(objectStoreName)
+      .store.index("insertTime")
+      .openCursor(null, "prev");
+    while (cursor) {
+      objects.push(cursor.value);
+      cursor = await cursor.continue();
+    }
+  } catch (e) {
+    console.warn(
+      "indexedDbService.js error on read(" + objectStoreName + ")",
+      e
+    );
   }
   return objects;
 }
