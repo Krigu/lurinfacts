@@ -1,96 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="bundle.css" />
+    <link rel="manifest" href="/manifest.json" />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <link rel="stylesheet" href="bundle.css" />
-  <link rel="manifest" href="/manifest.json" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/assets/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/assets/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/assets/favicon-16x16.png"
+    />
+    <link rel="shortcut icon" href="/assets/favicon.ico" />
+    <meta name="msapplication-TileColor" content="#b91d47" />
+    <meta name="msapplication-config" content="/assets/browserconfig.xml" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="sgtoilet" />
+    <meta
+      name="description"
+      content="Lurinfacts.ch - a site about the greatest coder ever."
+    />
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png" />
-  <link rel="shortcut icon" href="/assets/favicon.ico" />
-  <meta name="msapplication-TileColor" content="#b91d47" />
-  <meta name="msapplication-config" content="/assets/browserconfig.xml" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  <meta name="apple-mobile-web-app-title" content="sgtoilet" />
-  <meta name="description" content="Lurinfacts.ch - a site about the greatest coder ever." />
+    <meta
+      itemprop="name"
+      content="Lurinfacts.ch - a site about the greatest coder ever."
+    />
+    <meta
+      itemprop="description"
+      content="Lurinfacts.ch - a site about the greatest coder ever."
+    />
+    <meta itemprop="image" content="/assets/lurinfacts-header.png" />
 
-  <meta itemprop="name" content="Lurinfacts.ch - a site about the greatest coder ever." />
-  <meta itemprop="description" content="Lurinfacts.ch - a site about the greatest coder ever." />
-  <meta itemprop="image" content="/assets/lurinfacts-header.png" />
+    <meta property="og:url" content="www.lurinfacts.ch" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Lurinfacts.ch - a site about the greatest coder ever."
+    />
+    <meta
+      property="og:description"
+      content="Lurinfacts.ch - a site about the greatest coder ever."
+    />
+    <meta property="og:image" content="/assets/lurinfacts-header.png" />
 
-  <meta property="og:url" content="www.lurinfacts.ch" />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Lurinfacts.ch - a site about the greatest coder ever." />
-  <meta property="og:description" content="Lurinfacts.ch - a site about the greatest coder ever." />
-  <meta property="og:image" content="/assets/lurinfacts-header.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Lurinfacts.ch - a site about the greatest coder ever."
+    />
+    <meta
+      name="twitter:description"
+      content="Lurinfacts.ch - a site about the greatest coder ever."
+    />
+    <meta name="twitter:image" content="/assets/lurinfacts-header.png" />
+    <meta name="theme-color" content="#ffff42" />
 
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Lurinfacts.ch - a site about the greatest coder ever." />
-  <meta name="twitter:description" content="Lurinfacts.ch - a site about the greatest coder ever." />
-  <meta name="twitter:image" content="/assets/lurinfacts-header.png" />
-  <meta name="theme-color" content="#ffff42" />
+    <link crossorigin rel="preconnect" href="https://fonts.gstatic.com" />
 
-  <link crossorigin rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap"
+    />
 
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap" />
-  <link rel="stylesheet" media="print" onload="this.media='all'"
-    href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap" />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+      href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
+    />
 
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Roboto&display=swap" />
-  <link rel="stylesheet" media="print" onload="this.media='all'"
-    href="https://fonts.googleapis.com/css?family=Roboto&display=swap" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+      crossorigin=""
+    ></script>
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-    crossorigin="" />
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-    crossorigin=""></script>
+    <script type="text/javascript">
+      if (
+        location.protocol !== "https:" &&
+        location.href.indexOf("localhost") == -1
+      ) {
+        console.log("redirect to https");
+        location.replace(
+          `https:${location.href.substring(location.protocol.length)}`
+        );
+      }
+      if (
+        "serviceWorker" in navigator &&
+        !+localStorage.getItem("skipServiceWorkerRegistration")
+      ) {
+        navigator.serviceWorker
+          .register("./service-worker.js", { scope: "/" })
+          .then(function (reg) {
+            localStorage.setItem("swRegistrationTime", +new Date());
+            console.log("service worker registration successful", reg.scope);
+          })
+          .catch(function (error) {
+            console.log("service worker registration failed ", error);
+          });
+      } else {
+        console.log("service worker registration skipped.");
+      }
+    </script>
+    <title>Lurinfacts</title>
+  </head>
 
-  <script type="text/javascript">
-    if (
-      location.protocol !== "https:" &&
-      location.href.indexOf("localhost") == -1
-    ) {
-      console.log("redirect to https");
-      location.replace(
-        `https:${location.href.substring(location.protocol.length)}`
-      );
-    }
-    if (
-      "serviceWorker" in navigator &&
-      !!localStorage.getItem("skipServiceWorkerRegistration")
-    ) {
-      navigator.serviceWorker
-        .register("./service-worker.js", { scope: "/" })
-        .then(function (reg) {
-          localStorage.setItem("swRegistrationTime", +new Date())
-          console.log("service worker registration successful", reg.scope);
-        })
-        .catch(function (error) {
-          console.log("service worker registration failed ", error);
-        });
-    } else {
-      console.log('service worker registration skipped.')
-    }
-  </script>
-  <title>Lurinfacts</title>
-</head>
-
-<body>
-  <noscript>
-    <div class="flex items-center h-full">
-      <h1 class="text-gray-600 px-8">
-        Oops! Javascript required here! Allow it and try again!
-      </h1>
-    </div>
-  </noscript>
-  <script src="bundle.js"></script>
-</body>
-
+  <body>
+    <noscript>
+      <div class="flex items-center h-full">
+        <h1 class="text-gray-600 px-8">
+          Oops! Javascript required here! Allow it and try again!
+        </h1>
+      </div>
+    </noscript>
+    <script src="bundle.js"></script>
+  </body>
 </html>

@@ -25,6 +25,7 @@
     }
   ],
   "start_url": "/home",
+  "id": "/home",
   "background_color": "#F2EA00",
   "display": "standalone",
   "theme_color": "#F2EA00",
@@ -46,25 +47,37 @@
       "name": "Facts",
       "description": "View a list of all facts about Lurin",
       "url": "/facts",
-      "icons":[]
+      "icons":[{
+        "src" : "assets/mainfest/shortcuts/facts.png",
+        "sizes" : "128x128"
+      }]
     },
     {
       "name": "Images",
       "description": "View a list of all places Lurin has visited",
       "url": "/images",
-      "icons":[]
+      "icons":[{
+        "src" : "assets/mainfest/shortcuts/image.png",
+        "sizes" : "128x128"
+      }]
     },
     {
       "name": "Map",
       "description": "View the map with all the awesome places Lurin has visited",
       "url": "/map",
-      "icons":[]
+      "icons":[{
+        "src" : "assets/mainfest/shortcuts/map.png",
+        "sizes" : "128x128"
+      }]
     },
     {
       "name": "Contribute",
       "description": "Contribute your own wisdom about Lurin",
       "url": "/contribute",
-      "icons":[]
+      "icons":[{
+        "src" : "assets/mainfest/shortcuts/contribute.png",
+        "sizes" : "128x128"
+      }]
     }
   ],
   "screenshots" : [
@@ -80,7 +93,7 @@
     },
     {
       "src": "assets/mainfest_screenshots/images.webp",
-      "sizes": "746x600",
+      "sizes": "748x600",
       "type": "image/webp"
     },
     {
