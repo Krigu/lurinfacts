@@ -3,6 +3,22 @@ import { storeImage } from "./../webworker/indexedDbService.js";
 
 let imagesArray = [];
 const storageRef = storage.ref();
+
+export function loadImageMetaData(imageKey, callback) {
+  var alreadyStored = imagesArray.filter((x) => x.key == img.key);
+  if (alreadyStored.length == 1) {
+    callback(alreadyStored[0]);
+    return;
+  }
+
+  let metaRef = db.ref("imageMetaData/" + imageKey);
+  metaRef.on("value", function (snapshot) {
+    let image = snapshot.val();
+    image.key = imageKey;
+    callback(image);
+  });
+}
+
 export function subscribeToImages(callback) {
   console.log("load image from firebase");
   let metaRef = db.ref("imageMetaData");

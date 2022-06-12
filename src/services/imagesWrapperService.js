@@ -9,9 +9,7 @@ let imagesLoaded = false;
 let dataInterface = Comlink.wrap(worker);
 
 export async function subscribeToImages() {
-  //console.log("imagesServiceWrapper:subscribeToImages");
   let subscribeableImageStore = loadImages();
-
   return subscribeableImageStore;
 }
 
@@ -20,6 +18,18 @@ export async function subscribeToNewestImages() {
     await loadImages();
   }
   return newestImages;
+}
+
+export async function loadImageMetaData(imageKey) {
+  let image = writable({});
+
+  function callback(f) {
+    image.set(f);
+  }
+  console.log("loadImage via comlink");
+  dataInterface.loadImageMetaData(imageKey, Comlink.proxy(callback));
+
+  return image;
 }
 
 async function loadImages() {
@@ -37,7 +47,6 @@ async function loadImages() {
   dataInterface.subscribeToImages(Comlink.proxy(callback));
 
   imageAdapter.subscribe((f) => {
-    //console.log("imageAdapter got subscription count=" + f.length);
     var valToAdd = Array.isArray(f) ? f : [f];
 
     var newImages = valToAdd.filter(

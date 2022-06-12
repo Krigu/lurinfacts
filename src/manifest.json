@@ -82,22 +82,22 @@
   ],
   "screenshots" : [
     {
-      "src": "assets/mainfest_screenshots/facts.webp",
+      "src": "assets/mainfest/screenshots/facts.webp",
       "sizes": "500x500",
       "type": "image/webp"
     },
     {
-      "src": "assets/mainfest_screenshots/home.webp",
+      "src": "assets/mainfest/screenshots/home.webp",
       "sizes": "1066x600",
       "type": "image/webp"
     },
     {
-      "src": "assets/mainfest_screenshots/images.webp",
+      "src": "assets/mainfest/screenshots/images.webp",
       "sizes": "748x600",
       "type": "image/webp"
     },
     {
-      "src": "assets/mainfest_screenshots/map.webp",
+      "src": "assets/mainfest/screenshots/map.webp",
       "sizes": "649x598",
       "type": "image/webp"
     }

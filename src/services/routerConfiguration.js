@@ -1,5 +1,6 @@
 import Facts from "./../components/Facts.svelte";
 import Images from "./../components/Images.svelte";
+import SingleImage from "./../components/SingleImage.svelte";
 import LeafletMap from "./../components/LeafletMap.svelte";
 import Home from "./../components/Home.svelte";
 import Settings from "./../components/Settings.svelte";
@@ -29,6 +30,7 @@ export default function initRouting(registerFn) {
   registerFn("/shareApiTest", ShareApiTest, callBackFn);
   registerFn("/map", LeafletMap, callBackFn);
   registerFn("/images", Images, callBackFn);
+  registerFn("/singleImage", SingleImage, callBackFn);
   registerFn("/facts", Facts, callBackFn);
   registerFn("/slideShow", ImageFullScreen, callBackFn);
   registerFn("/*", Home, callBackFn);

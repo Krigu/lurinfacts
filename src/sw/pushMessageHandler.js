@@ -33,11 +33,13 @@ function prepareOptions(pushMsg) {
   console.log("handle push msg:" + pushMsg.type);
   var data = { url: "/home" };
 
-  if (pushMsg.type == "newfact" || pushMsg.type == "randomfact") {
+  var type = pushMsg.type.toLowerCase();
+
+  if (type == "newfact" || type == "randomfact") {
     data = { url: "/facts?key=" + pushMsg.itemKey };
   }
-  if (pushMsg.type == "newimage" || pushMsg.type == "randomimage") {
-    data = { url: "/slideShow?key=" + pushMsg.itemKey };
+  if (type == "newimage" || type == "randomimage") {
+    data = { url: "/singleImage?key=" + pushMsg.itemKey };
   }
 
   const options = {

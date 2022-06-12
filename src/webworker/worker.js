@@ -4,6 +4,7 @@ import {
   subscribeToImages,
   getDownloadUrl,
   preloadImageByKey,
+  loadImageMetaData,
 } from "./imageSerivce.js";
 import {
   saveImageAndMetadata,
@@ -37,6 +38,7 @@ const dataInterface = {
   preloadImageByKey,
   deleteImageAndMetadata,
   saveImageAndMetadata,
+  loadImageMetaData,
   logout,
   resetPasswordRequest,
   login,
