@@ -1,7 +1,7 @@
 import {
   resizeImage,
   getOrientation,
-  rotatePhoto,
+  loadImage,
 } from "./imageResizeService.js";
 
 const maxSizeFullSizeImageInKB = 300;
@@ -24,20 +24,28 @@ export async function getImageFormUrl(url) {
     let metadata = {
       type: "image/jpeg",
     };
-    let file = new File([data], "test.jpg", metadata);
-    handleFile(file, url, resolve, reject);
+    let file = new File([data], url, metadata);
+    //return handleFile(file, url, resolve, reject);
+    return loadImage(url).then((img) => {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      ctx.drawImage(img, 0, 0);
+      return handleFile(file, canvas.toDataURL("image/jpeg"), resolve, reject);
+    });
   });
 }
 
-async function handleFile(file, url, resolve, reject) {
+async function handleFile(file, base64, resolve, reject) {
   let orientation = await getOrientation(file);
   console.log(
     `orientation of photo is: ${orientation.degree}, rotating is switched off.`
   );
-  // var rotatedResult = await rotatePhoto(url, orientation.degree);
-  var promiseThumb = resizeImage(url, maxSizeThumbnailImageInKB);
-  var promiseFullsize = resizeImage(url, maxSizeFullSizeImageInKB);
-  return Promise.all([promiseThumb, promiseFullsize, Promise.resolve(url)])
+
+  var promiseThumb = resizeImage(base64, maxSizeThumbnailImageInKB);
+  var promiseFullsize = resizeImage(base64, maxSizeFullSizeImageInKB);
+  return Promise.all([promiseThumb, promiseFullsize, Promise.resolve(base64)])
     .then((r) => {
       resolve(r);
     })
