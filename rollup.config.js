@@ -1,64 +1,54 @@
-import commonjs from "@rollup/plugin-commonjs";
-import livereload from "rollup-plugin-livereload";
-import postcss from "rollup-plugin-postcss";
-import resolve from "@rollup/plugin-node-resolve";
 import svelte from "rollup-plugin-svelte";
-import { terser } from "rollup-plugin-terser";
-import builtins from "rollup-plugin-node-builtins";
-import globals from "rollup-plugin-node-globals";
-import copy from "rollup-plugin-copy-assets";
-import { injectManifest } from "rollup-plugin-workbox";
+import resolve from "rollup-plugin-node-resolve";
+import commonjs from "rollup-plugin-commonjs";
+import postcss from "rollup-plugin-postcss";
 import replace from "@rollup/plugin-replace";
-import sizes from "rollup-plugin-sizes";
-import svelte_preprocess_postcss from "svelte-preprocess-postcss";
-import analyze from "rollup-plugin-analyzer";
-
-const production = true;
-export default [
+import { injectManifest } from "rollup-plugin-workbox";
+import rollup_copy from "rollup-plugin-copy-assets";
+import rollup_sizes from "rollup-plugin-sizes";
+import rollup_analyze from "rollup-plugin-analyzer";
+module.exports = [
   {
-    input: "src/main.js",
+    input: "src/index.js",
     output: {
+      file: "dist/bundle.js",
       format: "iife",
-      sourcemap: true,
       name: "app",
-      file: "dist/main.js",
     },
-
     plugins: [
-      svelte({
-        dev: !production,
-        preprocess: {
-          style: svelte_preprocess_postcss(),
-        },
-        css: (css) => {
-          css.write("dist/components.css");
-        },
+      svelte(),
+      resolve({
+        browser: true,
+        dedupe: ["svelte"],
       }),
-      resolve(),
       commonjs(),
-      globals(),
-      builtins(),
-      copy({
-        assets: ["src/assets"],
-      }),
       postcss({
-        extensions: [".scss", ".sass"],
         extract: true,
         minimize: true,
         use: [
           [
             "sass",
             {
-              includePaths: ["./src/theme/", "./node_modules"],
+              includePaths: ["./src/theme", "./node_modules"],
             },
           ],
         ],
       }),
-      !production && livereload("dist"),
-      production && terser(),
-      sizes(),
-      analyze({ limit: 10 }),
+      rollup_sizes(),
+      rollup_analyze({ limit: 10 }),
+      rollup_copy({
+        assets: [
+          "src/assets",
+          "src/manifest.json",
+          "src/index.html",
+          "src/.htaccess",
+          "src/404.html",
+        ],
+      }),
     ],
+    watch: {
+      clearScreen: false,
+    },
   },
   {
     input: "src/sw/service-worker.js",
@@ -66,10 +56,11 @@ export default [
       sourcemap: true,
       format: "iife",
       name: "workbox",
-      file: "dist/service-worker_temp.js",
+      file: "dist/service-worker.js",
     },
     plugins: [
       replace({
+        preventAssignment: true,
         "process.env.NODE_ENV": JSON.stringify(
           process.env.NODE_ENV || "production"
         ),
@@ -77,7 +68,7 @@ export default [
       resolve(),
       injectManifest(
         {
-          swSrc: "dist/service-worker_temp.js",
+          swSrc: "dist/service-worker.js",
           swDest: "dist/service-worker.js",
           globDirectory: "dist/",
         },
@@ -100,6 +91,7 @@ export default [
     },
     plugins: [
       replace({
+        preventAssignment: true,
         "process.env.NODE_ENV": JSON.stringify(
           process.env.NODE_ENV || "production"
         ),

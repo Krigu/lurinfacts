@@ -1,21 +1,31 @@
 import { db } from "./customfirebase";
+import { storeFact } from "./../webworker/indexedDbService.js";
 
 let factsArray = [];
 var factsDbRef = db.ref("facts");
 
 export function subscribeToFacts(callback) {
   factsDbRef.on("child_added", function (snapshot) {
-    var fact = snapshot.val();
+    let fact = snapshot.val();
     fact.key = snapshot.key;
-    if (factsArray.filter((x) => x.key == fact.key).length == 0) {
-      addFact(fact);
-      callback(fact);
-    }
+    let newlyStored = addFacts([fact]);
+    callback(newlyStored);
   });
   factsDbRef.on("child_removed", function (snapshot) {
     factsArray = factsArray.filter((p) => p.key !== snapshot.key);
     callback(factsArray);
   });
+}
+
+function addFacts(facts) {
+  let onlyNewOnes = facts.filter(
+    (img) => !factsArray.some((x) => x.key == img.key)
+  );
+  factsArray.push(...onlyNewOnes);
+  factsArray.sort((x, y) => y.insertTime - x.insertTime);
+
+  var newlyAdded = onlyNewOnes.filter(async (x) => storeFact(x));
+  return newlyAdded;
 }
 
 export function deleteFact(fact) {
@@ -32,16 +42,4 @@ export function deleteFact(fact) {
       });
   }
   return Promise.resolve(false);
-}
-
-function addFact(fact) {
-  if (factsArray.some((x) => x.key == fact.key)) {
-    return;
-  }
-  factsArray.push(fact);
-  factsArray.sort((x, y) => y.insertTime - x.insertTime);
-  // // localStorage.setItem("facts", JSON.stringify(factsArray));
-  // factsNewestArray = factsArray
-  //   .sort((y, x) => x.insertTime > y.insertTime)
-  //   .splice(0, 3);
 }

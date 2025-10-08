@@ -2,14 +2,15 @@
   import { onMount } from "svelte";
   import {
     getPositionByCoords,
-    getPositionByAddress
+    getPositionByAddress,
   } from "./../services/geoLocationService.js";
-  import { loadMapScript } from "./../services/mapsLoaderService.js";
   import Button, { Label } from "@smui/button";
   import Radio from "@smui/radio";
   import FormField from "@smui/form-field";
   import { Icon } from "@smui/icon-button";
   import { createEventDispatcher } from "svelte";
+  import { notify } from "./../services/notifyService.js";
+
   const dispatch = createEventDispatcher();
 
   export let location = {};
@@ -20,38 +21,35 @@
   let selectedOption = "map";
   let addressSearch = "";
   function initMap() {
-    var observer = loadMapScript();
-    observer.subscribe(loaded => {
-      if (loaded) {
-        let initialCoords = { lat: 46.65, lng: 7.709 };
+    let initialCoords = [46.65, 7.709];
 
-        if (location && location.latitude) {
-          initialCoords = { lat: location.latitude, lng: location.longitude };
-        } else {
-          updateLocationByCoords(initialCoords.lat, initialCoords.lng);
-        }
-        map = new google.maps.Map(mapElement, {
-          center: initialCoords,
-          zoom: 8
-        });
-        marker = new google.maps.Marker({
-          map: map,
-          draggable: true,
-          animation: google.maps.Animation.DROP,
-          position: initialCoords
-        });
-        marker.addListener("dragend", function() {
-          console.log(marker);
-          updateLocationByCoords(marker.position.lat(), marker.position.lng());
-        });
-      }
+    if (location && location.latitude) {
+      initialCoords = [location.latitude, location.longitude];
+    } else {
+      updateLocationByCoords(initialCoords[0], initialCoords[1]);
+    }
+
+    map = L.map("map").setView(initialCoords, 6);
+    L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+      attribution: "OSM",
+    }).addTo(map);
+
+    marker = L.marker(initialCoords, { draggable: true }).addTo(map);
+    marker.on("dragend", function () {
+      var latLng = marker.getLatLng();
+      //console.log("moved marker", latLng);
+      updateLocationByCoords(latLng.lat, latLng.lng);
     });
   }
 
   async function updateLocationByCoords(lat, lng) {
     try {
-      location = await getPositionByCoords(lat, lng);
-      dispatch("locationChoosen", location);
+      let foundLocation = await getPositionByCoords(lat, lng);
+      if (foundLocation == null) {
+        notify("could not get location by coordinates.");
+      } else {
+        setLocation(foundLocation);
+      }
     } catch (e) {
       console.log("updateLocationByCoords: error while looking up coords", e);
     }
@@ -59,12 +57,22 @@
   async function getByAddress(e) {
     e.preventDefault();
     try {
-      location = await getPositionByAddress(addressSearch);
-      dispatch("locationChoosen", location);
+      let foundLocation = await getPositionByAddress(addressSearch);
+      if (foundLocation == null) {
+        notify("could not get location by address.");
+      } else {
+        setLocation(foundLocation);
+      }
     } catch (e) {
       console.log("getByAddress: error while looking up coords", e);
     }
     return false;
+  }
+
+  function setLocation(newLocation) {
+    location = newLocation;
+    marker.setLatLng([newLocation.latitude, newLocation.longitude]);
+    dispatch("locationChoosen", location);
   }
 
   onMount(async () => {
@@ -78,38 +86,38 @@
     } else if (selectedOption == "device") {
       locationOfDevice = {
         msg: "Locate your device position.....",
-        icon: "phonelink_ring"
+        icon: "phonelink_ring",
       };
       if (!navigator.geolocation) {
         locationOfDevice = {
           msg: "Looks like your phone does not support gelocation",
-          icon: "local_phone"
+          icon: "local_phone",
         };
         return;
       }
 
       navigator.geolocation.getCurrentPosition(
-        position => {
+        (position) => {
           locationOfDevice = { msg: "Location found", icon: "done" };
           location = {
             latitude: position.coords.latitude,
-            longitude: position.coords.longitude
+            longitude: position.coords.longitude,
           };
           updateLocationByCoords(
             position.coords.latitude,
             position.coords.longitude
           );
         },
-        error => {
+        (error) => {
           if (error.code == 1) {
             locationOfDevice = {
               msg: "Error on fetching the device's locaction",
-              icon: "phonelink_erase"
+              icon: "phonelink_erase",
             };
           } else {
             locationOfDevice = {
               msg: "Lurin has no rights to access your device's location 💩",
-              icon: "phonelink_lock"
+              icon: "phonelink_lock",
             };
           }
         }
@@ -118,54 +126,50 @@
   }
 </script>
 
-<style type="text/postcss">
-  #map {
-    height: 300px;
-    width: 100%;
-  }
-</style>
-
 <div>
   <h2>Add location</h2>
   <div>
     <FormField>
       <Radio
-        bind:group={selectedOption}
+        bind:group="{selectedOption}"
         value="address"
-        on:change={optionChanged} />
+        on:change="{optionChanged}"
+      />
       <span slot="label">By address</span>
     </FormField>
     <FormField>
       <Radio
-        bind:group={selectedOption}
+        bind:group="{selectedOption}"
         value="map"
-        on:change={optionChanged} />
+        on:change="{optionChanged}"
+      />
       <span slot="label">By map location</span>
     </FormField>
     <FormField>
       <Radio
-        bind:group={selectedOption}
+        bind:group="{selectedOption}"
         value="device"
-        on:change={optionChanged} />
+        on:change="{optionChanged}"
+      />
       <span slot="label">Device location</span>
     </FormField>
   </div>
 
-  {#if selectedOption == 'address'}
+  {#if selectedOption == "address"}
     <div>
       <h3>Choose by address</h3>
       <div class="lurinForm">
         <label for="contributor">Address</label>
-        <input type="text" name="contributor" bind:value={addressSearch} />
+        <input type="text" name="contributor" bind:value="{addressSearch}" />
         Where have you been? Enter a address, Lurin will guess the coordinates.
       </div>
       <div style="width: 100%;height: 80px;">
-        <Button on:click={getByAddress} variant="raised" class="formButton">
+        <Button on:click="{getByAddress}" variant="raised" class="formButton">
           <Label>Get coords by address</Label>
         </Button>
       </div>
     </div>
-  {:else if selectedOption == 'device'}
+  {:else if selectedOption == "device"}
     <div>
       <h3>Choose by device</h3>
       <Icon class="material-icons" style="vertical-align: text-bottom">
@@ -173,14 +177,14 @@
       </Icon>
       <span>{locationOfDevice.msg}</span>
     </div>
-  {:else if selectedOption == 'map'}
+  {:else if selectedOption == "map"}
     <div>
       <h3>Choose by map</h3>
-      <div id="map" bind:this={mapElement} />
+      <div id="map"></div>
     </div>
   {/if}
 
-  {#if location.address}
+  {#if location && location.address}
     <h3>Choosen location</h3>
     Latitdude: {location.latitude}
     <br />
@@ -192,3 +196,10 @@
     <br />
   {/if}
 </div>
+
+<style type="text/postcss">
+  #map {
+    height: 300px;
+    width: 100%;
+  }
+</style>

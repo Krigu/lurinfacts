@@ -3,16 +3,32 @@
   import { createEventDispatcher } from "svelte";
   import Button, { Label } from "@smui/button";
   import page from "page";
+  import { onMount, onDestroy } from "svelte";
 
   export let image;
   export let hasDeleteButton;
 
   let pathName = location.pathname || "home";
   pathName = pathName.indexOf("/") == 0 ? pathName.substring(1) : PathName;
-
+  let imageContainer;
   let landscapeClass = "portrait";
-
+  let displayUrl = "assets/image_placeholder.jpg";
+  let intersectionObserver;
   const dispatch = createEventDispatcher();
+
+  onMount(async function () {
+    var intersectionObserver = new IntersectionObserver(function (entries) {
+      if (entries[0].intersectionRatio > 0) {
+        console.log("intersection observer for " + image.imageTitle, entries);
+        displayUrl = image.thumbnail;
+      }
+    });
+    intersectionObserver.observe(imageContainer);
+  });
+
+  onDestroy(async function () {
+    intersectionObserver && intersectionObserver.disconnect();
+  });
 
   function deleteLocation(e) {
     e.stopPropagation();
@@ -26,10 +42,36 @@
   }
 </script>
 
+<div
+  bind:this="{imageContainer}"
+  class="imageContainer mdc-card"
+  on:click="{() =>
+    page('/slideShow?key=' + image.key + '&backUrl=' + pathName)}"
+>
+  <div>
+    <div class="imageText">{image.imageTitle}</div>
+    <div class="square">
+      <img
+        src="{displayUrl}"
+        class="{landscapeClass}"
+        on:load="{imageLoaded}"
+        alt="{image.funFact}"
+      />
+    </div>
+    <div class="imageText">{image.funFact}</div>
+    <div class="imageSubtitle">{getDisplayTime(image.insertTime)}</div>
+    {#if hasDeleteButton}
+      <Button on:click="{deleteLocation}" variant="raised" class="formButton">
+        <Label>Delete location</Label>
+      </Button>
+    {/if}
+  </div>
+</div>
+
 <style>
   .imageContainer {
     margin: 5px;
-    background-color: #ffff65;
+    background-color: #ffff42;
     font-size: 18px;
     border-radius: 6px;
     width: 100%;
@@ -74,25 +116,3 @@
     object-fit: cover;
   }
 </style>
-
-<div
-  class="imageContainer mdc-card"
-  on:click={() => page('/slideShow?key=' + image.key + '&backUrl=' + pathName)}>
-  <div>
-    <div class="imageText">{image.imageTitle}</div>
-    <div class="square">
-      <img
-        src={image.thumbnail}
-        class={landscapeClass}
-        on:load={imageLoaded}
-        alt={image.funFact} />
-    </div>
-    <div class="imageText">{image.funFact}</div>
-    <div class="imageSubtitle">{getDisplayTime(image.insertTime)}</div>
-    {#if hasDeleteButton}
-      <Button on:click={deleteLocation} variant="raised" class="formButton">
-        <Label>Delete location</Label>
-      </Button>
-    {/if}
-  </div>
-</div>

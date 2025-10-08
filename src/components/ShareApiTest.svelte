@@ -1,15 +1,11 @@
 <script>
-
 </script>
-
-<style>
-
-</style>
 
 <div>
   <br />
   <br />
   <h2>simulate web share api call</h2>
+  <!-- svelte-ignore component-name-lowercase -->
   <form method="post" action="/_share-target" enctype="multipart/form-data">
     <label>
       choose image
@@ -19,3 +15,6 @@
     <button>send</button>
   </form>
 </div>
+
+<style>
+</style>

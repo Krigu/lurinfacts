@@ -1,7 +1,7 @@
 <script>
   import {
     readFile,
-    getImageFormUrl
+    getImageFormUrl,
   } from "./../services/imageReaderService.js";
   import LinearProgress from "@smui/linear-progress";
   import { Icon } from "@smui/icon-button";
@@ -9,7 +9,7 @@
   import { createEventDispatcher } from "svelte";
   import {
     getCachedMediaMetadata,
-    deleteCachedMediaMetadata
+    deleteCachedMediaMetadata,
   } from "./../services/imageMediaDataCache.js";
   import { tick } from "svelte";
   import { onMount } from "svelte";
@@ -19,6 +19,7 @@
   let uploadedFiles = [];
   let thumbnailImage = null;
   let fullsizeImage = null;
+  let originalImage = null;
   let cachedImage = {};
   let cachedImageLoading = true;
   onMount(async () => {
@@ -29,49 +30,156 @@
 
   async function loadCachedImage() {
     const images = await getCachedMediaMetadata("image");
+    console.log(`got ${(images && images.length) || 0} in cache`, images);
     let img = images ? images[0] : null;
     if (img) {
-      let [thumb, fullSize] = await getImageFormUrl(img.src);
+      let [thumb, fullSize, original] = await getImageFormUrl(img.src);
       cachedImage = img;
       cachedImage.thumbnailImage = thumb;
       cachedImage.fullsizeImage = fullSize;
+      cachedImage.originalImage = original;
     }
     cachedImageLoading = false;
   }
 
   async function useCachedImage(e) {
     e.preventDefault();
-    thumbnailImage = cachedImage.thumbnailImage;
-    fullsizeImage = cachedImage.fullsizeImage;
-    dispatch("imageChoosen", { thumbnailImage, fullsizeImage });
-    deleteCachedMediaMetadata(cachedImage.src).then(
-      result => (cachedImage = {})
+    dispatchImageChoosen(
+      cachedImage.thumbnailImage,
+      cachedImage.fullsizeImage,
+      cachedImage.originalImage
     );
+    deleteCachedMediaMetadata(cachedImage.src).then(() => (cachedImage = {}));
   }
 
   async function deleteCachedImage(e) {
     e.preventDefault();
     await deleteCachedMediaMetadata(cachedImage.src);
-    cachedImage = null;
+    cachedImage = {};
     cachedImageLoading = true;
     loadCachedImage();
     return false;
   }
 
   function readUploadedFiles(e) {
-    readFile(e.target.files[0]).then(([thumb, fullSize]) => {
-      thumbnailImage = thumb;
-      fullsizeImage = fullSize;
-      dispatch("imageChoosen", { thumbnailImage, fullsizeImage });
+    readFile(e.target.files[0]).then(([thumb, fullSize, original]) => {
+      dispatchImageChoosen(thumb, fullSize, original);
+    });
+  }
+
+  function dispatchImageChoosen(thumb, fullsize, original) {
+    thumbnailImage = thumb;
+    fullsizeImage = fullsize;
+    originalImage = original;
+    dispatch("imageChoosen", {
+      thumbnailImage,
+      fullsizeImage,
+      originalImage,
     });
   }
 
   function deleteImages() {
-    thumbnailImage = null;
-    fullsizeImage = null;
-    dispatch("imageChoosen", { thumbnailImage, fullsizeImage });
+    dispatchImageChoosen(null, null, null);
+  }
+
+  function size(base64EncodeImage) {
+    var base64str = base64EncodeImage.split(",")[1];
+    var len = atob(base64str).length;
+    return Math.round(len / 1024, 2) + " KB";
   }
 </script>
+
+<div>
+  <h2>Select image</h2>
+  {#if cachedImageLoading}
+    <LinearProgress indeterminate />
+  {:else if cachedImage.src}
+    <div class="col">
+      <img
+        src="{cachedImage.thumbnailImage}"
+        alt="use this one this previous shared for your next post"
+        style="max-height:100px;height:auto"
+      />
+    </div>
+    <div class="col">
+      <Button on:click="{useCachedImage}" variant="raised" class="formButton">
+        <Label>Use this image</Label>
+      </Button>
+      <Button
+        on:click="{deleteCachedImage}"
+        variant="raised"
+        class="formButton"
+      >
+        <Label>Choose other image</Label>
+      </Button>
+    </div>
+  {/if}
+  {#if !cachedImageLoading && !cachedImage.src && !thumbnailImage}
+    <div class="dropZoneContainer">
+      <input
+        type="file"
+        id="drop_zone"
+        bind:value="{uploadedFiles}"
+        class="FileUpload"
+        accept=".jpg,.png,.gif"
+        on:change="{readUploadedFiles}"
+      />
+      <div class="dropZoneOverlay">
+        Drag and drop your image
+        <br />
+        or
+        <br />
+        Click to add
+      </div>
+    </div>
+  {/if}
+  {#if thumbnailImage}
+    <div class="flex-grid-imageOk">
+      <div class="col">
+        <div class="imageReadyContainer">
+          <img
+            align="left"
+            src="{thumbnailImage}"
+            class="imagePreview"
+            alt="thmbnail"
+          />
+          {size(thumbnailImage)}
+          <br />
+          <Icon class="material-icons" style="vertical-align: text-bottom;">
+            done
+          </Icon>
+          Thumbnail is ready!
+        </div>
+        <div class="imageReadyContainer">
+          {#if fullsizeImage}
+            <img
+              align="left"
+              src="{fullsizeImage}"
+              class="imagePreview"
+              alt="thmbnail"
+            />
+            {size(fullsizeImage)}
+            <br />
+            <Icon class="material-icons" style="vertical-align: text-bottom;">
+              done
+            </Icon>
+            Fullsize is ready!
+          {/if}
+        </div>
+      </div>
+    </div>
+    <div style="height:100px">
+      <Button
+        on:click="{deleteImages}"
+        disabled="{!thumbnailImage}"
+        variant="raised"
+        class="formButton"
+      >
+        <Label>Delete</Label>
+      </Button>
+    </div>
+  {/if}
+</div>
 
 <style type="text/postcss">
   .dropZoneOverlay,
@@ -105,77 +213,15 @@
   }
   .col {
     flex: auto;
+    display: inline-flex;
+  }
+  .imageReadyContainer {
+    padding: 0px 4px;
+    width: 100%;
+  }
+  .imagePreview {
+    max-height: 60px;
+    height: 100%;
+    padding: 0px 4px;
   }
 </style>
-
-<div>
-  <h2>Select image</h2>
-  {#if cachedImageLoading}
-    <LinearProgress indeterminate />
-  {:else if cachedImage.src}
-    <div class="col">
-      <img
-        src={cachedImage.thumbnailImage}
-        alt="shared image"
-        style="max-height:100px;height:auto" />
-    </div>
-    <div class="col">
-      <Button on:click={useCachedImage} variant="raised" class="formButton">
-        <Label>Use this image</Label>
-      </Button>
-      <Button on:click={deleteCachedImage} variant="raised" class="formButton">
-        <Label>Choose other image</Label>
-      </Button>
-    </div>
-  {/if}
-  {#if !cachedImageLoading && !cachedImage.src && !thumbnailImage}
-    <div class="dropZoneContainer">
-      <input
-        type="file"
-        id="drop_zone"
-        bind:value={uploadedFiles}
-        class="FileUpload"
-        accept=".jpg,.png,.gif"
-        on:change={readUploadedFiles} />
-      <div class="dropZoneOverlay">
-        Drag and drop your image
-        <br />
-        or
-        <br />
-        Click to add
-      </div>
-    </div>
-  {/if}
-  {#if thumbnailImage}
-    <div class="flex-grid-imageOk">
-      <div class="col" style="padding: 4px;">
-        <img
-          src={thumbnailImage}
-          style="max-height:60px;height:100%"
-          alt="thmbnail" />
-      </div>
-      <div class="col" style="padding-top: 12px;">
-        <Icon class="material-icons" style="vertical-align: text-bottom;">
-          done
-        </Icon>
-        Thumbnail is ready!
-        {#if fullsizeImage}
-          <br />
-          <Icon class="material-icons" style="vertical-align: text-bottom;">
-            done
-          </Icon>
-          Fullsize is ready!
-        {/if}
-      </div>
-      <div class="col" style="height:100px">
-        <Button
-          on:click={deleteImages}
-          disabled={!thumbnailImage}
-          variant="raised"
-          class="formButton">
-          <Label>Delete</Label>
-        </Button>
-      </div>
-    </div>
-  {/if}
-</div>

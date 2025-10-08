@@ -1,33 +1,30 @@
-import { makeRequest } from './httpRequestService'
+import { makeRequest } from "./httpRequestService";
 
-var key = 'AIzaSyC0P3kNpRrvnXLbNXLx4D033Fz0ttPsgkI'
-var baseUrl = 'https://maps.google.com/maps/api/geocode/json?&key=' + key
-
+let baseUrl = "https://nominatim.openstreetmap.org/search?format=json&limit=3";
 export async function getPositionByCoords(lat, lng) {
-  var geoUrl = baseUrl + '&latlng=' + lat + ',' + lng
-  return geoCodeService(geoUrl)
+  var geoUrl = baseUrl + "&q=" + lat + "," + lng;
+  return geoCodeService(geoUrl,lat,lng);
 }
 
 export async function getPositionByAddress(address) {
-  var geoUrl = baseUrl + '&address=' + address
-  return geoCodeService(geoUrl)
+  var location = geoCodeService(baseUrl + "&q=" + address);
+  return location;
 }
 
-async function geoCodeService(geoUrl) {
-  let data = await makeRequest(geoUrl)
-  let json = JSON.parse(data.responseText)
+async function geoCodeService(geoUrl,lat,lng) {
+  let data = await makeRequest(geoUrl);
+  let json = JSON.parse(data.responseText);
 
-  console.log(json)
-  if (json.results.length > 0) {
-    var res0 = json.results[0]
+  if (json.length > 0) {
+    var res0 = json[0];
+    var addressParts = res0.display_name.split(",");
     var location = {
-      latitude: res0.geometry.location.lat,
-      longitude: res0.geometry.location.lng,
-      address: res0.formatted_address,
-      country:
-        res0.address_components[res0.address_components.length - 2].long_name,
-    }
-    return location
+      latitude: lat || res0.lat,
+      longitude: lng || res0.lon,
+      address: res0.display_name,
+      country: addressParts[addressParts.length - 1],
+    };
+    return location;
   }
-  return null
+  return null;
 }

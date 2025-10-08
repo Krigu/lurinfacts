@@ -1,15 +1,10 @@
 <script>
   import { saveImageAndMetadata } from "./../services/imagesWrapperService.js";
-  import {
-    resizeImage,
-    getOrientation,
-    rotatePhoto
-  } from "./../services/imageResizeService.js";
-  import IconButton, { Icon } from "@smui/icon-button";
+  import Checkbox from "@smui/checkbox";
+  import FormField from "@smui/form-field";
   import { notify } from "./../services/notifyService.js";
   import { form } from "svelte-forms";
   import Button, { Label } from "@smui/button";
-  import { onMount } from "svelte";
   import LocationSelector from "./LocationSelector.svelte";
   import ImageSelector from "./ImageSelector.svelte";
   import page from "page";
@@ -19,15 +14,17 @@
     funFact: "",
     imageKey: "",
     location: {},
-    thumbnail: ""
+    thumbnail: "",
   };
+  let triggerPushMessage = true;
   let thumbnailImage = null;
-
   let fullsizeImage = null;
+  let originalImage = null;
 
   function updateImage(event) {
     fullsizeImage = event.detail.fullsizeImage;
     thumbnailImage = event.detail.thumbnailImage;
+    originalImage = event.detail.originalImage;
   }
 
   function updateLocation(event) {
@@ -37,12 +34,12 @@
   const imageForm = form(() => ({
     title: {
       value: imageObj.imageTitle,
-      validators: ["required", "min:5", "max:80"]
+      validators: ["required", "min:5", "max:80"],
     },
     funFact: {
       value: imageObj.funFact,
-      validators: ["required", "min:5", "max:240"]
-    }
+      validators: ["required", "min:5", "max:240"],
+    },
   }));
 
   async function saveData(e) {
@@ -52,7 +49,9 @@
       var result = await saveImageAndMetadata(
         imageObj,
         thumbnailImage,
-        fullsizeImage
+        fullsizeImage,
+        originalImage,
+        triggerPushMessage
       );
       if (result) {
         imageObj = {
@@ -60,10 +59,11 @@
           funFact: "",
           imageKey: "",
           location: {},
-          thumbnail: ""
+          thumbnail: "",
         };
         thumbnailImage = null;
         fullsizeImage = null;
+        originalImage = null;
         notify("thanks for adding this gem.");
         page("/images");
       } else {
@@ -75,41 +75,51 @@
     }
     return false;
   }
-
-  function handleFiles(e) {
-    readFile(e.target.files[0]).then(([thumb, fullSize]) => {
-      thumbnailImage = thumb;
-      fullsizeImage = fullSize;
-    });
-  }
 </script>
-
-<style type="text/postcss">
-
-</style>
 
 <div class="contentpadding">
   <h1>Add place to be</h1>
-  <form style="max-width: 400px;" on:submit={saveData}>
+  <!-- svelte-ignore component-name-lowercase -->
+  <form style="max-width: 400px;" on:submit="{saveData}">
     <div class="lurinForm">
       <div>
         <label for="title">Location, Country</label>
-        <input type="text" name="title" bind:value={imageObj.imageTitle} />
+        <input type="text" name="title" bind:value="{imageObj.imageTitle}" />
       </div>
       <div>
         <label for="fact">Fun Fact</label>
-        <input type="text" name="fact" bind:value={imageObj.funFact} />
+        <input type="text" name="fact" bind:value="{imageObj.funFact}" />
       </div>
 
-      <ImageSelector on:imageChoosen={updateImage} />
+      <ImageSelector on:imageChoosen="{updateImage}" />
 
-      <LocationSelector on:locationChoosen={updateLocation} />
-      <Button
-        disabled={!($imageForm.valid && imageObj.funFact.length > 0 && fullsizeImage && thumbnailImage && location)}
-        variant="raised"
-        class="formButton">
-        <Label>Send</Label>
-      </Button>
+      <LocationSelector on:locationChoosen="{updateLocation}" />
+      <div class="formButtons">
+        <FormField>
+          <Checkbox bind:checked="{triggerPushMessage}" />
+          <span slot="label">Trigger PushMessage</span>
+        </FormField>
+        <Button
+          disabled="{!(
+            $imageForm.valid &&
+            imageObj.funFact.length > 0 &&
+            fullsizeImage &&
+            thumbnailImage &&
+            location
+          )}"
+          variant="raised"
+          class="formButton"
+        >
+          <Label>Send</Label>
+        </Button>
+      </div>
     </div>
   </form>
 </div>
+
+<style type="text/postcss">
+  .formButtons {
+    display: flex;
+    justify-content: space-between;
+  }
+</style>

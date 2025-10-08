@@ -3,7 +3,7 @@ export function getDisplayTime(insertTime) {
   var days = Math.floor(diff / (1000 * 60 * 60 * 24));
   var hours = Math.floor(diff / (1000 * 60 * 60));
   var formatter = new Intl.RelativeTimeFormat(navigator.language, {
-    style: "narrow"
+    style: "narrow",
   });
   if (days < 3) {
     return formatter.format(-hours, "hours");
@@ -14,7 +14,7 @@ export function getDisplayTime(insertTime) {
       weekday: "long",
       year: "numeric",
       month: "long",
-      day: "numeric"
+      day: "numeric",
     };
     return new Date(insertTime).toLocaleDateString("de-DE", options);
   }

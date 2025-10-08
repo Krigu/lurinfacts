@@ -1,59 +1,71 @@
 import * as Comlink from "comlink";
 import { writable } from "svelte/store";
 const worker = new Worker("worker.js");
+import { readImages } from "./../webworker/indexedDbService.js";
 
-let images = writable([]);
 let newestImages = writable([]);
 let imageAdapter = writable([]);
-
+let imagesLoaded = false;
 let dataInterface = Comlink.wrap(worker);
 
 export async function subscribeToImages() {
-  return images;
+  //console.log("imagesServiceWrapper:subscribeToImages");
+  let subscribeableImageStore = loadImages();
+
+  return subscribeableImageStore;
 }
 
 export async function subscribeToNewestImages() {
+  if (!imagesLoaded) {
+    await loadImages();
+  }
   return newestImages;
 }
 
 async function loadImages() {
-  var storedImages = localStorage.getItem("images") || "[]";
-  const imagesArray = JSON.parse(storedImages);
+  let images = writable([]);
 
-  images.set(imagesArray);
-  newestImages.set(getNewest(imagesArray));
+  const imagesArray = (await readImages()) || [];
+
+  images.set([...imagesArray]);
+  newestImages.set(getNewestImages(imagesArray));
 
   function callback(f) {
     imageAdapter.set(f);
   }
+  console.log("subscribe to images via comlink");
   dataInterface.subscribeToImages(Comlink.proxy(callback));
 
   imageAdapter.subscribe((f) => {
-    // console.log("got call back from comlink", f);
+    //console.log("imageAdapter got subscription count=" + f.length);
     var valToAdd = Array.isArray(f) ? f : [f];
 
-    var notYetStoredImages = valToAdd.filter(
+    var newImages = valToAdd.filter(
       (x) => !imagesArray.some((a) => a.key == x.key)
     );
 
-    if (notYetStoredImages.length == 0) {
+    if (newImages.length == 0) {
       return;
     }
 
-    imagesArray.push(...notYetStoredImages);
+    imagesArray.push(...newImages);
 
     imagesArray.sort((x, y) => y.insertTime - x.insertTime);
 
-    let imagesForLocalStore = imagesArray.filter((x, idx) => idx < 10);
-    localStorage.setItem("images", JSON.stringify(imagesForLocalStore));
-
-    images.set(imagesArray);
-    newestImages.set(getNewest(imagesArray));
+    images.set([...imagesArray]);
+    imagesLoaded = true;
+    newestImages.set(getNewestImages(imagesArray));
   });
+  return images;
 }
 
-function getNewest(imagesArray) {
-  return imagesArray.filter((x, idx) => idx < 1);
+function getNewestImages(imagesArray) {
+  var newest = [];
+  let newestCount = 1;
+  for (let i = 0; i < Math.min(newestCount, imagesArray.length); i++) {
+    newest.push(imagesArray[i]);
+  }
+  return newest;
 }
 
 export async function deleteImageAndMetadata(...p) {
@@ -79,5 +91,3 @@ export async function loadFullSizeImage(image) {
   });
   return p1;
 }
-
-loadImages();

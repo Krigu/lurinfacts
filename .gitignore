@@ -1,8 +1,5 @@
-dist/*.js
-dist/*.js.map
-dist/*.css
-dist/*.css.map
-dist/assets
+dist/
+distbak/
 .firebase/
 node_modules/
-.package-lock.json
+

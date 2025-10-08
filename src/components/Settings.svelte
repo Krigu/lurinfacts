@@ -2,13 +2,25 @@
   import {
     disablePush,
     enablePush,
-    getCurrentSubscription
   } from "./../services/pushNotificationService.js";
   import { notify } from "./../services/notifyService.js";
   import Button, { Label } from "@smui/button";
 
   let isWorking = false;
-  let isPushFeatured = "serviceWorker" in navigator && "PushManager" in window;
+  let skipServiceWorkerRegistration =
+    localStorage.getItem("skipServiceWorkerRegistration") || false;
+  let hasServiceWorker = "serviceWorker" in navigator;
+  let isPushFeatured = hasServiceWorker && "PushManager" in window;
+
+  let serviceWorkerInfo = "";
+  if (hasServiceWorker) {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      console.log("", registrations);
+      serviceWorkerInfo =
+        "Registered at: " +
+        new Date(+localStorage.getItem("swRegistrationTime") || 0);
+    });
+  }
 
   async function togglePush(disable) {
     isWorking = true;
@@ -21,36 +33,112 @@
     notify(result.msg);
     isWorking = false;
   }
+
+  async function toggleSwRegistration() {
+    skipServiceWorkerRegistration = !skipServiceWorkerRegistration;
+    localStorage.setItem(
+      "skipServiceWorkerRegistration",
+      +skipServiceWorkerRegistration
+    );
+  }
+
+  async function clearStorage() {
+    localStorage.clear();
+    if (!window.indexedDB) {
+      return;
+    }
+    console.log("delete indexedDB named lurinfacts_3_0");
+    window.indexedDB.deleteDatabase("lurinfacts_3_0");
+    notify("All cleared!");
+  }
+
+  function unregisterServiceWorker() {
+    navigator.serviceWorker.getRegistrations().then(function (registrations) {
+      for (let registration of registrations) {
+        registration.unregister();
+        localStorage.setItem("swRegistrationTime", null);
+        serviceWorkerInfo = "";
+        notify("ServiceWorker kicked!");
+      }
+    });
+  }
 </script>
 
-<style type="text/postcss">
-
-</style>
-
 <div class="contentpadding">
-  <h1>Settings</h1>
+  <div class="configItem">
+    <h1>Settings</h1>
 
-  <h2>Push Notifications</h2>
-  <p>Get the latest and greatest news about lurins trips and wisdom.</p>
-  {#if isPushFeatured}
+    <h2>Push Notifications</h2>
+    <p>Get the latest and greatest news about lurins trips and wisdom.</p>
+    {#if isPushFeatured}
+      <Button
+        on:click="{() => togglePush(true)}"
+        disabled="{isWorking}"
+        variant="raised"
+        class="formButton"
+      >
+        <Label>Disable</Label>
+      </Button>
+      <Button
+        on:click="{() => togglePush(false)}"
+        disabled="{isWorking}"
+        variant="raised"
+        class="formButton"
+      >
+        <Label>Enable</Label>
+      </Button>
+    {:else}
+      <p>
+        Sorry, your browser doesn't feature push notification. Ask lurin how to
+        download a real browser
+      </p>
+    {/if}
+  </div>
+  <div class="configItem">
+    <h2>Cache</h2>
+    <p>Clear LocalStorage and IndexDB</p>
     <Button
-      on:click={() => togglePush(true)}
-      disabled={isWorking}
+      on:click="{() => clearStorage()}"
       variant="raised"
-      class="formButton">
-      <Label>Disable</Label>
+      class="formButton"
+    >
+      <Label>Clear</Label>
     </Button>
-    <Button
-      on:click={() => togglePush(false)}
-      disabled={isWorking}
-      variant="raised"
-      class="formButton">
-      <Label>Enable</Label>
-    </Button>
-  {:else}
-    <p>
-      Sorry, your browser doesn't feature push notification. Ask lurin how to
-      download a real browser
-    </p>
-  {/if}
+  </div>
+  <div class="configItem">
+    {#if hasServiceWorker}
+      <h2>Service Worker</h2>
+      {serviceWorkerInfo || "No service-worker info"}<br />
+      Skip register service worker on startup: {skipServiceWorkerRegistration
+        ? "Yes"
+        : "Nope"}
+      <br />
+      <Button
+        on:click="{() => toggleSwRegistration()}"
+        variant="raised"
+        class="formButton"
+      >
+        <Label
+          >{skipServiceWorkerRegistration
+            ? "Register at startup"
+            : "Skip at startup"}
+        </Label>
+      </Button>
+      {#if serviceWorkerInfo}
+        <Button
+          on:click="{() => unregisterServiceWorker()}"
+          variant="raised"
+          class="formButton"
+        >
+          <Label>Unregister Service Worker</Label>
+        </Button>
+      {/if}
+    {/if}
+  </div>
 </div>
+
+<style type="text/postcss">
+  .configItem {
+    padding-bottom: 60px;
+  }
+</style>

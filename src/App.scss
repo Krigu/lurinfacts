@@ -16,8 +16,10 @@ html {
 }
 
 :root {
-  --mdc-theme-primary: #ffff65;
+  --mdc-theme-primary: #ffff42;
+  --mdc-theme-primary-transparent: rgba(255, 255, 101,0.7);
   --mdc-theme-on-primary: black;
+  --mdc-theme-on-primary-transparent: rgba(0, 0, 0, 0.78);
 }
 body {
   background-color: #f8f8f8;
@@ -31,13 +33,16 @@ ul {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --mdc-theme-on-primary: #ffff65;
     --mdc-theme-primary: black;
-    --mdc-theme-text-primary-on-background: white;
+    --mdc-theme-primary-transparent: rgba(0, 0, 0, 0.459);
+    --mdc-theme-text-primary-on-background: #ffff42;
+    --mdc-theme-on-primary: #ffff42;
+    --mdc-theme-on-primary-transparent: rgba(255, 255, 101,0.7);
   }
   body {
     background-color: #5f5353;
-    color: white;
+    color: #ffff42;
+    padding: 0px;
   }
   .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input {
     color: rgba(255, 255, 255, 0.87) !important;
@@ -78,8 +83,7 @@ ul {
 .mdc-text-field--focused
   .mdc-text-field__input:required
   ~ .mdc-floating-label:after,
-.md
-  -text-field--focused
+.mdc-text-field--focused
   .mdc-text-field__input:required
   ~ .mdc-notched-outline
   .mdc-floating-label:after,
@@ -87,13 +91,6 @@ ul {
   color: rgba(0, 0, 0, 0.87) !important;
 }
 
-// @import "@material/linear-progress/mixins";
-// @import "@material/theme/color-palette";
-
-// .my-colored-bar {
-//   @include mdc-linear-progress-bar-color($material-color-green-500);
-//   @include mdc-linear-progress-buffer-color($material-color-green-100);
-// }
 .lurinForm {
   max-width: 400px;
 }
@@ -102,7 +99,7 @@ textarea {
   display: flex;
   padding: 12px 16px 14px;
   border: solid black 1px;
-  width: 100%;
+  width: 90%;
   border-radius: 5px;
   background-color: transparent;
   margin-top: 5px;
