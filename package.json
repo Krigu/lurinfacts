@@ -45,7 +45,7 @@
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-copy-assets": "^2.0.3",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-postcss": "^4.0.0",
+    "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-sizes": "^1.0.4",
     "rollup-plugin-svelte": "^7.1.0",
     "rollup-plugin-workbox": "^5.2.1",
