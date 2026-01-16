@@ -50,7 +50,7 @@
     "rollup-plugin-svelte": "^7.1.0",
     "rollup-plugin-workbox": "^5.2.1",
     "sass": "^1.32.8",
-    "svelte": "^3.37.0",
+    "svelte": "^4.2.19",
     "svelte-forms": "^1.2.0"
   },
   "dependencies": {
